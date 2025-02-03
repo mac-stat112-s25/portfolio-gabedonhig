@@ -175,7 +175,7 @@ Here:
 
 ```{r}
 
-ggplot(hikes, aes(y = elevation)) + geom_bar(color = "orange") + theme_minimal()
+ggplot(hikes, aes(x = elevation)) + geom_bar(color = "orange") + theme_minimal()
 
 ```
 
