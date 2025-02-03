@@ -181,8 +181,11 @@ How many, or roughly what percent, of the 3000+ counties did the Republican cand
 -   Take a guess.
 -   Then make a plot of the `winner` variable.
 -   Then discuss what follow-up questions you might have (and that our data might help us answer).
+    - how did republicans lose in 2020 if they overwhelmingly won the majority of counties? Is it because many of these counties had small populations
 
 ```{r}
+ggplot(elections, aes(x = winner_20)) +
+  geom_bar()
 ```
 
 #### Part b {.unnumbered}
@@ -192,8 +195,11 @@ The `repub_pct_20` variable provides more detail about the Republican support in
 Notice that the distribution of Republican support from county to county is slightly **left skewed** or **negatively skewed**.
 
 What follow-up questions do you have?
-
+   - Of the counties where Republicans had x>50 percent of the vote, how big were their populations compared to the other counties
 ```{r}
+ggplot(elections, aes(x = repub_pct_20)) +
+  geom_histogram(color = "white") +
+  theme_minimal()
 ```
 
 
@@ -218,6 +224,8 @@ Try to replicate this using `ggplot()`. THINK:
 ![](https://mac-stat.github.io/images/112/scatterplot_demo.png){width="50%"}
 
 ```{r}
+ggplot(elections, aes(x = repub_pct_16, y = repub_pct_20)) +
+  geom_density()
 ```
 
 
@@ -227,34 +235,34 @@ Run each chunk below to build up a a scatterplot of `repub_pct_20` vs `repub_pct
 
 ```{r eval = FALSE}
 # Set up the plotting frame
-# How does this differ than the frame for our histogram of repub_pct_20 alone?
+# This compares the repub_pct_20 and repub_pct_16 on the y-axis?
 ggplot(elections, aes(y = repub_pct_20, x = repub_pct_16))
 ```
 
 ```{r eval = FALSE}
 # Add a layer of points for each county
-# Take note of the geom!
+# The geom used here is points, to create a scatterplot
 ggplot(elections, aes(y = repub_pct_20, x = repub_pct_16)) +
   geom_point()
 ```
 
 ```{r eval = FALSE}
 # Change the shape of the points
-# What happens if you change the shape to another number?
+# You can change the shape of the geom-point to game it easier to read
 ggplot(elections, aes(y = repub_pct_20, x = repub_pct_16)) +
   geom_point(shape = 3)
 ```
 
 ```{r}
 # YOU TRY: Modify the code to make the points "orange"
-# NOTE: Try to anticipate if "color" or "fill" will be useful here. Then try both.
+# NOTE: If you use color, the color of the dots will be entirely that color and the fill color will have no effect. If you do not use color, but use fill, the dots will be the same color as the fill
 ggplot(elections, aes(y = repub_pct_20, x = repub_pct_16)) +
-  geom_point()
+  geom_point(color = "blue", fill = "white")
 ```
 
 ```{r eval = FALSE}
 # Add a layer that represents each county by the state it's in
-# Take note of the geom and the info it needs to run!
+# To add a label of which state every county is from, you need to add (aes(label = state_abbr)), within the geom_text()
 ggplot(elections, aes(y = repub_pct_20, x = repub_pct_16)) +
   geom_text(aes(label = state_abbr))
 ```
@@ -265,8 +273,11 @@ ggplot(elections, aes(y = repub_pct_20, x = repub_pct_16)) +
 Summarize the relationship between the Republican support in 2020 and 2016. Be sure to comment on:
 
 -   the strength of the relationship (weak/moderate/strong)\
+     - Overal, There was a strong relationship between Republican support in a county in 2020 depending on its support in 2016
 -   the direction of the relationship (positive/negative)\
+     - The direction of support was positive
 -   outliers (in what state do counties deviate from the national trend? Any ideas why this might be the case?)
+     - States where Republicans have enjoyed significant support for decades saw a few outliers where Republican support significantly increased in 2020 compared to 2016. There were practically no outliers where there was a significant decrease in support. Perhaps this is because across the country there was an average decrease in the support for Trump, enough to make him lose. The reason a few counties saw a significant increase in support in Republican states is because 1) he has a very polarizing effect on his supporters, either making them hate him or love him even more and/or 2) he enjoys support in rural counties where a small increase in the absolute number of people accounts for a large increase in the percent of people who support him in the county.
 
 
 ### Exercise 4: Visualizing trend {.unnumbered}
