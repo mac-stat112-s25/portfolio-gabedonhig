@@ -192,7 +192,7 @@ Work on the examples below in your groups. Check in with your intuition! We'll t
 # Plot temp3pm vs temp9am
 # Change the code in order to indicate the location to which each data point corresponds
 ggplot(weather, aes(y = temp3pm, x = temp9am)) + 
-  geom_point()
+  geom_point() 
 ```
 
 ```{r}
