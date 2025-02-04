@@ -295,6 +295,8 @@ ggplot(elections, aes(y = repub_pct_20, x = repub_pct_16)) +
 Construct a new plot that contains the model smooth but does *not* include the individual point glyphs.
 
 ```{r}
+ggplot(elections, aes(y = repub_pct_20, x = repub_pct_16)) +
+  geom_smooth()
 ```
 
 #### Part b {.unnumbered}
@@ -311,14 +313,21 @@ ggplot(elections, aes(y = repub_pct_20, x = repub_pct_16)) +
 ### Exercise 5: Your Turn {.unnumbered}
 
 To examine how the 2020 results are related to some county demographics, construct scatterplots of `repub_pct_20` vs `median_rent`, and `repub_pct_20` vs `median_age`. Summarize the relationship between these two variables and comment on which is the better predictor of `repub_pct_20`, `median_rent` or `median_age`.
+   - median rent is negatively correlated with support for republicans in 2020 and median age is positively correlated. Median rent is a better predictor, as the scatterplot formed creates a clearer line than the median age scatterplot
 
 ```{r}
 # Scatterplot of repub_pct_20 vs median_rent
 
-
+ggplot(elections, aes(y = repub_pct_20, x = median_rent)) +
+  geom_point() +
+  geom_smooth(method = "lm")
 
 # Scatterplot of repub_pct_20 vs median_age
 
+ggplot(elections, aes(y = repub_pct_20, x = median_age)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+  
 
 
 ```
@@ -327,6 +336,7 @@ To examine how the 2020 results are related to some county demographics, constru
 ### Exercise 6: A Sad Scatterplot {.unnumbered}
 
 Next, let's explore the relationship between a county's 2020 Republican support `repub_pct_20` and the `historical` political trends in its state. In this case `repub_pct_20` is **quantitative**, but `historical` is **categorical**. Explain why a scatterplot might *not* be an effective visualization for exploring this relationship. (What questions does / doesn't it help answer?)
+   - A scatterplot is ineffective because what is being mapped is qualitative, not quantitative, and the leanings of states would be better done with a bar chart which more effectively visualizes categories
 
 ```{r}
 ggplot(elections, aes(y = repub_pct_20, x = historical)) +
@@ -358,6 +368,7 @@ Box plots are constructed from five numbers - the minimum, 25th percentile, medi
 
 Summarize what you've learned about the 2020 Republican county-level support within and between red/purple/blue states.
 
+   - In 2020, the median historically democratic county voted for a republican by about 55%. 25% of them voted for the republicans at between 55-65%, and 25% voted for a republican at 45-55%. The maximum was roughly 85% and the minimum was roughly 12.5%. In purple counties, the median county voted for a republican at 60%, the upper 25% at anywhere between 60-70%, and the lower 25% at anywhere between 55-60%. The maximum was roughly 90% and the minimum was roughly 25%. In historically Republican counties, the median county voted for republicans at 75%, the upper 25% voted for republicans at 75-80%, and the lower 25% at 60-75%. The maximum was roughly 95% and the minimum was roughly 40%.
 
 ### Exercise 8: Quantitative vs Categorical -- Intuition Check {.unnumbered}
 
@@ -382,28 +393,27 @@ ggplot(elections, aes(x = repub_pct_20)) +
 Work through the chunks below and address the comments therein.
 
 ```{r eval = FALSE}
-# Name two "bad" things about this plot
+# This plot does not fully show the variability of each category, and it does not effectively use color to match the theme (such as making the colors match by historical party)
 ggplot(elections, aes(x = repub_pct_20, fill = historical)) +
   geom_density()
 ```
 
 ```{r eval = FALSE}
-# What does scale_fill_manual do?
+# scale_fill() allows the categories displayed in the plot to be customized, including in their fill
 ggplot(elections, aes(x = repub_pct_20, fill = historical)) +
   geom_density() +
   scale_fill_manual(values = c("blue", "purple", "red"))
 ```
 
 ```{r eval = FALSE}
-# What does alpha = 0.5 do?
-# Play around with different values of alpha, between 0 and 1
+# alpha = 0.5 sets the opacity of the fill
 ggplot(elections, aes(x = repub_pct_20, fill = historical)) +
-  geom_density(alpha = 0.5) +
+  geom_density(alpha = 0.45) +
   scale_fill_manual(values = c("blue", "purple", "red"))
 ```
 
 ```{r eval = FALSE}
-# What does facet_wrap do?!
+# Facet wrap separates the categories so that they each have their own x-axis, not intruding on each other, while also retaining the same shape from the original plot density plot
 ggplot(elections, aes(x = repub_pct_20, fill = historical)) +
   geom_density() +
   scale_fill_manual(values = c("blue", "purple", "red")) +
@@ -412,7 +422,7 @@ ggplot(elections, aes(x = repub_pct_20, fill = historical)) +
 
 ```{r eval = FALSE}
 # Let's try a similar grouping strategy with a histogram instead of density plot.
-# Why is this terrible?
+# This ineffectively separates the categories, placing them on top of each other and making the viz worse
 ggplot(elections, aes(x = repub_pct_20, fill = historical)) +
   geom_histogram(color = "white") +
   scale_fill_manual(values = c("blue", "purple", "red"))
@@ -424,8 +434,11 @@ ggplot(elections, aes(x = repub_pct_20, fill = historical)) +
 We've now learned 3 (of many) ways to visualize the relationship between a quantitative and categorical variable: side-by-side violins, boxplots, and density plots.
 
 -   Which do you like best?
+     - boxplots provide the most immediate information about medians, the lower and upper range (excluding outliers), and the upper 75th and lower 25th percentile's range. They, however, do not display all of the data but rather summarize.
 -   What is one pro of density plots relative to boxplots?
+     - density plots allow one to see which categories and how the range of the predictor variable is affecting the response variable, with more information shown in the organic shape whereas boxplots remove all the points (except outliers) to show the upper 75th and lower 25th percentile along with the median and the maximum and minimums
 -   What is one con of density plots relative to boxplots?
+     - Density plots do not provide information about the range of the response variable, only the distribution of the response variable to the predictor variable
 
 
 ### Exercise 11: Categorical vs Categorical -- Intuition Check {.unnumbered}
@@ -445,13 +458,15 @@ Spend at most 5 minutes on the following intuition check. Adjust the code below 
 ```{r}
 # Plot 1: adjust this to recreate the top plot
 ggplot(elections, aes(x = historical)) +
-  geom_bar()
+  geom_bar(facet_wrap) +
+  scale_fill_manual(values = c("orange", "blue"))
 ```
 
 ```{r}
 # Plot 2: adjust this to recreate the bottom plot
 ggplot(elections, aes(x = winner_20)) +
-  geom_bar()
+  geom_bar() +
+  facet_wrap(~historical)
 ```
 
 
@@ -461,13 +476,13 @@ Construct the following 4 bar plot visualizations.
 
 ```{r eval = FALSE}
 # A stacked bar plot
-# How are the "historical" and "winner_20" variables mapped to the plot, i.e. what roles do they play?
+# historical is assigned to the x-axis for categories, while winner 20 is applied as a fill within the bars that show the number of counties within it
 ggplot(elections, aes(x = historical, fill = winner_20)) +
   geom_bar()
 ```
 
 ```{r eval = FALSE}
-# A faceted bar plot
+# this divides the plot the that each variable has an x-axis
 ggplot(elections, aes(x = winner_20)) +
   geom_bar() +
   facet_wrap(~ historical)
@@ -475,14 +490,14 @@ ggplot(elections, aes(x = winner_20)) +
 
 ```{r eval = FALSE}
 # A side-by-side bar plot
-# Note the new argument to geom_bar
+# The dodge function makes it so that instead of filling the bar with the dem and repub category, they are instead just seperated into two bars next to each other
 ggplot(elections, aes(x = historical, fill = winner_20)) +
   geom_bar(position = "dodge")
 ```
 
 ```{r eval = FALSE}
 # A proportional bar plot
-# Note the new argument to geom_bar
+# the position = "fill" function makes it so that all of the bars are equally tall and instead of displaying the number of counties that voted republican or democrat, the chart displays the proportion of counties in the historical categories who voted for trump or biden
 ggplot(elections, aes(x = historical, fill = winner_20)) +
   geom_bar(position = "fill")
 ```
@@ -490,10 +505,12 @@ ggplot(elections, aes(x = historical, fill = winner_20)) +
 #### Part a {.unnumbered}
 
 Name one pro and one con of using the "proportional bar plot" instead of one of the other three options.
+     - The proportional bar plot shows the proportion within each category oh how the other category relates, but it fails to show the number of observations like the other three options do
 
 #### Part b {.unnumbered}
 
 What's your favorite bar plot from part and why?
+    - my favorite bar plot is the side-by-side bar plot because it not only makes it easier to see the comparison between the two categories in each pair of bars, but also to compare the number of each categories from the other side by side bars
 
 
 ### Exercise 13: Practice (now or later) {.unnumbered}
