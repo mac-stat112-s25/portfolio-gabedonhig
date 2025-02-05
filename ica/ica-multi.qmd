@@ -196,15 +196,21 @@ ggplot(weather, aes(y = temp3pm, x = temp9am)) +
 ```
 
 ```{r}
+#| fig-height: 5
+#| fig-width: 5
 # Change the code in order to indicate the location to which each data point corresponds
 # AND identify the days on which it rained / didn't raintoday
 ggplot(weather, aes(y = temp3pm, x = temp9am)) + 
-  geom_point()
+  geom_point(size = 0.5) +
+  facet_wrap(~raintoday)
 ```
 
 ```{r}
 # How many ways can you think to make that plot of temp3pm vs temp9am with info about location and rain?
 # Play around!
+ggplot(weather, aes(x = temp3pm, y = temp9am, color = location)) +
+  geom_point() +
+  facet_wrap(~raintoday)
 
 ```
 
@@ -213,7 +219,8 @@ ggplot(weather, aes(y = temp3pm, x = temp9am)) +
 ```{r}
 # Change the code in order to construct a line plot of temp3pm vs date for each separate location (no points!)
 ggplot(weather, aes(y = temp3pm, x = date)) + 
-  geom_line()
+  geom_line() +
+  facet_wrap(~location)
 ```
 
 
@@ -223,7 +230,8 @@ ggplot(weather, aes(y = temp3pm, x = date)) +
 # Plot the relationship of raintomorrow & raintoday
 # Change the code in order to indicate this relationship by location
 ggplot(weather, aes(x = raintoday, fill = raintomorrow)) + 
-  geom_bar(position = "fill")
+  geom_bar(position = "fill") +
+  facet_wrap(~location)
 ```
 
 
@@ -278,13 +286,18 @@ A codebook is provided by Danny Kaplan who also made these data accessible:
 Construct a plot of how the average `sat` scores vary from state to state. (Just use 1 variable -- `sat` not `State`!)
 
 ```{r}
+#| fig-height: 10
+#| fig-width: 40
+ggplot(education, aes(x = sat, y = State)) +
+  geom_boxplot() +
+  theme_minimal()
 ```
 
 #### Part b {-}
 
 Summarize your observations from the plot. Comment on the basics: range, typical outcomes, shape. (Any theories about what might explain this non-normal shape?)
 
-
+ - The range of sat scores between the bottom 25th percentile and upper 75th percentile within state is very small, with most students receiving similar scores from the median. But, the maximum and minimum range of all students in every state goes from 0-1600, because in every state there are enough students for a significant number to score 1600 or 0. there is a large disparity in median between different state, which could be due to a number of factors like wealth, quality of the education system, or whether each state has a culture that prioritizes education more or less than others.
 
 ### Exercise 2: SAT Scores vs Per Pupil Spending & SAT Scores vs Salaries {-}
 
