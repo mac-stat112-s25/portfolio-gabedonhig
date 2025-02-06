@@ -537,20 +537,27 @@ Reflect before doing anything. What types of variables are these? How might you 
 ```{r}
 # How do 3pm temperatures (temp3pm) differ by location?
 
-
+ggplot(weather, aes(x = temp3pm)) +
+  geom_histogram(color = "white") +
+  facet_wrap(~location)
 
 ```
 
 ```{r}
 # How might we predict the 3pm temperature (temp3pm) by the 9am temperature (temp9am)?
 
-
+ggplot(weather, aes(x = temp9am, y = temp3pm)) +
+  geom_point(size = 0.5) +
+  geom_smooth()
 
 ```
 
 ```{r}
 # How do the number of rainy days (raintoday) differ by location?
 
+ggplot(weather, aes(x = raintoday)) +
+  geom_bar() +
+  facet_wrap(~location)
 
 ```
 
