@@ -309,24 +309,36 @@ The first question we'd like to answer is: Can the variability in `sat` scores f
 # Construct a plot of sat vs expend
 # Include a "best fit linear regression model" (HINT: method = "lm")
 
+ggplot(education, aes(x = expend, y = sat)) +
+  geom_point(size = 0.5) +
+  geom_smooth()
+
 ```
 
 ```{r}
 # Construct a plot of sat vs salary
 # Include a "best fit linear regression model" (HINT: method = "lm")
 
+ggplot(education, aes(x = salary, y = sat)) +
+  geom_point(size = 0.5) +
+  geom_smooth()
+
 ```
 
 #### Part b {-}
 
 What are the relationship trends between SAT scores and spending? Is there anything that surprises you?
-
+   - The relationship between SAT scores and spending seems to be very weak, having relatively little to no correlation on a scatterplot. Surprisingly, it is initially negative, before becoming positive and then having a negative plateua. What also makes sense is the similarity between the salary and SAT distribution and the spending and SAT distribution, since spending influences salaries
 
 ### Exercise 3: SAT Scores vs Per Pupil Spending *and* Teacher Salaries {-}
 
 Construct *one* visualization of the relationship of `sat` with `salary` *and* `expend`. HINT: Start with just 2 variables and tweak that code to add the third variable. Try out a few things!
 
 ```{r}
+#| fig-height: 10
+#| fig-width: 12
+ggplot(education, aes(x = salary, y = sat, color = expend)) +
+  geom_point(size = 8)
 ```
 
 
@@ -338,13 +350,15 @@ It can be tough to distinguish color scales and size scales for quantitative var
 Construct the plot below. Check out the code and think about what's happening here. What happens if you change "2" to "3"?
 
 ```{r eval = FALSE}
-ggplot(education, aes(y = sat, x = salary, color = cut(expend, 2))) + 
+ggplot(education, aes(y = sat, x = salary, color = cut(expend, 3))) + 
   geom_point() + 
   geom_smooth(se = FALSE, method = "lm")
 ```
 
 Describe the trivariate relationship between `sat`, `salary`, and `expend`.
-
+   - As salary increases, SAT scores go down, unless salary is very high, in which case it increases slightly. As salary increases, so does expend
+   - As SAT scores decrease, expenditure increases, unless expenditure is very high. Additionally, as SAT scores increase, they increase salary
+   - As salary increases, SAT scores fall. As salary increases, so does expenditure
 
 ### Exercise 5: Finally an Explanation {-}
 
@@ -355,6 +369,8 @@ It's strange that SAT scores *seem* to decrease with spending. But we're leaving
 Build a univariate viz of `fracCat` to better understand how many states fall into each category.
 
 ```{r}
+ggplot(education, aes(x = fracCat)) +
+  geom_bar()
 ```
 
 #### Part b {-}
@@ -362,6 +378,8 @@ Build a univariate viz of `fracCat` to better understand how many states fall in
 Build 2 bivariate visualizations that demonstrate the relationship between `sat` and `fracCat`. What story does your graphic tell and why does this make contextual sense?
 
 ```{r}
+ggplot(education, aes(y = sat, x = fracCat)) +
+  geom_boxplot()
 ```
 
 #### Part c {-}
@@ -370,12 +388,15 @@ Make a trivariate visualization that demonstrates the relationship of `sat` with
 Does it still seem that SAT scores decrease as spending increases?
 
 ```{r}
+ggplot(education, aes(y = sat, x = expend)) +
+  geom_point() +
+  facet_wrap(~fracCat)
 ```
 
 #### Part d {-}
 
 Putting all of this together, explain this example of **Simpson’s Paradox**. That is, why did it appear that SAT scores decrease as spending increases even though the *opposite* is true?
-
+   - What we see is that SAT scores are not just influenced by expenditure, but also by the percentage of students who take them. If you break the observations into different classes, based on the percent of students who took the SAT, you can see that across all of them there is a clear positive correlation between expenditure and SAT score. But together, you are combining data points from states whose SAT scores are influenced by the percentage of students who take the SAT.
 
 ## Exercises (optional)
 
