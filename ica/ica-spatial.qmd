@@ -130,7 +130,7 @@ BUT this was explained by a *confounding* or *omitted* or *lurking* variable: ??
 -   the temperature outside dropped...
 -   which then leads to higher energy use.
 
-Thus, *when controlling for* ???,
+Thus, *when controlling for* how cold it was outside,
 renovations led to *decreased* energy use.
 
 ## New stuff
@@ -327,6 +327,11 @@ Let's focus on only those in Minnesota for now:
 # Don't worry about the syntax
 starbucks_mn <- starbucks |>   
   filter(Country == "US", State.Province == "MN")
+
+leaflet(data = starbucks_mn) |>
+  addProviderTiles("USGS") |>
+  addCircles(weight = 5, opacity = 1, color = col2hex("black"))
+  
 ```
 
 Create a leaflet map of the Starbucks locations in Minnesota.
@@ -354,6 +359,8 @@ It's pretty cool that the plots we already know can provide some spatial context
 But what *don't* you like about this plot?
 
 ```{r}
+ggplot(starbucks, aes(x = Longitude, y = Latitude)) +
+  geom_point(alpha = 0.2, size = 0.2)
 ```
 
 ### Exercise 4: Adding a country-level background {.unnumbered}
@@ -407,6 +414,7 @@ ggplot(world_boundaries) +
 #### Part c {.unnumbered}
 
 Summarize what you learned about Starbucks from this map.
+   - I learned that starbucks locations tend to be concentrated in areas with dense populations, with some exceptions. For example, France is densely populated, but has few starbucks locations in comparison to Germany. In Europe there are a lot of Starbucks locations in the lowlands, Germany, and England. IN the United States, they are on the coasts and cities. In East Asia, they are focused in China's coast, South Korea, and Japan. However, there are next to none in India, which is densely populated. In certain developed countries with large cities, like Australia, New Zealand, and France there are few Starbucks locations. For some reason, Starbucks seems to have a strong presence in South East Asia too, and Turkey. It is hard to properly gage the number of locations on this world map, but countries like Russia, Saudi Arabia, and Kuwait seem to have a large number of Starbucks locations focused in relatively small areas. Starbucks seems to be nearly absent from certain countries(the DRC), regions(Central Asia), and continents(Africa). 
 
 ### Exercise 5: Zooming in on some countries {.unnumbered}
 
@@ -502,16 +510,16 @@ Adjust the code below to make the plot!
 Remove the `#` to run it.
 
 ```{r}
-# ggplot(___) + 
-#   geom___() + 
-#   geom___(
-#     data = ___,
-#     aes(x = ___, y = ___),
-#     alpha = 0.7,
-#     size = 0.2, 
-#     color = 'darkgreen'
-#   ) + 
-#   theme_map()
+ ggplot(midwest_boundaries) + 
+   geom_sf() +
+     geom_point(
+     data = starbucks_midwest,
+     aes(x = Longitude, y = Latitude),
+     alpha = 0.7,
+     size = 0.2, 
+     color = 'darkgreen'
+   ) + 
+   theme_map()
 ```
 
 ### Exercise 7: Contour maps {.unnumbered}
