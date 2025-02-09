@@ -148,14 +148,16 @@ Construct a plot that illustrates how 3pm temperatures (temp3pm) vary by `date` 
 
 ggplot(weather, aes(x = temp3pm, y = date)) +
   geom_point() +
-  geom_smooth(method = "lm")
+  geom_smooth(span = 0.5)
 ```
 
 ```{r}
 # Instead of a curve that captures the general TREND,
 # draw a line that illustrates the movement of RAW temperatures from day to day
 # NOTE: We haven't learned this geom yet! Guess.
-ggplot(woll, aes(y = temp3pm, x = date))
+ggplot(woll, aes(y = temp3pm, x = date)) +
+  geom_point() +
+  geom_smooth(method = "lm")
 ```
 
 **NOTE:** A line plot isn't always appropriate! It can be useful in situations like this, when our data are chronological.
@@ -191,7 +193,7 @@ Work on the examples below in your groups. Check in with your intuition! We'll t
 ```{r}
 # Plot temp3pm vs temp9am
 # Change the code in order to indicate the location to which each data point corresponds
-ggplot(weather, aes(y = temp3pm, x = temp9am)) + 
+ggplot(weather, aes(y = temp3pm, x = temp9am, color = location)) + 
   geom_point() 
 ```
 
@@ -200,7 +202,7 @@ ggplot(weather, aes(y = temp3pm, x = temp9am)) +
 #| fig-width: 5
 # Change the code in order to indicate the location to which each data point corresponds
 # AND identify the days on which it rained / didn't raintoday
-ggplot(weather, aes(y = temp3pm, x = temp9am)) + 
+ggplot(weather, aes(y = temp3pm, x = temp9am, color = location)) + 
   geom_point(size = 0.5) +
   facet_wrap(~raintoday)
 ```
@@ -208,10 +210,19 @@ ggplot(weather, aes(y = temp3pm, x = temp9am)) +
 ```{r}
 # How many ways can you think to make that plot of temp3pm vs temp9am with info about location and rain?
 # Play around!
-ggplot(weather, aes(x = temp3pm, y = temp9am, color = location)) +
+ggplot(weather, aes(x = temp3pm, y = temp9am, color = raintoday)) +
   geom_point() +
-  facet_wrap(~raintoday)
+  facet_wrap(~location)
 
+ggplot(weather, aes(x = temp3pm, y = temp9am, color = raintoday)) +
+  geom_point() +
+  facet_wrap(~location) +
+  geom_smooth(method = "lm")
+
+ggplot(weather, aes(x = temp3pm, y = temp9am, color = raintoday)) +
+  geom_point() +
+  facet_wrap(~location) +
+  geom_smooth()
 ```
 
 ### Example 6 {-}
@@ -220,6 +231,7 @@ ggplot(weather, aes(x = temp3pm, y = temp9am, color = location)) +
 # Change the code in order to construct a line plot of temp3pm vs date for each separate location (no points!)
 ggplot(weather, aes(y = temp3pm, x = date)) + 
   geom_line() +
+  geom_smooth()
   facet_wrap(~location)
 ```
 
@@ -230,7 +242,7 @@ ggplot(weather, aes(y = temp3pm, x = date)) +
 # Plot the relationship of raintomorrow & raintoday
 # Change the code in order to indicate this relationship by location
 ggplot(weather, aes(x = raintoday, fill = raintomorrow)) + 
-  geom_bar(position = "fill") +
+  geom_bar() +
   facet_wrap(~location)
 ```
 
@@ -289,7 +301,7 @@ Construct a plot of how the average `sat` scores vary from state to state. (Just
 #| fig-height: 10
 #| fig-width: 40
 ggplot(education, aes(x = sat, y = State)) +
-  geom_boxplot() +
+  geom_point() +
   theme_minimal()
 ```
 
