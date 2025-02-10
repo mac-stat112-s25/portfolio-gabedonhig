@@ -219,7 +219,8 @@ We must then *translate* this information into the *context* of our analysis, he
 2-MINUTE CHALLENGE: Thinking of the bar chart code, try to *intuit* what line you can tack on to the below frame of `elevation` to add a histogram layer. Don't forget a `+`. If it doesn't come to you within 2 minutes, *no problem* -- all will be revealed in the next exercise.
 
 ```{r}
-ggplot(hikes, aes(x = elevation)) + bin(1, 1000) + bin (1001, 2000) + bin(2001, 3000)
+ggplot(hikes, aes(x = elevation, y = difficulty)) 
+  #geom_histogram(breaks = c(1, 1000, 1001, 2000, 2001, 3000))
 ```
 
 

@@ -5,7 +5,8 @@ title: "Spatial Viz"
 ```{r}
 #| eval: false
 
-install.packages(c("sf", "maps", "RColorBrewer", "gplots", "socviz", "leaflet", "devtools"))
+install.packages(c("sf", "maps", "RColorBrewer", "gplots", "socviz", "leaflet", "devtools", "ggthemes"))
+library(ggthemes)
 devtools::install_github("ropensci/rnaturalearthhires")
 ```
 :::
@@ -212,7 +213,7 @@ Let's load [the data](../data/our_fave_places.csv) and map it!
 ```{r}
 #| echo: false
 
-fave_places <- read.csv("../data/our_fave_places.csv")
+fave_places <- read.csv("https://hash-mac.github.io/stat112site-s25/data/our_fave_places.csv")
 
 # Check it out
 head(fave_places)
@@ -650,6 +651,30 @@ ggplot(elections_by_state, aes(map_id = state_name, fill = repub_pct_20)) +
   theme_map() + 
   scale_fill_gradientn(name = "% Republican", colors = c("blue", "purple", "red"), values = scales::rescale(seq(0, 100, by = 5)))
 ```
+```{r}
+# Don't worry about the code!
+
+elections_by_state <- elections_by_state |> 
+  filter(state_abbr != "DC") |> 
+  select(state_name, state_abbr, repub_pct_20) |> 
+  mutate(repub_20_categories = 
+           cut(repub_pct_20, 
+               breaks = seq(30, 70, by = 5), 
+               labels = c("30-34", "35-39", "40-44", "45-49",
+                          "50-54", "55-59", "60-64", "65-70"), 
+               include.lowest = TRUE))
+
+elections_by_counties <- elections_by_counties |> 
+  select(state_name, state_abbr, county_name, county_fips,
+          repub_pct_20, median_age, median_rent) |> 
+  mutate(repub_20_categories = 
+           cut(repub_pct_20, 
+               breaks = seq(0, 100, by = 10),
+               labels = c("0-9", "10-19", "20-29", "30-39", "40-49",
+                          "50-59", "60-69", "70-79", "80-89", "90-100"),
+               include.lowest = TRUE))
+```
+
 
 It's not easy to get fine control over the color scale for the quantitative `repub_pct_20` variable.
 Instead, let's plot the *discretized* version, `repub_20_categories`:
