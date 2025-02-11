@@ -111,7 +111,8 @@ Think: How might we modify the below density plot of `temp_3pm` to distinguish b
 
 ```{r}
 ggplot(weather, aes(x = temp_3pm)) +
-      geom_density()
+  geom_density() +
+  facet_wrap(~location)
 ```
 
 c.  `rain_today` (the response) and `location` (the predictor)
@@ -225,7 +226,7 @@ Try to replicate this using `ggplot()`. THINK:
 
 ```{r}
 ggplot(elections, aes(x = repub_pct_16, y = repub_pct_20)) +
-  geom_density()
+  geom_point()
 ```
 
 
@@ -457,8 +458,13 @@ Spend at most 5 minutes on the following intuition check. Adjust the code below 
 
 ```{r}
 # Plot 1: adjust this to recreate the top plot
-ggplot(elections, aes(x = historical)) +
-  geom_bar(facet_wrap) +
+ggplot(elections, aes(x = winner_20)) +
+  geom_bar() +
+  facet_wrap(~historical) +
+  scale_fill_manual(values = c("orange", "blue"))
+  
+ggplot(elections, aes(x = historical, fill = winner_20)) +
+  geom_bar() +
   scale_fill_manual(values = c("orange", "blue"))
 ```
 
