@@ -487,7 +487,7 @@ In the final two plots, the states (rows) are rearranged by similarity with resp
 
 Putting this all together, what insight do you gain about the education trends across U.S. states? Which states are similar? In what ways are they similar? Are there any outliers with respect to 1 or more of the education metrics?
 
-
+   - We see a few patterns and a few outliers. Firstly, midwest states have high math, sat, verbal, and ratio values compared to their salary, expenditure, fracCat, and sometimes their ratio values. California and Utah stand out as states with high ratio scores in comparison to other states. New York, New Jersey, Connecticut, and Alaska stand out as states with salary and expenditure values but lower ratio, verbal, sat, and math values. 
 
 ### Exercise 7: Star plots {-}
 
@@ -498,7 +498,9 @@ Like heat maps, star plots indicate the relative scale of each variable for each
 Construct and check out the star plot below. Note that each state has a "pie", with each segment corresponding to a different variable. The larger a segment, the larger that variable's value is in that state. For example:
 
 -   Check out Minnesota. How does Minnesota's education metrics compare to those in other states? What metrics are relatively high? Relatively low?
+   - Minnesota's education metrics are high in verbal, calc, and math but low in frac, salary, ratio, and and expenditure.
 -   What states appear to be similar? Do these observations agree with those that you gained from the heat map?
+   - Similar patterns arise in the nearby states of Michigan and Wisconsin
 
 ```{r eval = FALSE, fig.width = 10, fig.height = 20}
 stars(plot_data,
@@ -512,6 +514,7 @@ stars(plot_data,
 #### Part b {-}
 
 Finally, let's plot the state stars by *geographic* location! What new insight do you gain here?!
+   - We can see that on the coasts fracCat tends to be emphasized much more strongly than in inland states. Inland states in the Midwest and Great Plains tend to focus on verbal, math, and the sat. Rocky Mountains states tend to be all over the place, with some spreading their focus evenly across categories and some hyper focusing on certain values.
 
 ```{r eval = FALSE, fig.width = 10, fig.height = 7}
 stars(plot_data,
