@@ -6,11 +6,10 @@ Use this file for practice with the **univariate viz** in-class activity.  Refer
 
 ## Exercises
 
-{{< include activity-instructions.qmd >}}
-
-
 ```{r}
 #| eval: true
+
+library(tidyverse)
 
 # Import data
 hikes <- read.csv("https://mac-stat.github.io/data/high_peaks.csv")

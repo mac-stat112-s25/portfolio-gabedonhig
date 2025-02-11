@@ -31,7 +31,7 @@ Construct a plot that allows us to examine how `temp3pm` varies.
 
 ```{r}
 ggplot(weather, aes(x = temp3pm)) +
-  geom_density(color = "blue", fill = "yellow") +
+  geom_density(color = "blue", fill = "yellow")
 ```
 
 
@@ -273,8 +273,6 @@ There's no end to the number and type of visualizations you *could* make. And it
 
 
 ## Exercises (required)
-
-{{< include activity-instructions.qmd >}}
 
 ### The story {-}
 
