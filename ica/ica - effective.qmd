@@ -265,7 +265,7 @@ Add appropriate alt text at the top of the chunk, in `fig-alt`. Then render your
 
 ```{r}
 #| fig-cap: "Density plots of 3pm temperatures in 3 Australian locations."
-#| fig-alt: "???"
+#| fig-alt: "This is a density plot containing a numerical and a categorical variable. The numerical variable in the temperature at 3 pm in Celcius. The categorical variable is the location where the temperature was measured. The numerical variable, the temperature, is on the x-axis. The y-axis represents the density of observations. The density plot has created 3 different lumps, each color coded for the legend which matches them to their location. The Hobart lump rises from 0 degrees celcius to 12.5, where it plateus before falling again at 17.5 and becoming exponentially lower on the y-axis as it approaches 40 degrees celcius on the x-axis. The Uluru lump rises from 10 degrees celcius, and has a series of plataeus followed by elevations until it reaches 37.5 degrees where it begins its decline till it reaches 40 degrees celcius on the x-axis. The Wollongong lump rises rapidly at 12.5 degrees celcius, peaks at 20 degrees celcius, and then rapidly falls till 27.5 degrees celcius where it then has a slightly negative plateuatill 40 degrees celcius."
 
 ggplot(weather, aes(x = temp3pm, fill = location)) + 
   geom_density(alpha = 0.5) + 
