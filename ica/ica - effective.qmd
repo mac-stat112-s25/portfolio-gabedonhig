@@ -297,6 +297,7 @@ Color is another important accessibility consideration. Let's check out the colo
 -   Above the image of crayons (I think it's crayons?), click "Choose file" and choose the plot file you just saved.
 -   Click the various simulator buttons (eg: Red-Weak/Protanomaly) to check out how the colors in this plot might appear to others.
 -   Summarize what you learn. What impact might our color choices have on one's ability to interpret the viz?
+   - What I saw is that certain colors in the legend had much less contrast depending on the color blindness, meaning that depending on the colors it can be very hard to understand color coding. Also, sometimes a two of the colors would look very similar but the third one would contrast, meaning that the contrasting color was much more noticeable.
 
 #### Part c {.unnumbered}
 
