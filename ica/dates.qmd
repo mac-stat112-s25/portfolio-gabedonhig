@@ -190,10 +190,14 @@ Once you've thought about it, put the code inside a chunk and run it!
 
 penguins |\> filter(species == "Chinstrap") |\> group_by(sex) |\> summarize(min = min(body_mass_g), max = max(body_mass_g)) |\> mutate(range = max - min)
 
-\
-\
-\
-\
+```{r}
+penguins |>
+  filter(species == "Chinstrap") |>
+  group_by(sex) |>
+  summarise(min = min(body_mass_g), max = max(body_mass_g)) |>
+  mutate(ranget = max - min)
+```
+
 
 ## Exercises Part 1: Same Verbs, New Tricks
 
@@ -224,17 +228,17 @@ To comment/uncomment several lines of code at once, highlight them then click <k
 ```{r}
 # Create a dataset with just Adelie and Chinstrap using %in%
 # Pipe this into `count(species)` to confirm that you only have these 2 species
-# ___ |> 
-#   filter(___) |> 
-#   count(species)
+penguins |>
+  filter(species %in% c("Adelie", "Chinstrap")) |>
+  count(species)
 ```
 
 ```{r}
 # Create a dataset with just Adelie and Chinstrap using !=
 # Pipe this into `count(species)` to confirm that you only have these 2 species
-# ___ |> 
-#   filter(___) |> 
-#   count(species)
+penguins |>
+  filter(species != "Gentoo") |>
+  count(species)
 ```
 
 #### Part b {.unnumbered}
@@ -301,8 +305,7 @@ nrow(penguins)
 Explain why we should only use `na.omit()` in extreme circumstances.
 
 \
-\
-\
+We only use na.omit() when we want to get rid of all observations that do not have values for a single variable or more. We only do this when we want to make sure every variable has complete data in our observations, which is very rare. Most of the time, you can leave observations in the dataset even if they don't have values for some of your variables because you most likely won't be using all of the variables in the dataset.
 \
 
 ### Exercise 2: More Selecting {.unnumbered}
@@ -321,25 +324,28 @@ names(penguins)
 
 ```{r}
 # Use a shortcut to keep everything but the year and island variables
-
+penguins |>
+  select(-island, -year)
 
 ```
 
 ```{r}
 # Use a shortcut to keep only species and the penguin characteristics measured in mm
-
-
+penguins |>
+  select(species, contains("mm"))
 ```
 
 ```{r}
 # Use a shortcut to keep only species and bill-related measurements
-
+penguins |>
+  select(species, contains("bill"))
 
 ```
 
 ```{r}
 # Use a shortcut to keep only species and the length-related characteristics
-
+penguins |>
+  select(species, contains("length"))
 
 ```
 
@@ -356,19 +362,21 @@ We've done examples where we need to `filter()` by more than one variable, or `s
 # Change this code to sort the penguins by species, and then island name
 # NOTE: The first row should be an Adelie penguin living on Biscoe island
 penguins |> 
-  arrange(species)
+  arrange(species) |>
+  arrange(island)
 ```
 
 ```{r}
 # Change this code to count the number of male/female penguins observed for each species
 penguins |> 
+  group_by(sex) |>
   count(species)
 ```
 
 ```{r}
 # Change this code to calculate the average body mass by species and sex
 penguins |> 
-  group_by(species) |> 
+  group_by(species, sex) |> 
   summarize(mean = mean(body_mass_g, na.rm = TRUE))
 
 ```
@@ -429,8 +437,7 @@ today < ymd("2024-02-14")
 ```
 
 \
-\
-\
+They show us that the date today is after or on the same day as the 14th of February 2024
 \
 
 ## Exercises Part 2: Application
@@ -456,13 +463,19 @@ head(Birthdays)
 
 ```{r}
 # How many days of data do we have for each state?
+Birthdays |>
+  group_by(state) |>
+  count()
 
 
 # How many total births were there in this time period?
-
+Birthdays |>
+  summarise(sum(births))
 
 # How many total births were there per state in this time period, sorted from low to high?
-
+Birthdays |>
+  group_by(state) |>
+  summarise(sum(births))
 
 ```
 
@@ -473,11 +486,17 @@ head(Birthdays)
 Create a new dataset named `daily_births` that includes the total number of births per day (across all states) and the corresponding day of the week, eg, Mon. NOTE: Name the column with total births so that it's easier to wrangle and plot.
 
 ```{r}
+daily_births <- Birthdays |>
+  group_by(date) |>
+  summarize(total_births = sum(births)) |>
+  mutate(dayOfWeek = wday(date, label = TRUE))
 ```
 
 Using this data, construct a plot of `births` over time, indicating the day of week.
 
 ```{r}
+ggplot(daily_births, aes(x = date, y = total_births, color = dayOfWeek)) +
+  geom_point(size = 0.5, alpha = 0.5)
 ```
 
 
@@ -498,6 +517,13 @@ penguins |>
 Calculate the total number of births in each month and year, eg, Jan 1969, Feb 1969, .... Label month by names not numbers, eg, Jan not 1. Then, plot the births by month and comment on what you learn.
 
 ```{r}
+# It seems like, in the first half of the year, the number of births is really low compared to the second half of the year. I also learned that when you use ggplot to make a plot connected to piping, you don't need to enter the dataset.
+Birthdays |>
+  mutate(month = month(date, label = TRUE)) |>
+  group_by(month) |>
+  summarize(total_births = sum(births)) |>
+  ggplot(aes(x = month, y = total_births)) +
+    geom_point()
 ```
 
 #### Part b {.unnumbered}
@@ -505,6 +531,16 @@ Calculate the total number of births in each month and year, eg, Jan 1969, Feb 1
 In 1988, calculate the total number of births per week in each state. Get rid of week "53", which isn't a complete week! Then, make a line plot of births by week for each state and comment on what you learn. For example, do you notice any seasonal trends? Are these the same in every state? Any outliers?
 
 ```{r}
+# From this I learned that in 1988 California had exceptionally high birth rates. So did Texas and New York. Other states, however, had much lower rates.
+
+Birthdays |>
+  filter(year == 1988) |>
+  mutate(week = week(date)) |>
+  filter(week != 53) |>
+  group_by(state, week) |>
+  summarize(total_births = sum(births)) |>
+  ggplot(aes(x = week, y = total_births, color = state)) +
+    geom_point()
 ```
 
 #### Part c {.unnumbered}
@@ -512,6 +548,16 @@ In 1988, calculate the total number of births per week in each state. Get rid of
 Repeat the above for just Minnesota (MN) and Louisiana (LA). MN has one of the coldest climates and LA has one of the warmest. How do their seasonal trends compare? Do you think these trends are similar in other colder and warmer states? Try it!
 
 ```{r}
+# Minnesota has more births in the middle of the year, form Spring to Fall, while Louisiana's total births per week is highest in the summer and fall, but drops off until spring returns
+
+Birthdays |>
+  filter(year == 1988, state %in% c("MN", "LA")) |>
+  mutate(week = week(date)) |>
+  filter(week != 53) |>
+  group_by(state, week) |>
+  summarize(total_births = sum(births)) |>
+  ggplot(aes(x = week, y = total_births, color = state)) +
+    geom_point()
 ```
 
 
@@ -523,11 +569,24 @@ Repeat the above for just Minnesota (MN) and Louisiana (LA). MN has one of the c
 Create a dataset with only births in Massachusetts (MA) in 1979 and sort the days from those with the most births to those with the fewest.
 
 ```{r}
+Birthdays |>
+  filter(year == 1979, state == "MA") |>
+  arrange(desc(births))
 ```
 
 #### Part b {.unnumbered}
 
 Make a table showing the five states with the most births between September 9, 1979 and September 12, 1979, including the 9th and 12th. Arrange the table in descending order of births.
+
+```{r}
+Birthdays |>
+  filter(year == 1979, month == 9, day >= 9,day <= 12) |>
+  arrange(desc(births)) |>
+  group_by(state) |>
+  summarize(total_births = sum(births)) |>
+  arrange(desc(total_births))
+```
+
 
 
 ## Solutions
