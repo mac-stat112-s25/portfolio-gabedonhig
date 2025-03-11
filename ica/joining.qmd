@@ -174,12 +174,15 @@ students_1 |>
 ```
 
 -   What did this do? What info would it give us?
-
+  - This tells us the rows where students_1 and enrollments_1 have matching information
 -   How does `semi_join()` differ from `inner_join()`?
-
+  - semi_join() only keeps the columns from the left dataset
 -   What, if anything, would change if we reversed the order of the data tables? Think about it, then try.
+  - The columns retained would be from enrollments_1
 
 ```{r}
+enrollments_1 |> 
+  semi_join(students_1)
 ```
 
 ### Example 6 {-}
@@ -194,10 +197,13 @@ students_1 |>
 ```
 
 -   What did this do? What info would it give us?
-
+  - This showed the rows that had N/A values in the join, and only showed the rows from students_1
 -   What, if anything, would change if we reversed the order of the data tables? Think about it, then try.
+  - It will only show the rows from enrollments_1
 
 ```{r}
+enrollments_1 |> 
+  anti_join(students_1)
 ```
 
 
@@ -346,16 +352,20 @@ Use the appropriate join for each prompt below. In each case, think before you t
 
 ```{r}
 # 1. We want contact info for people who HAVEN'T voted
-
+contact |>
+  anti_join(voters, join_by(name == id))
 
 # 2. We want contact info for people who HAVE voted
-
+contact |>
+  semi_join(voters, join_by(name == id))
 
 # 3. We want any data available on each person
-
+contact |>
+  full_join(voters, join_by(name == id))
 
 # 4. When possible, we want to add contact info to the voting roster
-
+voters |>
+  inner_join(contact, join_by(id == name))
 
 ```
 
@@ -398,10 +408,10 @@ Use R code to take a quick glance at the data.
 
 ```{r}
 # How many observations (rows) and variables (columns) are there in the grades data?
-
+str(grades)
 
 # How many observations (rows) and variables (columns) are there in the courses data?
-
+str(courses)
 
 ```
 
@@ -431,12 +441,12 @@ courses |>
 For our class size exploration, obtain the *total* enrollments in each `sessionID`, combining any cross-listed sections. Save this as `courses_combined`. NOTE: There's no joining to do here!
 
 ```{r}
-# courses_combined <- courses |> 
-#   ___(sessionID) |> 
-#   ___(enroll = sum(___))
+courses_combined <- courses |>
+  group_by(sessionID) |>
+  summarise(enroll = sum(enroll))
 
-# Check that this has 1695 rows and 2 columns
-# dim(courses_combined)
+str(courses_combined)
+head(courses_combined)
 ```
 
 #### Part b {.unnumbered}
@@ -448,6 +458,8 @@ Let's first examine the question of class size from the *administration*'s viewp
 -   Do you have to do any joining? If so, which dataset will go on the left, i.e. which dataset includes your primary observations of interest? Which join function will you need?
 
 ```{r}
+courses_combined |>
+  summarize(median = median(enroll))
 ```
 
 #### Part c {.unnumbered}
@@ -459,6 +471,15 @@ But how big are classes from the student perspective? To this end, calculate the
 -   Do you have to do any joining? If so, which dataset will go on the left, i.e. which dataset includes your primary observations of interest? Which join function will you need?
 
 ```{r}
+head(grades)
+head(courses_combined)
+
+student_class_size <- grades |>
+  full_join(courses_combined, join_by(sessionID == sessionID)) |>
+  group_by(sid) |>
+  summarise(median_class_size = median(enroll))
+
+head(student_class_size)
 ```
 
 #### Part d {.unnumbered}
@@ -466,8 +487,9 @@ But how big are classes from the student perspective? To this end, calculate the
 The median class size varies from student to student. To get a sense for the typical student experience and range in student experiences, construct and discuss a histogram of the median class sizes experienced by the students.
 
 ```{r}
-# ggplot(student_class_size, aes(x = ___)) + 
-#   geom___()
+head(grades)
+ggplot(student_class_size, aes(x = median_class_size)) + 
+  geom_histogram(color = "white")
 ```
 
 
@@ -479,6 +501,8 @@ The median class size varies from student to student. To get a sense for the typ
 Show data on the students that enrolled in `session1986`. THINK FIRST: Which of the 2 datasets do you need to answer this question? One? Both?
 
 ```{r}
+grades |>
+  filter(sessionID == "session1986")
 ```
 
 #### Part b {.unnumbered}
@@ -493,6 +517,8 @@ dept_E <- courses |>
 What students enrolled in classes in department E? (We just want info on the students, not the classes.)
 
 ```{r}
+grades |>
+  semi_join(dept_E, join_by(sessionID == sessionID))
 ```
 
 
@@ -518,6 +544,12 @@ gpa_conversion
 How many total student enrollments are there in each department? Order from high to low.
 
 ```{r}
+courses_combined |>
+  left_join(courses, join_by(sessionID == sessionID)) |>
+  left_join(grades) |>
+  group_by(dept) |>
+  summarize(total_in_dept = sum(enroll.x)) |>
+  arrange(desc(total_in_dept))
 ```
 
 #### Part b {.unnumbered}
@@ -525,6 +557,10 @@ How many total student enrollments are there in each department? Order from high
 What's the grade-point average (GPA) for each student?
 
 ```{r}
+grades |>
+  left_join(gpa_conversion) |>
+  group_by(sid) |>
+  summarize(gpa = mean(gp))
 ```
 
 #### Part c {.unnumbered}
@@ -532,6 +568,9 @@ What's the grade-point average (GPA) for each student?
 What's the median GPA across all students?
 
 ```{r}
+grades |>
+  left_join(gpa_conversion) |>
+  summarize(median_gpa = median(gp, na.rm = TRUE))
 ```
 
 #### Part d {.unnumbered}
@@ -539,6 +578,14 @@ What's the median GPA across all students?
 What fraction of grades are below B+?
 
 ```{r}
+glimpse(grades)
+
+grades |>
+  left_join(gpa_conversion) |>
+  mutate(less_than_BPlus = gp < 3.3) |>
+  group_by(less_than_BPlus) |>
+  count(less_than_BPlus)
+  
 ```
 
 #### Part e {.unnumbered}
@@ -546,12 +593,17 @@ What fraction of grades are below B+?
 What's the grade-point average for each instructor? Order from low to high.
 
 ```{r}
+grades |>
+  left_join(courses) |>
+  left_join(gpa_conversion) |>
+  group_by(iid) |>
+  summarize(grade_point_average = mean(gp, na.rm = TRUE)) |>
+  arrange(grade_point_average)
 ```
 
 #### Part f {.unnumbered}
 
 CHALLENGE: Estimate the grade-point average for each department, and sort from low to high. NOTE: Don't include cross-listed courses. Students in cross-listed courses could be enrolled under either department, and we do not know which department to assign the grade to. HINT: You'll need to do multiple joins.
-
 
 
 ## Solutions
