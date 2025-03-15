@@ -90,8 +90,6 @@ classes |>
   mutate(area = str_replace(area, "Math", "math")) |>
   mutate(area = str_replace(area, "Anthro", "anthro"))
 
-
-
 ```
 
 ```{r}
@@ -190,11 +188,12 @@ classes |>
 a.  Separate enroll into 2 separate columns: `students` and `people`. (These columns don't make sense this is just practice).
 
 ```{r}
-# classes |> 
-#   separate(___, c(___, ___), sep = "___")
+classes |>
+  separate(enroll, c("students", "people"), sep = " - ")
 ```
 
 b.  We separated `sem` into semester and year above using `str_sub()`. Why would this be hard using `separate()`?
+  - Because there is nothing separating them
 
 c.  When we want to split a column into 2+ new columns (or do other types of string processing), but there's no consistent pattern by which to do this, we can use *regular expressions* (an optional topic):
 
@@ -240,7 +239,16 @@ Use our more familiar wrangling tools to warm up.
 # Construct a table that indicates the number of classes offered in each day/time slot
 # Print only the 6 most popular time slots
 
-
+courses |>
+  mutate("9:40-10:40" = str_detect(time, "9:40")) |>
+  mutate("1:10-2:10" = str_detect(time, "1:10")) |>
+  mutate("3:00-4:30" = str_detect(time, "3:00")) |>
+  mutate("7:00-10:00" = str_detect(time, "7:00")) |>
+  mutate("1:20-2:50" = str_detect(time, "1:20")) |>
+  group_by("9:40-10:40")
+  # separate(days, c("MWRF", "R"),
+  #          "(?<=[T])(?=[MWRF ])",
+  # )
 
 ```
 
