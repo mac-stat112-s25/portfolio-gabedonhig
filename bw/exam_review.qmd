@@ -3,7 +3,13 @@ title: "exam_review"
 format: html
 ---
 ```{r}
+install.packages(c("sf", "maps", "RColorBrewer", "gplots", "socviz", "leaflet", "devtools", "ggthemes"))
 library(tidyverse)
+library(sf)
+library(maps)
+library(mosaic)
+library(gplots)
+library(leaflet)
 ```
 ## The Max Number of Variables in a Viz is 7:
 
@@ -92,4 +98,480 @@ ggplot(weather, aes(y = temp3pm, x = temp9am, color = location)) +
   geom_smooth(method = "lm") +
   labs(x = "Temperature at 9 am", title = "Weather observation in Australia",y = "Temperature at 3 pm", color = "Location")
 ```
+
+## Spatial Viz:
+
+Create a map widget by calling leaflet( ) and telling it the data to use
+```{r}
+fave_places <- read.csv("https://hash-mac.github.io/stat112site-s25/data/our_fave_places.csv")
+
+leaflet(data = fave_places)
+```
+
+Add a base map using addTiles( ) or addProviderTiles( )
+```{r}
+leaflet(data = fave_places) |> 
+  addTiles()
+```
+
+Add layers to the map using layer functions(addMarkers( ) or addPolygons( ))
+```{r}
+leaflet(data = fave_places) |> 
+  addTiles() |> 
+  addMarkers(lng = ~longitude, lat = ~latitude)
+```
+Print the map widget to display it
+
+
+## The 3 Types of Spatial Viz:
+
+Point map: Maps plotting individual observations
+```{r}
+starbucks <- read.csv("https://mac-stat.github.io/data/starbucks.csv")
+
+ggplot(starbucks, aes(y = Latitude, x = Longitude)) + 
+  geom_point(size = 0.5)
+```
+
+
+Contour maps: Maps plotting the density of the distribution of observations
+```{r}
+starbucks_cma <- starbucks_cma <- starbucks |> 
+  filter(Country %in% c('CA', 'MX', 'US'))
+
+cma_boundaries <- ne_states(
+  country = c("canada", "mexico", "united states of america"),
+  returnclass = "sf")
+
+ggplot(cma_boundaries) + 
+  geom_sf() + 
+  geom_density_2d(
+    data = starbucks_cma,
+    aes(x = Longitude, y = Latitude),
+    size = 0.2,
+    color = "darkgreen"
+  ) +
+  coord_sf(xlim = c(-179.14, -50), ylim = c(14.54, 83.11)) +
+  theme_map()
+```
+
+
+Choropleth maps: Maps plotting outcomes in different regions
+```{r}
+elections_by_state <- elections_by_state |> 
+  filter(state_abbr != "DC") |> 
+  select(state_name, state_abbr, repub_pct_20) |> 
+  mutate(repub_20_categories = 
+           cut(repub_pct_20, 
+               breaks = seq(30, 70, by = 5), 
+               labels = c("30-34", "35-39", "40-44", "45-49",
+                          "50-54", "55-59", "60-64", "65-70"), 
+               include.lowest = TRUE))
+
+elections_by_counties <- elections_by_counties |> 
+  select(state_name, state_abbr, county_name, county_fips,
+          repub_pct_20, median_age, median_rent) |> 
+  mutate(repub_20_categories = 
+           cut(repub_pct_20, 
+               breaks = seq(0, 100, by = 10),
+               labels = c("0-9", "10-19", "20-29", "30-39", "40-49",
+                          "50-59", "60-69", "70-79", "80-89", "90-100"),
+               include.lowest = TRUE))
+
+states_map <- map_data("state")
+
+ggplot(elections_by_state, aes(map_id = state_name, fill = repub_pct_20)) +
+  geom_map(map = states_map) +
+  expand_limits(x = states_map$long, y = states_map$lat) +
+  theme_map() +
+  labs(fill = "% of Republican Support")
+```
+
+
+## Alt text and titles
+
+Alt text is a written description of the viz that can be read by a screen reader
+```{r}
+#| fig-alt: "This is a density plot containing a numerical and a categorical variable. The numerical variable in the temperature at 3 pm in Celcius. The categorical variable is the location where the temperature was measured. The numerical variable, the temperature, is on the x-axis. The y-axis represents the density of observations. The density plot has created 3 different lumps, each color coded for the legend which matches them to their location. The Hobart lump rises from 0 degrees celcius to 12.5, where it plateus before falling again at 17.5 and becoming exponentially lower on the y-axis as it approaches 40 degrees celcius on the x-axis. The Uluru lump rises from 10 degrees celcius, and has a series of plataeus followed by elevations until it reaches 37.5 degrees where it begins its decline till it reaches 40 degrees celcius on the x-axis. The Wollongong lump rises rapidly at 12.5 degrees celcius, peaks at 20 degrees celcius, and then rapidly falls till 27.5 degrees celcius where it then has a slightly negative plateuatill 40 degrees celcius."
+
+ggplot(weather, aes(x = temp3pm, fill = location)) + 
+  geom_density(alpha = 0.5) + 
+  labs(x = "3pm temperature (Celsius)")  
+```
+
+The title is a 1-sentence description of a plot
+```{r}
+#| fig-cap: "Density plots of 3pm temperatures in 3 Australian locations."
+
+ggplot(weather, aes(x = temp3pm, fill = location)) + 
+  geom_density(alpha = 0.5) + 
+  labs(x = "3pm temperature (Celsius)")  
+```
+
+## Categorical plots
+
+**1 variable:**
+
+Bar chart (just counts observations)
+```{r}
+hikes <- read.csv("https://mac-stat.github.io/data/high_peaks.csv")
+
+ggplot(hikes, aes(x = rating)) +
+  geom_bar()
+```
+
+**2 variables:**
+
+Bar charts:
+  - stacked (heights vary, but each color (stripe) of the bar follows the Y-axis)
+```{r}
+ggplot(elections, aes(x = historical, fill = winner_20)) +
+  geom_bar()
+```
+  - dodge (side by side)
+```{r}
+ggplot(elections, aes(x = historical, fill = winner_20)) +
+  geom_bar(position = "dodge")
+```
+  - proportional (all same height)
+    - this loses information about the number of observations
+```{r}
+ggplot(elections, aes(x = historical, fill = winner_20)) +
+  geom_bar(position = "fill")
+```
+
+**3 variables:**
+
+Facted wrapped bar charts:
+  - facet wrapped stacked
+```{r}
+ggplot(weather, aes(x = raintoday, fill = raintomorrow)) + 
+  geom_bar() +
+  facet_wrap(~location)
+```
+  - facet wrapped dodge
+```{r}
+ggplot(weather, aes(x = raintoday, fill = raintomorrow)) + 
+  geom_bar(position = "dodge") +
+  facet_wrap(~location)
+```
+  - facet wrapped proportional
+```{r}
+ggplot(weather, aes(x = raintoday, fill = raintomorrow)) + 
+  geom_bar(position = "fill") +
+  facet_wrap(~location)
+```
+
+## Numerical Plots:
+
+**1 variable:**
+
+Histogram
+```{r}
+ggplot(weather, aes(x = maxtemp)) +
+  geom_histogram(color = "white")
+```
+
+Box plot
+```{r}
+ggplot(weather, aes(y = maxtemp)) +
+  geom_boxplot()
+```
+
+Density plot
+```{r}
+ggplot(weather, aes(x = maxtemp)) +
+  geom_density()
+```
+
+**2 variables:**
+
+Scatterplot
+```{r}
+ggplot(weather, aes(x = maxtemp, y = mintemp)) +
+  geom_point()
+```
+
+Line plot
+```{r}
+ggplot(weather, aes(x = maxtemp, y = mintemp)) +
+  geom_line()
+```
+
+**3 variables:**
+
+Scatterplot
+  - color
+```{r}
+ggplot(weather, aes(x = maxtemp, y = mintemp, color = windspeed9am)) +
+  geom_point(alpha = 1)
+```
+  - proportional symbols
+```{r}
+ggplot(weather, aes(x = maxtemp, y = mintemp, size = rainfall)) +
+  geom_point(alpha = 0.5) +
+  scale_size_continuous(name = "rainfall", range = c(1, 5))
+```
+  - opacity
+```{r}
+ggplot(weather, aes(x = maxtemp, y = mintemp, alpha = windgustspeed)) +
+  geom_point()
+```
+
+## Mixed Variable Plots:
+
+**1 numerical + 1 categorical:**
+
+Density plots:
+  - faceted
+```{r}
+ggplot(weather, aes(x = windgustspeed)) +
+  geom_density() +
+  facet_wrap(~location)
+```
+  - color
+```{r}
+ggplot(weather, aes(x = windgustspeed, fill = location)) +
+  geom_density(alpha = 0.5)
+```
+
+Box plot (faceted)
+```{r}
+ggplot(weather, aes(y = windgustspeed)) +
+  geom_boxplot() +
+  facet_wrap(~location)
+```
+
+Violin
+```{r}
+ggplot(weather, aes(y = windgustspeed, x = location)) +
+  geom_violin()
+```
+Histograms:
+  - faceted
+```{r}
+ggplot(weather, aes(x = windgustspeed)) +
+  geom_histogram(color = "white") +
+  facet_wrap(~location)
+```
+  - fill / color
+```{r}
+ggplot(weather, aes(x = windgustspeed, fill = location)) +
+  geom_histogram(color = "white")
+```
+
+**1 numerical + 2 categorical:**
+
+Heat map
+```{r}
+#| fig-height: 15
+#| fig-width: 8
+education <- read.csv("https://mac-stat.github.io/data/sat.csv")
+
+plot_data <- education |> 
+  column_to_rownames("State") |> 
+  data.matrix() |> 
+  scale()
+
+heatmap.2(plot_data,
+  dendrogram = "none",
+  Rowv = NA, 
+  scale = "column",
+  keysize = 0.7, 
+  density.info = "none",
+  col = hcl.colors(256), 
+  margins = c(10, 20),
+  colsep = c(1:7), rowsep = (1:50), sepwidth = c(0.05, 0.05),
+  sepcolor = "white", trace = "none"
+)
+```
+
+
+**2 numerical + 1 categorical:**
+
+Scatterplots:
+  - faceted
+```{r}
+ggplot(weather, aes(x = mintemp, y = maxtemp)) +
+  geom_point() +
+  facet_wrap(~location)
+```
+  - fill / coor
+```{r}
+ggplot(weather, aes(x = mintemp, y = maxtemp, color = location)) +
+  geom_point()
+```
+  - shape
+```{r}
+ggplot(weather, aes(x = mintemp, y = maxtemp, shape = location)) +
+  geom_point(size = 1, alpha = 0.5)
+```
+  - labeled points
+```{r}
+ggplot(weather, aes(x = mintemp, y = maxtemp)) +
+  geom_text(aes(label = windgustdir), alpha = 1, size = 2)
+```
+
+## Data manipulation
+
+**Piping:**
+Use the |> pipe operator. It makes the object on the left side pass to the function on the right to the get a new object.
+
+**Types of reshaped data:**
+- Aggregated data
+  - Data that has had functions like group_by() or summarize() done to it. It gains aggregate information         about the observations but loses data on individual observations
+- Raw data, reshaped
+  - Data that is reshaped to maintain individual observations, but in a way that it can be properly               manipulated
+
+**Unit of observation:**
+The level at which data is collected and analyzed, by individual cases or groups.
+
+For example, in a dataset of students, each student is the unit of observation. In a dataset of cities, each city is the unit of observation. In a datset of daily weather data, each day is the unit of observation
+
+## Command List:
+
+| Verb             | Outcome                                                                 |
+|------------------|-------------------------------------------------------------------------|
+| `arrange`        | Arrange the rows according to a variable                                |
+| `filter`         | Filter out or obtain a subset of the rows                               |
+| `select`         | Select a subset of the columns                                           |
+| `mutate`         | Mutate or create a column                                               |
+| `summarize`      | Calculate a numerical summary of a column                               |
+| `group_by`       | Group the rows by a specified column                                    |
+| `ungroup`        | Ungroups the previous `group_by`                                        |
+| `count()`        | Counts the number of observations in a group or just the whole column   |
+| `n()`            | Also counts the number of observations in a group, but must be used inside of `summarize` or `mutate` |
+| `na.rm`          | Makes it so that the expressions you use in your command do not have the `NA` value |
+| `as.factor`      | Use it in the `mutate` command to make a variable categorical           |
+| `as.numeric`     | Use it in the `mutate` command to make a variable numeric               |
+| `head()`         | Shows first rows of dataset                                             |
+| `library(package)` | Loads package into program                                            |
+
+
+**arrange:**
+
+We have dataset weather
+```{r}
+head(weather)
+```
+And we use arrange(maxtemp) on it to order observations from lowest to highest value in maxtemp
+```{r}
+weather |>
+  arrange(maxtemp) |>
+  head()
+```
+Or arrange(desc(maxtemp)) to order observations from highest to lowest value in maxtemp
+```{r}
+weather |>
+  arrange(desc(maxtemp)) |>
+  head()
+```
+
+**filter:**
+
+We can use filter(maxtemp < 45) to get observations with a maxtemp below 45
+```{r}
+weather |>
+  filter(maxtemp < 45) |>
+  head()
+```
+
+**select:**
+
+We can use select(maxtemp, mintemp, location) to only select those columns
+```{r}
+weather |>
+  select(maxtemp, mintemp, location) |>
+  head()
+```
+Or we can use (-maxtemp) to select all columns except maxtemp
+```{r}
+weather |>
+  select(-maxtemp) |>
+  head()
+```
+
+**mutate:**
+
+We can use mutate(double_maxtemp = maxtemp * 2) to create a new column
+```{r}
+weather |>
+  mutate(double_maxtemp = maxtemp * 2) |>
+  select(maxtemp, mintemp) |>
+  head()
+```
+
+**summarize:**
+
+We can use summarize(mean_mintemp = mean(mintemp)) to summarize the mintemp column as a mean
+```{r}
+weather |>
+  summarize(mean_mintemp = mean(mintemp, na.rm = TRUE)) |>
+  head()
+```
+
+**group_by:**
+
+We can use group_by(location) to make the unit of observation location, and then use a function like summarize(avg_mintemp = mean(mintemp))
+```{r}
+weather |>
+  group_by(location) |>
+  summarize(avg_mintemp = mean(mintemp, na.rm = TRUE)) |>
+  head()
+```
+
+**ungroup:**
+
+You can reverse the unit of observation you select in group_by by using ungroup by, but only if you didn't use summarize. In this example, we use group_by(location), then mutate(avg_mintemp = mean(mintemp)), then ungroup()
+```{r}
+weather |>
+  group_by(location) |>
+  mutate(avg_mintemp = mean(mintemp, na.rm = TRUE)) |>
+  ungroup() |>
+  head()
+```
+
+**count:**
+
+We have dataset hikes
+```{r}
+head(hikes)
+```
+
+We can use count(rating) to count the number of observations in the location column for each value
+```{r}
+hikes |>
+  count(rating) |>
+  head()
+```
+We can also use count() to count the total observations in the dataset
+```{r}
+hikes |>
+  count() |>
+  head()
+```
+
+**n:**
+
+We can use n(rating) in a sumamrize function to count the number of observations in a group, similar to count
+```{r}
+hikes |>
+  group_by(rating) |>
+  summarize(total_trails = n(rating, na.rm = TRUE))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
