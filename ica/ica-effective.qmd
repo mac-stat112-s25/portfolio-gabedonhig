@@ -1,9 +1,4 @@
 ---
-title: "ica-effective"
-format: html
----
-
----
 title: "ica - effective"
 format: html
 ---
@@ -268,7 +263,7 @@ Add appropriate alt text at the top of the chunk, in `fig-alt`. Then render your
 
 ```{r}
 #| fig-cap: "Density plots of 3pm temperatures in 3 Australian locations."
-#| fig-alt: "A density plot is displayed. On the X-axis, there is the temperature at 3 pm in Celcius. The density plot is divided into three different humps, given corresponding colors on a legend. They represent the locations of Hobart, Uluru, and Wollongong. On the density plot, the Wollongong lump concentrates and is very high at the 20 degree celcius point of the x-axis. The Hobart lump increases on the y-axis, before reaching 15 degrees celcius where there is a brief plateau before a similar descent again. The Uluru lump is inconsistent, with rises and plateus that steadily increases from 10 degrees celcius till there is a sudden drop at 35 degrees celcius on the x-axis.  "
+#| fig-alt: "This is a density plot containing a numerical and a categorical variable. The numerical variable in the temperature at 3 pm in Celcius. The categorical variable is the location where the temperature was measured. The numerical variable, the temperature, is on the x-axis. The y-axis represents the density of observations. The density plot has created 3 different lumps, each color coded for the legend which matches them to their location. The Hobart lump rises from 0 degrees celcius to 12.5, where it plateus before falling again at 17.5 and becoming exponentially lower on the y-axis as it approaches 40 degrees celcius on the x-axis. The Uluru lump rises from 10 degrees celcius, and has a series of plataeus followed by elevations until it reaches 37.5 degrees where it begins its decline till it reaches 40 degrees celcius on the x-axis. The Wollongong lump rises rapidly at 12.5 degrees celcius, peaks at 20 degrees celcius, and then rapidly falls till 27.5 degrees celcius where it then has a slightly negative plateuatill 40 degrees celcius."
 
 ggplot(weather, aes(x = temp3pm, fill = location)) + 
   geom_density(alpha = 0.5) + 
@@ -300,6 +295,7 @@ Color is another important accessibility consideration. Let's check out the colo
 -   Above the image of crayons (I think it's crayons?), click "Choose file" and choose the plot file you just saved.
 -   Click the various simulator buttons (eg: Red-Weak/Protanomaly) to check out how the colors in this plot might appear to others.
 -   Summarize what you learn. What impact might our color choices have on one's ability to interpret the viz?
+   - What I saw is that certain colors in the legend had much less contrast depending on the color blindness, meaning that depending on the colors it can be very hard to understand color coding. Also, sometimes a two of the colors would look very similar but the third one would contrast, meaning that the contrasting color was much more noticeable.
 
 #### Part c {.unnumbered}
 
