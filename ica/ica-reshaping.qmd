@@ -235,8 +235,6 @@ more_food |>
 
 ## Exercises
 
-{{< include activity-instructions.qmd >}}
-
 ### Exercise 1: What's the problem? {.unnumbered}
 
 Consider data on a sleep study in which subjects received only 3 hours of sleep per night.  Each day, their reaction time to a stimulus (in ms) was recorded.[^10-reshaping-data-1]
