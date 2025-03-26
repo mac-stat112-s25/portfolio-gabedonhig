@@ -596,7 +596,240 @@ head(weather)
 
 **library():**
 
-When you want to use a package that has been downloaded, use download(the package's name)
+When you want to use a package that has been downloaded, use download(the package's name). For example:
+```{r}
+library(tidyverse)
+```
+
+
+## Logical Operators:
+
+| Operator             | Meaning                              |
+|----------------------|---------------------------------------|
+| `==`                 | Equal to                              |
+| `!=`                 | Not equal to                          |
+| `>`                  | Greater than                          |
+| `>=`                 | Greater than or equal to              |
+| `<`                  | Less than                             |
+| `<=`                 | Less than or equal to                 |
+| `%in% c(var1, var2)` | Is equal to var1, var2, etc.          |
+
+We can use logical operators to do various things. For example, in data manipulation, you can use it with a filter function like this:
+```{r}
+weather |>
+  filter(mintemp > 0)
+```
+
+## Selection Commands:
+
+| Verb                   | Output                                                     |
+|------------------------|------------------------------------------------------------|
+| `starts_with("string")` | Selects columns that start with the given string            |
+| `ends_with("string")`   | Selects columns that end with the given string              |
+| `contains("string")`    | Selects columns that contain the given string               |
+| `names(dataset1)`       | Returns the names of all columns in the dataset             |
+| `is.na`                 | Selects values that are `NA`                                |
+| `!is.na`                | Selects values that are **not** `NA`                        |
+| `na.omit()`             | Removes rows with any `NA` values from the dataset          |
+
+**starts_with():**
+
+We can use starts_with("wind") in a select function to select columns that start with wind
+```{r}
+weather |>
+  select(starts_with("wind"))
+```
+
+**ends_with():**
+
+We can use ends_with("pm") in a select function to select columns of measurements taken in the second half of the day
+```{r}
+weather |>
+  select(ends_with("pm"))
+```
+
+**contains():**
+
+We can use contains("3") in a select function to select columns with measurements at 3 pm or am
+```{r}
+weather |>
+  select(contains("3"))
+```
+
+**name:**
+
+We can use names(weather) to get the names of each column in the weather dataset
+```{r}
+names(weather)
+```
+
+**is.na():**
+
+We can use is.na(cloud9am) in a filter function to select observations which have NA values in the clouds9am column
+```{r}
+weather |>
+  filter(is.na(cloud9am))
+```
+
+**!is.na():**
+
+We can use !is.na(cloud9am) in a filter function to select observations which don't have NA values in the clouds9am column
+```{r}
+weather |>
+  filter(!is.na(cloud9am))
+```
+
+**na.omit():**
+
+We can use na.omit(weather) to remove all observations with NA values
+```{r}
+na.omit(weather)
+```
+
+## Date Commands:
+
+| Input                        | Output                                              |
+|-----------------------------|-----------------------------------------------------|
+| `as.Date(today())`          | Returns today’s date                                |
+| `year(date)`                | Returns the year from the date                      |
+| `month(date)`               | Returns the month (1–12) from the date              |
+| `month(date, label = TRUE)` | Returns the month as Jan, Feb, Mar, etc.            |
+| `week(date)`                | Returns the week of the year from the date          |
+| `mday(date)`                | Returns the day of the month from the date          |
+| `yday(date)`                | Returns the day of the year from the date           |
+| `wday(date)`                | Returns the day of the week (1 = Sunday by default) |
+| `wday(date, label = TRUE)`  | Returns the day of the week as text (e.g. Mon, Tue) |
+
+When you type date1 > date2, you are typing a boolean expression that claims that date 1 occurred after date 2. Same goes for >= and <=
+
+When filtering by dates, use “” marks, or it won’t identify the numbers as a date, for example:
+```{r}
+weather |>
+  filter(date > "2020-05-12")
+```
+
+## Reshaping:
+
+You can condense information (pivot longer) to combine information from multiple columns into one. You can also spread information from one column into multiple columns (pivot wider).
+
+| Function                                                                                      | Result                                                                                                                              |
+|-----------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| `pivot_wider(names_from = variable1, values_from = variable2)`                                | Creates a new column for each unique value in `variable1`; fills each with values from `variable2`.                                |
+| `pivot_longer(cols = c(variable1, variable2, variable3), names_to = "variable4", values_to = "variable5")` | Converts multiple columns into two: `variable4` stores the original column names, `variable5` holds their values.                  |
+| `pivot_longer(cols = -c(variable1, variable2, variable3), names_to = "variable4", values_to = "variable5")` | Same as above, but pivots **all columns except** `variable1`, `variable2`, and `variable3`.                                         |
+
+To add a prefix to the name of every new column, use “names_prefix = ‘prefix1’” for pivot_wider at the end of the command. To remove the prefix of the column names in pivot wider, use “names_prefix = ‘prefix2’”. Use it in between names_to and values_to, and it will remove the text (from left to right) in the columns that are combining.
+
+**pivot_wider():**
+
+We can use the pivot_wider() function to create columns for each row, and assign the value of the average maxtemp for each location depending on if it rained or not
+```{r}
+weather |>
+  filter(!is.na(maxtemp)) |>
+  filter(!is.na(raintoday)) |>
+  group_by(raintoday, location) |>
+  summarize(mean_maxtemp = mean(maxtemp)) |>
+  pivot_wider(names_from = location, values_from = mean_maxtemp, names_prefix = "avg_maxtemp_")
+```
+
+**pivot_longer:**
+
+We can use pivot_longer() to create a column for if the temperature measured in the min or max temp that day, and another column for the value of the mintemp or maxtemp
+```{r}
+weather |>
+  pivot_longer(cols = c(mintemp, maxtemp), names_to = "temp", values_to = "temperature") |>
+  select(date, location, temp, temperature)
+```
+
+## Joining:
+
+| Function                             | Result                                                                                      |
+|--------------------------------------|---------------------------------------------------------------------------------------------|
+| `dataset1 |> left_join(dataset2)`    | Adds matching data from `dataset2` to `dataset1`; keeps all rows from `dataset1`.          |
+| `dataset1 |> right_join(dataset2)`   | Adds matching data from `dataset1` to `dataset2`; keeps all rows from `dataset2`.          |
+| `dataset1 |> inner_join(dataset2)`   | Keeps only rows with matches in **both** datasets; removes rows with no match (no `NA`s).  |
+| `dataset1 |> full_join(dataset2)`    | Combines all rows from both datasets; fills with `NA` where there are no matches.          |
+| `dataset1 |> anti_join(dataset2)`    | Keeps rows from `dataset1` **that do not match** anything in `dataset2`.                   |
+| `dataset1 |> semi_join(dataset2)`    | Keeps rows from `dataset1` **that have a match** in `dataset2`, but includes **only** columns from `dataset1`. |
+
+
+Inside the join functions, you should specify join_by(commonon_column == common_column) to make sure the right observations are matched together
+
+**left_join:**
+
+We can insert how many students are enrolled in each class by inserting information from the courses_combined dataset into the grades dataset by using left_join()
+```{r}
+grades <- read.csv("https://mac-stat.github.io/data/grades.csv")
+
+courses <- read.csv("https://mac-stat.github.io/data/courses.csv")
+
+courses_combined <- courses |>
+  group_by(sessionID) |>
+  summarise(enroll = sum(enroll))
+
+grades |>
+  left_join(courses_combined, join_by(sessionID == sessionID))
+```
+
+**right_join:**
+
+We can also add information about grades and student identification number to courses_combined by using right_join(). New observations(rows) will be created in courses_combined to accomodate the larger number of observations in grades
+```{r}
+grades |>
+  right_join(courses_combined, join_by(sessionID == sessionID))
+```
+
+**full_join():**
+
+We can use full_join() between the voters and contact datasets to combine as much information as we can about each observation. However, there will be NA values, meaning that some observations will be missing information for certain columns
+```{r}
+voters <- data.frame(
+  id = c("A", "D", "E", "F", "G"),
+  times_voted = c(2, 4, 17, 6, 20)
+)
+  
+contact <- data.frame(
+  name = c("A", "B", "C", "D"),
+  address = c("summit", "grand", "snelling", "fairview"),
+  age = c(24, 89, 43, 38)
+)
+
+voters |>
+  full_join(contact, join_by(id == name))
+```
+
+**inner_join():**
+
+We can use inner_join() between the voters and contact datasets to combine only observations where the combined information will fill all fields, so that no NA values will be created
+```{r}
+voters |>
+  inner_join(contact, join_by(id == name))
+```
+
+**anti_join():**
+
+We can use anti_join() to exclude all observations in voters that have a match in contact with no NA values
+```{r}
+voters |>
+  anti_join(contact, join_by(id == name))
+```
+
+**semi_join:**
+
+We can use inner_join() between the voters and contact datasets to only show observations in voters where the match in contact has no NA values. This will also not add information to the dataset from contact.
+```{r}
+voters |>
+  semi_join(contact, join_by(id == name))
+```
+
+
+
+
+
+
+
+
+
 
 
 
