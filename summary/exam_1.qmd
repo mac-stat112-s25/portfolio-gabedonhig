@@ -1,15 +1,16 @@
 ---
-title: "exam_review"
+title: "exam_1"
 format: html
 ---
 ```{r}
-install.packages(c("sf", "maps", "RColorBrewer", "gplots", "socviz", "leaflet", "devtools", "ggthemes"))
+# install.packages(c("sf", "maps", "gplots", "leaflet", "rnaturalearth", "mosaic"))
 library(tidyverse)
 library(sf)
 library(maps)
 library(mosaic)
 library(gplots)
 library(leaflet)
+library(rnaturalearth)
 ```
 ## The Max Number of Variables in a Viz is 7:
 
@@ -158,6 +159,9 @@ ggplot(cma_boundaries) +
 
 Choropleth maps: Maps plotting outcomes in different regions
 ```{r}
+elections_by_state <-  read.csv("https://mac-stat.github.io/data/election_2020_by_state.csv")
+elections_by_counties <- read.csv("https://mac-stat.github.io/data/election_2020_county.csv")
+
 elections_by_state <- elections_by_state |> 
   filter(state_abbr != "DC") |> 
   select(state_name, state_abbr, repub_pct_20) |> 

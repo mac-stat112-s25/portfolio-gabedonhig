@@ -46,6 +46,10 @@ book:
       - ica/ica-dates.qmd
       - ica/ica-data_import.qmd
       
+    - part: "summary"
+      chapters: 
+      - summary/exam_1.qmd
+      
 
 format:
   html:
