@@ -3,7 +3,6 @@ title: "exam_1"
 format: html
 ---
 ```{r}
-# install.packages(c("sf", "maps", "gplots", "leaflet", "rnaturalearth", "mosaic"))
 library(tidyverse)
 library(sf)
 library(maps)
