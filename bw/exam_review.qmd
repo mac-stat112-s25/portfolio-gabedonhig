@@ -553,23 +553,50 @@ hikes |>
 
 **n:**
 
-We can use n(rating) in a sumamrize function to count the number of observations in a group, similar to count
-```{r}
+We can use n() in a summarize function to count the number of observations in a group, similar to count
+```{r} 
+hikes <- read.csv("https://mac-stat.github.io/data/high_peaks.csv")
+
 hikes |>
   group_by(rating) |>
-  summarize(total_trails = n(rating, na.rm = TRUE))
+  filter(!is.na(rating)) |>
+  summarize(total_trails = n())
 ```
 
+**na.rm:**
 
+We can use na.rm = TRUE in a summarize function to remove all NA values in a column
+```{r}
+weather |>
+  summarize(avg_mintemp = mean(mintemp, na.rm = TRUE))
+```
 
+**as.factor:**
 
+We can use as.factor(windgustdir) in a mutate function to make it a factor
+```{r}
+weather |>
+  mutate(windgustdir = as.factor(windgustdir))
+```
 
+**as.numeric:**
 
+We can use as.numeric(mintemp) in a mutate function to make mintemp a number (even though it was already a number)
+```{r}
+weather |>
+  mutate(mintemp = as.numeric(mintemp))
+```
 
+**head():**
 
+We can use head(weather) to check out the first few rows of the weather dataset
+```{r}
+head(weather)
+```
 
+**library():**
 
-
+When you want to use a package that has been downloaded, use download(the package's name)
 
 
 
