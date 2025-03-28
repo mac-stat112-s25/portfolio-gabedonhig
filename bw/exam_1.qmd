@@ -3,3 +3,28 @@ title: "exam_1"
 format: html
 ---
 
+Research question: what does the consumption of each food category in each country look like?
+
+```{r}
+# Install necessary packages
+install.packages(c("tidytuesdayR", "tidyverse"))
+```
+
+```{r}
+# Load them in
+library(tidytuesdayR)
+library(tidyverse)
+```
+
+```{r}
+# Get the Data
+tuesdata <- tt_load('2020-02-18')
+fc <- tuesdata$food_consumption
+```
+
+```{r}
+# List the consumption of each food type
+
+fc |>
+  pivot_wider(names_from = food_category, values_from = consumption, names_prefix = "consumption_")
+```
