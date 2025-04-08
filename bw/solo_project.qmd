@@ -1,0 +1,54 @@
+---
+title: "solo_project"
+format: html
+---
+
+```{r}
+# first load in the packages
+library(sf)
+library(tidyverse)
+library(viridisLite)
+```
+
+```{r}
+#| fig-cap: "Choropleth map of the contigious U.S States colored by their total Mormon temples"
+#| fig-alt: "A choropleth map of the contigious U.S states, colored by gradient in a colorblind friendly palette, shows the number of Mormon temples each state has. Utah has the most temples, above 30, while States like California, Texas, and Idaho follow at around 15. Most other states have a 5 or fewer. A few, such as many states in New England, West Virginia, and Alabama have no temples. States on the West Coast or in the Rocky Mountains tend to have more Mormon temples than those in the South or Great Plains, but exceptions include Florida and Virginia in the South and Missouri in the Great Plains. There are around 1 temple per state in the Midwest, but Illinois, Michigan, and Ohio have more temples. Pennsylvania and New York each have around 5 temples, but New Jersey, Delaware, and Maryland have around 1."
+
+# import a shapefile for US states and clean it
+messy_us_states_sf <- read_sf("../data/archive/cb_2018_us_state_500k.shp")
+
+us_states_sf <- messy_us_states_sf |>
+  filter(NAME != "Guam") |>
+  filter(NAME != "Commonwealth of the Northern Mariana Islands") |>
+  filter(NAME != "Hawaii") |>
+  filter(NAME != "Alaska") |>
+  filter(NAME != "Puerto Rico") |>
+  filter(NAME != "United States Virgin Islands") |>
+  filter(NAME != "American Samoa")
+
+# import data on mormon temples and clean it
+messy_mormon_temples <- read_csv("../data/ChurchofJesusChristTemples.csv")
+
+mormon_temples <- messy_mormon_temples |>
+  filter(Country == "United States") |>
+  group_by(State) |>
+  summarize(total_temples = n())
+
+# join the shapefile and correct the NA values for states without temples to be zero
+geospatial_mormon_temples <- us_states_sf |>
+  left_join(mormon_temples, join_by(NAME == State)) |>
+  mutate(total_temples = replace_na(total_temples, 0))
+
+# create the map
+ggplot() +
+  geom_sf(data = geospatial_mormon_temples,
+          aes(fill = total_temples)) +
+  scale_fill_viridis_c(option = "turbo", name = "Number of Mormon Temples") +
+  theme_void() +
+  coord_sf(crs = 5070)
+```
+
+
+
+
+

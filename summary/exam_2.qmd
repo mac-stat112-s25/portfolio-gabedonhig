@@ -1,0 +1,24 @@
+---
+title: "exam_2"
+format: html
+---
+
+## The Goals of Data Wrangling:
+
+When wrangling data, you want to get data into a tidy shape / format for analysis. Me might want to:
+  - Keep only certain observations
+  - Define new variables
+  - Reformat or "clean" existing variables
+  - Combine various datasets
+  - Process "string" or text data
+
+We want to numerically, not just visually, explore and summarize various characteristics of the variable in our dataset
+
+| verb        | action                                            |
+|-------------|--------------------------------------------------|
+| `arrange`   | **arrange** the *rows* according to some *column* |
+| `filter`    | **filter** out or obtain a subset of the *rows*   |
+| `select`    | **select** a subset of *columns*                  |
+| `mutate`    | **mutate** or create a *column*                   |
+| `summarize` | calculate a numerical **summary** of a *column*   |
+| `group_by`  | **group** the *rows* by a specified *column*      |
