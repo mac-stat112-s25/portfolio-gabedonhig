@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.5.57">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>7&nbsp; solo_project – COMP/STAT112 Notebook</title>
+<title>7&nbsp; Solo Project – COMP/STAT112 Notebook</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -106,7 +106,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../bw/bw-uni.html">Best Work</a></li><li class="breadcrumb-item"><a href="../bw/solo_project.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">solo_project</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../bw/bw-uni.html">Best Work</a></li><li class="breadcrumb-item"><a href="../bw/solo_project.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Solo Project</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -189,7 +189,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../bw/solo_project.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">solo_project</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Solo Project</span></span></a>
   </div>
 </li>
       </ul>
@@ -298,13 +298,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#research-question" id="toc-research-question" class="nav-link active" data-scroll-target="#research-question"><span class="header-section-number">7.1</span> Research Question:</a></li>
+  <li><a href="#step-1-load-necessary-packages" id="toc-step-1-load-necessary-packages" class="nav-link" data-scroll-target="#step-1-load-necessary-packages"><span class="header-section-number">7.2</span> Step 1: Load Necessary Packages</a></li>
+  <li><a href="#step-2-import-clean-wrangle-the-data" id="toc-step-2-import-clean-wrangle-the-data" class="nav-link" data-scroll-target="#step-2-import-clean-wrangle-the-data"><span class="header-section-number">7.3</span> Step 2: Import / Clean / Wrangle the Data</a></li>
+  <li><a href="#step-3-finally-create-a-choropleth-map-of-the-contiguous-united-states-by-total-temples-in-each-state" id="toc-step-3-finally-create-a-choropleth-map-of-the-contiguous-united-states-by-total-temples-in-each-state" class="nav-link" data-scroll-target="#step-3-finally-create-a-choropleth-map-of-the-contiguous-united-states-by-total-temples-in-each-state"><span class="header-section-number">7.4</span> Step 3: Finally, create a choropleth map of the contiguous United States by total temples in each state</a></li>
+  <li><a href="#research-question-2" id="toc-research-question-2" class="nav-link" data-scroll-target="#research-question-2"><span class="header-section-number">7.5</span> Research Question 2:</a></li>
+  <li><a href="#step-1-load-necessary-packages-1" id="toc-step-1-load-necessary-packages-1" class="nav-link" data-scroll-target="#step-1-load-necessary-packages-1"><span class="header-section-number">7.6</span> Step 1: Load Necessary Packages</a></li>
+  <li><a href="#step-2-import-clean-wrangle-the-data-1" id="toc-step-2-import-clean-wrangle-the-data-1" class="nav-link" data-scroll-target="#step-2-import-clean-wrangle-the-data-1"><span class="header-section-number">7.7</span> Step 2: Import / Clean / Wrangle the Data</a></li>
+  <li><a href="#step-3-create-a-choropleth-map-of-utahs-counties-by-total-temples-in-each-state" id="toc-step-3-create-a-choropleth-map-of-utahs-counties-by-total-temples-in-each-state" class="nav-link" data-scroll-target="#step-3-create-a-choropleth-map-of-utahs-counties-by-total-temples-in-each-state"><span class="header-section-number">7.8</span> Step 3: Create a choropleth map of Utah’s counties by total temples in each state</a></li>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../bw/bw-uni.html">Best Work</a></li><li class="breadcrumb-item"><a href="../bw/solo_project.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">solo_project</span></a></li></ol></nav><div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../bw/bw-uni.html">Best Work</a></li><li class="breadcrumb-item"><a href="../bw/solo_project.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Solo Project</span></a></li></ol></nav><div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">
-<span class="chapter-number">7</span>&nbsp; <span class="chapter-title">solo_project</span>
+<span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Solo Project</span>
 </h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
@@ -319,9 +330,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 
-</header><div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># first load in the packages</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</header><section id="research-question" class="level2" data-number="7.1"><h2 data-number="7.1" class="anchored" data-anchor-id="research-question">
+<span class="header-section-number">7.1</span> Research Question:</h2>
+<p>What is the distribution of Mormon Temples in the Contigious United States by State. (A Mormon Temple is not the same as a church. It holds particular religious importance)</p>
+</section><section id="step-1-load-necessary-packages" class="level2" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="step-1-load-necessary-packages">
+<span class="header-section-number">7.2</span> Step 1: Load Necessary Packages</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE</code></pre>
 </div>
@@ -340,23 +355,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">library</span>(viridisLite)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">library</span>(viridisLite)</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section><section id="step-2-import-clean-wrangle-the-data" class="level2" data-number="7.3"><h2 data-number="7.3" class="anchored" data-anchor-id="step-2-import-clean-wrangle-the-data">
+<span class="header-section-number">7.3</span> Step 2: Import / Clean / Wrangle the Data</h2>
+<p><strong>Import a shapefile of the United States and clean / wrangle it</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># import a shapefile for US states and clean it</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a>messy_us_states_sf <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"../data/archive/cb_2018_us_state_500k.shp"</span>)</span>
-<span id="cb7-3"><a href="#cb7-3"></a></span>
-<span id="cb7-4"><a href="#cb7-4"></a>us_states_sf <span class="ot">&lt;-</span> messy_us_states_sf <span class="sc">|&gt;</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"Guam"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb7-6"><a href="#cb7-6"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"Commonwealth of the Northern Mariana Islands"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb7-7"><a href="#cb7-7"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"Hawaii"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"Alaska"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb7-9"><a href="#cb7-9"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"Puerto Rico"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb7-10"><a href="#cb7-10"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"United States Virgin Islands"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb7-11"><a href="#cb7-11"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"American Samoa"</span>)</span>
-<span id="cb7-12"><a href="#cb7-12"></a></span>
-<span id="cb7-13"><a href="#cb7-13"></a><span class="co"># import data on mormon temples and clean it</span></span>
-<span id="cb7-14"><a href="#cb7-14"></a>messy_mormon_temples <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/ChurchofJesusChristTemples.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>messy_us_states_sf <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"../data/archive/cb_2018_us_state_500k.shp"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3"></a>us_states_sf <span class="ot">&lt;-</span> messy_us_states_sf <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"Guam"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"Commonwealth of the Northern Mariana Islands"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"Hawaii"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"Alaska"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"Puerto Rico"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"United States Virgin Islands"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"American Samoa"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Import data on mormon temples and clean / wrangle it</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>messy_mormon_temples <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/ChurchofJesusChristTemples.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: One or more parsing issues, call `problems()` on your data frame for details,
 e.g.:
@@ -373,27 +392,99 @@ dbl  (2): Latitude, Longitude
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>mormon_temples <span class="ot">&lt;-</span> messy_mormon_temples <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"United States"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb10-3"><a href="#cb10-3"></a>  <span class="fu">group_by</span>(State) <span class="sc">|&gt;</span></span>
-<span id="cb10-4"><a href="#cb10-4"></a>  <span class="fu">summarize</span>(<span class="at">total_temples =</span> <span class="fu">n</span>())</span>
-<span id="cb10-5"><a href="#cb10-5"></a></span>
-<span id="cb10-6"><a href="#cb10-6"></a><span class="co"># join the shapefile and correct the NA values for states without temples to be zero</span></span>
-<span id="cb10-7"><a href="#cb10-7"></a>geospatial_mormon_temples <span class="ot">&lt;-</span> us_states_sf <span class="sc">|&gt;</span></span>
-<span id="cb10-8"><a href="#cb10-8"></a>  <span class="fu">left_join</span>(mormon_temples, <span class="fu">join_by</span>(NAME <span class="sc">==</span> State)) <span class="sc">|&gt;</span></span>
-<span id="cb10-9"><a href="#cb10-9"></a>  <span class="fu">mutate</span>(<span class="at">total_temples =</span> <span class="fu">replace_na</span>(total_temples, <span class="dv">0</span>))</span>
-<span id="cb10-10"><a href="#cb10-10"></a></span>
-<span id="cb10-11"><a href="#cb10-11"></a><span class="co"># create the map</span></span>
-<span id="cb10-12"><a href="#cb10-12"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb10-13"><a href="#cb10-13"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> geospatial_mormon_temples,</span>
-<span id="cb10-14"><a href="#cb10-14"></a>          <span class="fu">aes</span>(<span class="at">fill =</span> total_temples)) <span class="sc">+</span></span>
-<span id="cb10-15"><a href="#cb10-15"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"turbo"</span>, <span class="at">name =</span> <span class="st">"Number of Mormon Temples"</span>) <span class="sc">+</span></span>
-<span id="cb10-16"><a href="#cb10-16"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb10-17"><a href="#cb10-17"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="dv">5070</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>mormon_temples_national <span class="ot">&lt;-</span> messy_mormon_temples <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"United States"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a>  <span class="fu">group_by</span>(State) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a>  <span class="fu">summarize</span>(<span class="at">total_temples =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Join the shapefile and the data on Mormon temples</strong></p>
+<p>sidenote: make sure any NA values in the total_temples column become 0</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>geospatial_mormon_temples <span class="ot">&lt;-</span> us_states_sf <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">left_join</span>(mormon_temples_national, <span class="fu">join_by</span>(NAME <span class="sc">==</span> State)) <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="fu">mutate</span>(<span class="at">total_temples =</span> <span class="fu">replace_na</span>(total_temples, <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="step-3-finally-create-a-choropleth-map-of-the-contiguous-united-states-by-total-temples-in-each-state" class="level2" data-number="7.4"><h2 data-number="7.4" class="anchored" data-anchor-id="step-3-finally-create-a-choropleth-map-of-the-contiguous-united-states-by-total-temples-in-each-state">
+<span class="header-section-number">7.4</span> Step 3: Finally, create a choropleth map of the contiguous United States by total temples in each state</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> geospatial_mormon_temples,</span>
+<span id="cb13-3"><a href="#cb13-3"></a>          <span class="fu">aes</span>(<span class="at">fill =</span> total_temples)) <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"turbo"</span>, <span class="at">name =</span> <span class="st">"Number of Mormon Temples"</span>) <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb13-6"><a href="#cb13-6"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="dv">5070</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="solo_project_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" alt="A choropleth map of the contigious U.S states, colored by gradient in a colorblind friendly palette, shows the number of Mormon temples each state has. Utah has the most temples, above 30, while States like California, Texas, and Idaho follow at around 15. Most other states have a 5 or fewer. A few, such as many states in New England, West Virginia, and Alabama have no temples. States on the West Coast or in the Rocky Mountains tend to have more Mormon temples than those in the South or Great Plains, but exceptions include Florida and Virginia in the South and Missouri in the Great Plains. There are around 1 temple per state in the Midwest, but Illinois, Michigan, and Ohio have more temples. Pennsylvania and New York each have around 5 temples, but New Jersey, Delaware, and Maryland have around 1." width="672"></p>
+<figure class="figure"><p><img src="solo_project_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" alt="A choropleth map of the contigious U.S states, colored by gradient in a colorblind friendly palette, shows the number of Mormon temples each state has. Utah has the most temples, above 30, while States like California, Texas, and Idaho follow at around 15. Most other states have a 5 or fewer. A few, such as many states in New England, West Virginia, and Alabama have no temples. States on the West Coast or in the Rocky Mountains tend to have more Mormon temples than those in the South or Great Plains, but exceptions include Florida and Virginia in the South and Missouri in the Great Plains. There are around 1 temple per state in the Midwest, but Illinois, Michigan, and Ohio have more temples. Pennsylvania and New York each have around 5 temples, but New Jersey, Delaware, and Maryland have around 1." width="672"></p>
 <figcaption>Choropleth map of the contigious U.S States colored by their total Mormon temples</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Interesting. Utah has an incredibly high number of temples. I wonder how temples are distributed spatially in Utah.</p>
+</section><section id="research-question-2" class="level2" data-number="7.5"><h2 data-number="7.5" class="anchored" data-anchor-id="research-question-2">
+<span class="header-section-number">7.5</span> Research Question 2:</h2>
+<p>What is the distribution of Mormon temples in Utah by County</p>
+</section><section id="step-1-load-necessary-packages-1" class="level2" data-number="7.6"><h2 data-number="7.6" class="anchored" data-anchor-id="step-1-load-necessary-packages-1">
+<span class="header-section-number">7.6</span> Step 1: Load Necessary Packages</h2>
+<p>Packages were already loaded earlier</p>
+</section><section id="step-2-import-clean-wrangle-the-data-1" class="level2" data-number="7.7"><h2 data-number="7.7" class="anchored" data-anchor-id="step-2-import-clean-wrangle-the-data-1">
+<span class="header-section-number">7.7</span> Step 2: Import / Clean / Wrangle the Data</h2>
+<p><strong>Use the already imported data on Mormon temples, and clean / wrangle it</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>mormon_temples_utah <span class="ot">&lt;-</span> messy_mormon_temples <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"United States"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a>  <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"Utah"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a>  <span class="fu">group_by</span>(County) <span class="sc">|&gt;</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a>  <span class="fu">summarize</span>(<span class="at">total_temples =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Import data of county fips codes across the United States, and clean / wrangle it</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>messy_county_fips <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/state_and_county_fips_master.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 3195 Columns: 3
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (2): name, state
+dbl (1): fips
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>utah_county_fips <span class="ot">&lt;-</span> messy_county_fips <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"UT"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">mutate</span>(<span class="at">State =</span> <span class="fu">as.numeric</span>(<span class="fu">str_sub</span>(fips, <span class="at">start =</span> <span class="dv">0</span>, <span class="at">end =</span> <span class="dv">2</span>)),</span>
+<span id="cb17-4"><a href="#cb17-4"></a>         <span class="at">County =</span> <span class="fu">as.numeric</span>(<span class="fu">str_sub</span>(fips, <span class="at">start =</span> <span class="dv">3</span>, <span class="at">end =</span> <span class="dv">5</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb17-5"><a href="#cb17-5"></a>  <span class="fu">select</span>(County, name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Import a shapefile of counties in Utah, and clean / wrangle it while also joining the dataset on county fips codes</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>messy_utah_counties_sf <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"../data/tl_2022_49_cousub/tl_2022_49_cousub.shp"</span>)</span>
+<span id="cb18-2"><a href="#cb18-2"></a></span>
+<span id="cb18-3"><a href="#cb18-3"></a>utah_counties_sf <span class="ot">&lt;-</span> messy_utah_counties_sf <span class="sc">|&gt;</span></span>
+<span id="cb18-4"><a href="#cb18-4"></a>  <span class="fu">select</span>(<span class="sc">-</span>NAME) <span class="sc">|&gt;</span></span>
+<span id="cb18-5"><a href="#cb18-5"></a>  <span class="fu">mutate</span>(<span class="at">COUNTYFP =</span> <span class="fu">as.numeric</span>(COUNTYFP)) <span class="sc">|&gt;</span></span>
+<span id="cb18-6"><a href="#cb18-6"></a>  <span class="fu">left_join</span>(utah_county_fips, <span class="fu">join_by</span>(COUNTYFP <span class="sc">==</span> County)) <span class="sc">|&gt;</span></span>
+<span id="cb18-7"><a href="#cb18-7"></a>  <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">str_replace</span>(name, <span class="st">" County"</span>, <span class="st">""</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Join the data on Mormon temples to the shapefile</strong></p>
+<p>sidenote: make sure any NA values in the total_temples column become 0</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>mormon_temples_utah_sf <span class="ot">&lt;-</span> utah_counties_sf <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>  <span class="fu">left_join</span>(mormon_temples_utah, <span class="fu">join_by</span>(name <span class="sc">==</span> County)) <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a>  <span class="fu">mutate</span>(<span class="at">total_temples =</span> <span class="fu">replace_na</span>(total_temples, <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="step-3-create-a-choropleth-map-of-utahs-counties-by-total-temples-in-each-state" class="level2" data-number="7.8"><h2 data-number="7.8" class="anchored" data-anchor-id="step-3-create-a-choropleth-map-of-utahs-counties-by-total-temples-in-each-state">
+<span class="header-section-number">7.8</span> Step 3: Create a choropleth map of Utah’s counties by total temples in each state</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> mormon_temples_utah_sf,</span>
+<span id="cb20-3"><a href="#cb20-3"></a>          <span class="fu">aes</span>(<span class="at">fill =</span> total_temples)) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">name =</span> <span class="st">"Total Mormon Temples"</span>) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5"></a>  <span class="fu">theme_void</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="solo_project_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
 </div>
@@ -401,8 +492,7 @@ dbl  (2): Latitude, Longitude
 
 <!-- -->
 
-
-</main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -1032,59 +1122,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb11" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1"></a><span class="co">---</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="an">title:</span><span class="co"> "solo_project"</span></span>
-<span id="cb11-3"><a href="#cb11-3"></a><span class="an">format:</span><span class="co"> html</span></span>
-<span id="cb11-4"><a href="#cb11-4"></a><span class="co">---</span></span>
-<span id="cb11-5"><a href="#cb11-5"></a></span>
-<span id="cb11-8"><a href="#cb11-8"></a><span class="in">```{r}</span></span>
-<span id="cb11-9"><a href="#cb11-9"></a><span class="co"># first load in the packages</span></span>
-<span id="cb11-10"><a href="#cb11-10"></a><span class="fu">library</span>(sf)</span>
-<span id="cb11-11"><a href="#cb11-11"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb11-12"><a href="#cb11-12"></a><span class="fu">library</span>(viridisLite)</span>
-<span id="cb11-13"><a href="#cb11-13"></a><span class="in">```</span></span>
-<span id="cb11-14"><a href="#cb11-14"></a></span>
-<span id="cb11-17"><a href="#cb11-17"></a><span class="in">```{r}</span></span>
-<span id="cb11-18"><a href="#cb11-18"></a><span class="co">#| fig-cap: "Choropleth map of the contigious U.S States colored by their total Mormon temples"</span></span>
-<span id="cb11-19"><a href="#cb11-19"></a><span class="co">#| fig-alt: "A choropleth map of the contigious U.S states, colored by gradient in a colorblind friendly palette, shows the number of Mormon temples each state has. Utah has the most temples, above 30, while States like California, Texas, and Idaho follow at around 15. Most other states have a 5 or fewer. A few, such as many states in New England, West Virginia, and Alabama have no temples. States on the West Coast or in the Rocky Mountains tend to have more Mormon temples than those in the South or Great Plains, but exceptions include Florida and Virginia in the South and Missouri in the Great Plains. There are around 1 temple per state in the Midwest, but Illinois, Michigan, and Ohio have more temples. Pennsylvania and New York each have around 5 temples, but New Jersey, Delaware, and Maryland have around 1."</span></span>
-<span id="cb11-20"><a href="#cb11-20"></a></span>
-<span id="cb11-21"><a href="#cb11-21"></a><span class="co"># import a shapefile for US states and clean it</span></span>
-<span id="cb11-22"><a href="#cb11-22"></a>messy_us_states_sf <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"../data/archive/cb_2018_us_state_500k.shp"</span>)</span>
-<span id="cb11-23"><a href="#cb11-23"></a></span>
-<span id="cb11-24"><a href="#cb11-24"></a>us_states_sf <span class="ot">&lt;-</span> messy_us_states_sf <span class="sc">|&gt;</span></span>
-<span id="cb11-25"><a href="#cb11-25"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"Guam"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb11-26"><a href="#cb11-26"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"Commonwealth of the Northern Mariana Islands"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb11-27"><a href="#cb11-27"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"Hawaii"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb11-28"><a href="#cb11-28"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"Alaska"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb11-29"><a href="#cb11-29"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"Puerto Rico"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb11-30"><a href="#cb11-30"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"United States Virgin Islands"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb11-31"><a href="#cb11-31"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"American Samoa"</span>)</span>
-<span id="cb11-32"><a href="#cb11-32"></a></span>
-<span id="cb11-33"><a href="#cb11-33"></a><span class="co"># import data on mormon temples and clean it</span></span>
-<span id="cb11-34"><a href="#cb11-34"></a>messy_mormon_temples <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/ChurchofJesusChristTemples.csv"</span>)</span>
-<span id="cb11-35"><a href="#cb11-35"></a></span>
-<span id="cb11-36"><a href="#cb11-36"></a>mormon_temples <span class="ot">&lt;-</span> messy_mormon_temples <span class="sc">|&gt;</span></span>
-<span id="cb11-37"><a href="#cb11-37"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"United States"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb11-38"><a href="#cb11-38"></a>  <span class="fu">group_by</span>(State) <span class="sc">|&gt;</span></span>
-<span id="cb11-39"><a href="#cb11-39"></a>  <span class="fu">summarize</span>(<span class="at">total_temples =</span> <span class="fu">n</span>())</span>
-<span id="cb11-40"><a href="#cb11-40"></a></span>
-<span id="cb11-41"><a href="#cb11-41"></a><span class="co"># join the shapefile and correct the NA values for states without temples to be zero</span></span>
-<span id="cb11-42"><a href="#cb11-42"></a>geospatial_mormon_temples <span class="ot">&lt;-</span> us_states_sf <span class="sc">|&gt;</span></span>
-<span id="cb11-43"><a href="#cb11-43"></a>  <span class="fu">left_join</span>(mormon_temples, <span class="fu">join_by</span>(NAME <span class="sc">==</span> State)) <span class="sc">|&gt;</span></span>
-<span id="cb11-44"><a href="#cb11-44"></a>  <span class="fu">mutate</span>(<span class="at">total_temples =</span> <span class="fu">replace_na</span>(total_temples, <span class="dv">0</span>))</span>
-<span id="cb11-45"><a href="#cb11-45"></a></span>
-<span id="cb11-46"><a href="#cb11-46"></a><span class="co"># create the map</span></span>
-<span id="cb11-47"><a href="#cb11-47"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb11-48"><a href="#cb11-48"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> geospatial_mormon_temples,</span>
-<span id="cb11-49"><a href="#cb11-49"></a>          <span class="fu">aes</span>(<span class="at">fill =</span> total_temples)) <span class="sc">+</span></span>
-<span id="cb11-50"><a href="#cb11-50"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"turbo"</span>, <span class="at">name =</span> <span class="st">"Number of Mormon Temples"</span>) <span class="sc">+</span></span>
-<span id="cb11-51"><a href="#cb11-51"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb11-52"><a href="#cb11-52"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="dv">5070</span>)</span>
-<span id="cb11-53"><a href="#cb11-53"></a><span class="in">```</span></span>
-<span id="cb11-54"><a href="#cb11-54"></a></span>
-<span id="cb11-55"><a href="#cb11-55"></a></span>
-<span id="cb11-56"><a href="#cb11-56"></a></span>
-<span id="cb11-57"><a href="#cb11-57"></a></span>
+<div class="sourceCode" id="cb21" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb21-1"><a href="#cb21-1"></a><span class="co">---</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="an">title:</span><span class="co"> "Solo Project"</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb21-4"><a href="#cb21-4"></a><span class="co">---</span></span>
+<span id="cb21-5"><a href="#cb21-5"></a></span>
+<span id="cb21-6"><a href="#cb21-6"></a><span class="fu">## Research Question:</span></span>
+<span id="cb21-7"><a href="#cb21-7"></a></span>
+<span id="cb21-8"><a href="#cb21-8"></a>What is the distribution of Mormon Temples in the Contigious United States by State. (A Mormon Temple is not the same as a church. It holds particular religious importance)</span>
+<span id="cb21-9"><a href="#cb21-9"></a></span>
+<span id="cb21-10"><a href="#cb21-10"></a></span>
+<span id="cb21-11"><a href="#cb21-11"></a><span class="fu">## Step 1: Load Necessary Packages</span></span>
+<span id="cb21-12"><a href="#cb21-12"></a></span>
+<span id="cb21-15"><a href="#cb21-15"></a><span class="in">```{r}</span></span>
+<span id="cb21-16"><a href="#cb21-16"></a><span class="fu">library</span>(sf)</span>
+<span id="cb21-17"><a href="#cb21-17"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb21-18"><a href="#cb21-18"></a><span class="fu">library</span>(viridisLite)</span>
+<span id="cb21-19"><a href="#cb21-19"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb21-20"><a href="#cb21-20"></a><span class="in">```</span></span>
+<span id="cb21-21"><a href="#cb21-21"></a></span>
+<span id="cb21-22"><a href="#cb21-22"></a></span>
+<span id="cb21-23"><a href="#cb21-23"></a><span class="fu">## Step 2: Import / Clean / Wrangle the Data</span></span>
+<span id="cb21-24"><a href="#cb21-24"></a></span>
+<span id="cb21-25"><a href="#cb21-25"></a></span>
+<span id="cb21-26"><a href="#cb21-26"></a>**Import a shapefile of the United States and clean / wrangle it**</span>
+<span id="cb21-27"><a href="#cb21-27"></a></span>
+<span id="cb21-30"><a href="#cb21-30"></a><span class="in">```{r}</span></span>
+<span id="cb21-31"><a href="#cb21-31"></a>messy_us_states_sf <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"../data/archive/cb_2018_us_state_500k.shp"</span>)</span>
+<span id="cb21-32"><a href="#cb21-32"></a></span>
+<span id="cb21-33"><a href="#cb21-33"></a>us_states_sf <span class="ot">&lt;-</span> messy_us_states_sf <span class="sc">|&gt;</span></span>
+<span id="cb21-34"><a href="#cb21-34"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"Guam"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-35"><a href="#cb21-35"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"Commonwealth of the Northern Mariana Islands"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-36"><a href="#cb21-36"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"Hawaii"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-37"><a href="#cb21-37"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"Alaska"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-38"><a href="#cb21-38"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"Puerto Rico"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-39"><a href="#cb21-39"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"United States Virgin Islands"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-40"><a href="#cb21-40"></a>  <span class="fu">filter</span>(NAME <span class="sc">!=</span> <span class="st">"American Samoa"</span>)</span>
+<span id="cb21-41"><a href="#cb21-41"></a><span class="in">```</span></span>
+<span id="cb21-42"><a href="#cb21-42"></a></span>
+<span id="cb21-43"><a href="#cb21-43"></a></span>
+<span id="cb21-44"><a href="#cb21-44"></a>**Import data on mormon temples and clean / wrangle it**</span>
+<span id="cb21-45"><a href="#cb21-45"></a></span>
+<span id="cb21-48"><a href="#cb21-48"></a><span class="in">```{r}</span></span>
+<span id="cb21-49"><a href="#cb21-49"></a>messy_mormon_temples <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/ChurchofJesusChristTemples.csv"</span>)</span>
+<span id="cb21-50"><a href="#cb21-50"></a></span>
+<span id="cb21-51"><a href="#cb21-51"></a>mormon_temples_national <span class="ot">&lt;-</span> messy_mormon_temples <span class="sc">|&gt;</span></span>
+<span id="cb21-52"><a href="#cb21-52"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"United States"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-53"><a href="#cb21-53"></a>  <span class="fu">group_by</span>(State) <span class="sc">|&gt;</span></span>
+<span id="cb21-54"><a href="#cb21-54"></a>  <span class="fu">summarize</span>(<span class="at">total_temples =</span> <span class="fu">n</span>())</span>
+<span id="cb21-55"><a href="#cb21-55"></a><span class="in">```</span></span>
+<span id="cb21-56"><a href="#cb21-56"></a></span>
+<span id="cb21-57"><a href="#cb21-57"></a></span>
+<span id="cb21-58"><a href="#cb21-58"></a>**Join the shapefile and the data on Mormon temples**</span>
+<span id="cb21-59"><a href="#cb21-59"></a></span>
+<span id="cb21-60"><a href="#cb21-60"></a>sidenote: make sure any NA values in the total_temples column become 0</span>
+<span id="cb21-61"><a href="#cb21-61"></a></span>
+<span id="cb21-64"><a href="#cb21-64"></a><span class="in">```{r}</span></span>
+<span id="cb21-65"><a href="#cb21-65"></a>geospatial_mormon_temples <span class="ot">&lt;-</span> us_states_sf <span class="sc">|&gt;</span></span>
+<span id="cb21-66"><a href="#cb21-66"></a>  <span class="fu">left_join</span>(mormon_temples_national, <span class="fu">join_by</span>(NAME <span class="sc">==</span> State)) <span class="sc">|&gt;</span></span>
+<span id="cb21-67"><a href="#cb21-67"></a>  <span class="fu">mutate</span>(<span class="at">total_temples =</span> <span class="fu">replace_na</span>(total_temples, <span class="dv">0</span>))</span>
+<span id="cb21-68"><a href="#cb21-68"></a><span class="in">```</span></span>
+<span id="cb21-69"><a href="#cb21-69"></a></span>
+<span id="cb21-70"><a href="#cb21-70"></a></span>
+<span id="cb21-71"><a href="#cb21-71"></a><span class="fu">## Step 3: Finally, create a choropleth map of the contiguous United States by total temples in each state</span></span>
+<span id="cb21-72"><a href="#cb21-72"></a></span>
+<span id="cb21-73"><a href="#cb21-73"></a></span>
+<span id="cb21-76"><a href="#cb21-76"></a><span class="in">```{r}</span></span>
+<span id="cb21-77"><a href="#cb21-77"></a><span class="co">#| fig-cap: "Choropleth map of the contigious U.S States colored by their total Mormon temples"</span></span>
+<span id="cb21-78"><a href="#cb21-78"></a><span class="co">#| fig-alt: "A choropleth map of the contigious U.S states, colored by gradient in a colorblind friendly palette, shows the number of Mormon temples each state has. Utah has the most temples, above 30, while States like California, Texas, and Idaho follow at around 15. Most other states have a 5 or fewer. A few, such as many states in New England, West Virginia, and Alabama have no temples. States on the West Coast or in the Rocky Mountains tend to have more Mormon temples than those in the South or Great Plains, but exceptions include Florida and Virginia in the South and Missouri in the Great Plains. There are around 1 temple per state in the Midwest, but Illinois, Michigan, and Ohio have more temples. Pennsylvania and New York each have around 5 temples, but New Jersey, Delaware, and Maryland have around 1."</span></span>
+<span id="cb21-79"><a href="#cb21-79"></a></span>
+<span id="cb21-80"><a href="#cb21-80"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb21-81"><a href="#cb21-81"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> geospatial_mormon_temples,</span>
+<span id="cb21-82"><a href="#cb21-82"></a>          <span class="fu">aes</span>(<span class="at">fill =</span> total_temples)) <span class="sc">+</span></span>
+<span id="cb21-83"><a href="#cb21-83"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"turbo"</span>, <span class="at">name =</span> <span class="st">"Number of Mormon Temples"</span>) <span class="sc">+</span></span>
+<span id="cb21-84"><a href="#cb21-84"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb21-85"><a href="#cb21-85"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="dv">5070</span>)</span>
+<span id="cb21-86"><a href="#cb21-86"></a><span class="in">```</span></span>
+<span id="cb21-87"><a href="#cb21-87"></a></span>
+<span id="cb21-88"><a href="#cb21-88"></a>Interesting. Utah has an incredibly high number of temples. I wonder how temples are distributed spatially in Utah.</span>
+<span id="cb21-89"><a href="#cb21-89"></a></span>
+<span id="cb21-90"><a href="#cb21-90"></a><span class="fu">## Research Question 2: </span></span>
+<span id="cb21-91"><a href="#cb21-91"></a></span>
+<span id="cb21-92"><a href="#cb21-92"></a>What is the distribution of Mormon temples in Utah by County</span>
+<span id="cb21-93"><a href="#cb21-93"></a></span>
+<span id="cb21-94"><a href="#cb21-94"></a></span>
+<span id="cb21-95"><a href="#cb21-95"></a><span class="fu">## Step 1: Load Necessary Packages</span></span>
+<span id="cb21-96"><a href="#cb21-96"></a></span>
+<span id="cb21-97"><a href="#cb21-97"></a>Packages were already loaded earlier</span>
+<span id="cb21-98"><a href="#cb21-98"></a></span>
+<span id="cb21-99"><a href="#cb21-99"></a></span>
+<span id="cb21-100"><a href="#cb21-100"></a><span class="fu">## Step 2: Import / Clean / Wrangle the Data</span></span>
+<span id="cb21-101"><a href="#cb21-101"></a></span>
+<span id="cb21-102"><a href="#cb21-102"></a></span>
+<span id="cb21-103"><a href="#cb21-103"></a>**Use the already imported data on Mormon temples, and clean / wrangle it**</span>
+<span id="cb21-104"><a href="#cb21-104"></a></span>
+<span id="cb21-107"><a href="#cb21-107"></a><span class="in">```{r}</span></span>
+<span id="cb21-108"><a href="#cb21-108"></a>mormon_temples_utah <span class="ot">&lt;-</span> messy_mormon_temples <span class="sc">|&gt;</span></span>
+<span id="cb21-109"><a href="#cb21-109"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"United States"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-110"><a href="#cb21-110"></a>  <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"Utah"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-111"><a href="#cb21-111"></a>  <span class="fu">group_by</span>(County) <span class="sc">|&gt;</span></span>
+<span id="cb21-112"><a href="#cb21-112"></a>  <span class="fu">summarize</span>(<span class="at">total_temples =</span> <span class="fu">n</span>())</span>
+<span id="cb21-113"><a href="#cb21-113"></a><span class="in">```</span></span>
+<span id="cb21-114"><a href="#cb21-114"></a></span>
+<span id="cb21-115"><a href="#cb21-115"></a></span>
+<span id="cb21-116"><a href="#cb21-116"></a>**Import data of county fips codes across the United States, and clean / wrangle it**</span>
+<span id="cb21-117"><a href="#cb21-117"></a></span>
+<span id="cb21-120"><a href="#cb21-120"></a><span class="in">```{r}</span></span>
+<span id="cb21-121"><a href="#cb21-121"></a>messy_county_fips <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/state_and_county_fips_master.csv"</span>)</span>
+<span id="cb21-122"><a href="#cb21-122"></a></span>
+<span id="cb21-123"><a href="#cb21-123"></a>utah_county_fips <span class="ot">&lt;-</span> messy_county_fips <span class="sc">|&gt;</span></span>
+<span id="cb21-124"><a href="#cb21-124"></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"UT"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-125"><a href="#cb21-125"></a>  <span class="fu">mutate</span>(<span class="at">State =</span> <span class="fu">as.numeric</span>(<span class="fu">str_sub</span>(fips, <span class="at">start =</span> <span class="dv">0</span>, <span class="at">end =</span> <span class="dv">2</span>)),</span>
+<span id="cb21-126"><a href="#cb21-126"></a>         <span class="at">County =</span> <span class="fu">as.numeric</span>(<span class="fu">str_sub</span>(fips, <span class="at">start =</span> <span class="dv">3</span>, <span class="at">end =</span> <span class="dv">5</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb21-127"><a href="#cb21-127"></a>  <span class="fu">select</span>(County, name)</span>
+<span id="cb21-128"><a href="#cb21-128"></a><span class="in">```</span></span>
+<span id="cb21-129"><a href="#cb21-129"></a></span>
+<span id="cb21-130"><a href="#cb21-130"></a></span>
+<span id="cb21-131"><a href="#cb21-131"></a>**Import a shapefile of counties in Utah, and clean / wrangle it while also joining the dataset on county fips codes**</span>
+<span id="cb21-132"><a href="#cb21-132"></a></span>
+<span id="cb21-135"><a href="#cb21-135"></a><span class="in">```{r}</span></span>
+<span id="cb21-136"><a href="#cb21-136"></a>messy_utah_counties_sf <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"../data/tl_2022_49_cousub/tl_2022_49_cousub.shp"</span>)</span>
+<span id="cb21-137"><a href="#cb21-137"></a></span>
+<span id="cb21-138"><a href="#cb21-138"></a>utah_counties_sf <span class="ot">&lt;-</span> messy_utah_counties_sf <span class="sc">|&gt;</span></span>
+<span id="cb21-139"><a href="#cb21-139"></a>  <span class="fu">select</span>(<span class="sc">-</span>NAME) <span class="sc">|&gt;</span></span>
+<span id="cb21-140"><a href="#cb21-140"></a>  <span class="fu">mutate</span>(<span class="at">COUNTYFP =</span> <span class="fu">as.numeric</span>(COUNTYFP)) <span class="sc">|&gt;</span></span>
+<span id="cb21-141"><a href="#cb21-141"></a>  <span class="fu">left_join</span>(utah_county_fips, <span class="fu">join_by</span>(COUNTYFP <span class="sc">==</span> County)) <span class="sc">|&gt;</span></span>
+<span id="cb21-142"><a href="#cb21-142"></a>  <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">str_replace</span>(name, <span class="st">" County"</span>, <span class="st">""</span>))</span>
+<span id="cb21-143"><a href="#cb21-143"></a><span class="in">```</span></span>
+<span id="cb21-144"><a href="#cb21-144"></a></span>
+<span id="cb21-145"><a href="#cb21-145"></a></span>
+<span id="cb21-146"><a href="#cb21-146"></a>**Join the data on Mormon temples to the shapefile**</span>
+<span id="cb21-147"><a href="#cb21-147"></a></span>
+<span id="cb21-148"><a href="#cb21-148"></a>sidenote: make sure any NA values in the total_temples column become 0</span>
+<span id="cb21-149"><a href="#cb21-149"></a></span>
+<span id="cb21-152"><a href="#cb21-152"></a><span class="in">```{r}</span></span>
+<span id="cb21-153"><a href="#cb21-153"></a>mormon_temples_utah_sf <span class="ot">&lt;-</span> utah_counties_sf <span class="sc">|&gt;</span></span>
+<span id="cb21-154"><a href="#cb21-154"></a>  <span class="fu">left_join</span>(mormon_temples_utah, <span class="fu">join_by</span>(name <span class="sc">==</span> County)) <span class="sc">|&gt;</span></span>
+<span id="cb21-155"><a href="#cb21-155"></a>  <span class="fu">mutate</span>(<span class="at">total_temples =</span> <span class="fu">replace_na</span>(total_temples, <span class="dv">0</span>))</span>
+<span id="cb21-156"><a href="#cb21-156"></a><span class="in">```</span></span>
+<span id="cb21-157"><a href="#cb21-157"></a></span>
+<span id="cb21-158"><a href="#cb21-158"></a></span>
+<span id="cb21-159"><a href="#cb21-159"></a><span class="fu">## Step 3: Create a choropleth map of Utah's counties by total temples in each state</span></span>
+<span id="cb21-160"><a href="#cb21-160"></a></span>
+<span id="cb21-161"><a href="#cb21-161"></a></span>
+<span id="cb21-164"><a href="#cb21-164"></a><span class="in">```{r}</span></span>
+<span id="cb21-165"><a href="#cb21-165"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb21-166"><a href="#cb21-166"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> mormon_temples_utah_sf,</span>
+<span id="cb21-167"><a href="#cb21-167"></a>          <span class="fu">aes</span>(<span class="at">fill =</span> total_temples)) <span class="sc">+</span></span>
+<span id="cb21-168"><a href="#cb21-168"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">name =</span> <span class="st">"Total Mormon Temples"</span>) <span class="sc">+</span></span>
+<span id="cb21-169"><a href="#cb21-169"></a>  <span class="fu">theme_void</span>()</span>
+<span id="cb21-170"><a href="#cb21-170"></a><span class="in">```</span></span>
+<span id="cb21-171"><a href="#cb21-171"></a></span>
+<span id="cb21-172"><a href="#cb21-172"></a></span>
+<span id="cb21-173"><a href="#cb21-173"></a></span>
+<span id="cb21-174"><a href="#cb21-174"></a></span>
+<span id="cb21-175"><a href="#cb21-175"></a></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
