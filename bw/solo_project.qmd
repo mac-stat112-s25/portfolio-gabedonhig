@@ -1,20 +1,29 @@
 ---
-title: "solo_project"
+title: "Solo Project"
 format: html
 ---
 
+## Research Question:
+
+What is the distribution of Mormon Temples in the Contigious United States by State. (A Mormon Temple is not the same as a church. It holds particular religious importance)
+
+
+## Step 1: Load Necessary Packages
+
 ```{r}
-# first load in the packages
 library(sf)
 library(tidyverse)
 library(viridisLite)
+library(dplyr)
 ```
 
-```{r}
-#| fig-cap: "Choropleth map of the contigious U.S States colored by their total Mormon temples"
-#| fig-alt: "A choropleth map of the contigious U.S states, colored by gradient in a colorblind friendly palette, shows the number of Mormon temples each state has. Utah has the most temples, above 30, while States like California, Texas, and Idaho follow at around 15. Most other states have a 5 or fewer. A few, such as many states in New England, West Virginia, and Alabama have no temples. States on the West Coast or in the Rocky Mountains tend to have more Mormon temples than those in the South or Great Plains, but exceptions include Florida and Virginia in the South and Missouri in the Great Plains. There are around 1 temple per state in the Midwest, but Illinois, Michigan, and Ohio have more temples. Pennsylvania and New York each have around 5 temples, but New Jersey, Delaware, and Maryland have around 1."
 
-# import a shapefile for US states and clean it
+## Step 2: Import / Clean / Wrangle the Data
+
+
+**Import a shapefile of the United States and clean / wrangle it**
+
+```{r}
 messy_us_states_sf <- read_sf("../data/archive/cb_2018_us_state_500k.shp")
 
 us_states_sf <- messy_us_states_sf |>
@@ -25,21 +34,39 @@ us_states_sf <- messy_us_states_sf |>
   filter(NAME != "Puerto Rico") |>
   filter(NAME != "United States Virgin Islands") |>
   filter(NAME != "American Samoa")
+```
 
-# import data on mormon temples and clean it
+
+**Import data on mormon temples and clean / wrangle it**
+
+```{r}
 messy_mormon_temples <- read_csv("../data/ChurchofJesusChristTemples.csv")
 
-mormon_temples <- messy_mormon_temples |>
+mormon_temples_national <- messy_mormon_temples |>
   filter(Country == "United States") |>
   group_by(State) |>
   summarize(total_temples = n())
+```
 
-# join the shapefile and correct the NA values for states without temples to be zero
+
+**Join the shapefile and the data on Mormon temples**
+
+sidenote: make sure any NA values in the total_temples column become 0
+
+```{r}
 geospatial_mormon_temples <- us_states_sf |>
-  left_join(mormon_temples, join_by(NAME == State)) |>
+  left_join(mormon_temples_national, join_by(NAME == State)) |>
   mutate(total_temples = replace_na(total_temples, 0))
+```
 
-# create the map
+
+## Step 3: Finally, create a choropleth map of the contiguous United States by total temples in each state
+
+
+```{r}
+#| fig-cap: "Choropleth map of the contigious U.S States colored by their total Mormon temples"
+#| fig-alt: "A choropleth map of the contigious U.S states, colored by gradient in a colorblind friendly palette, shows the number of Mormon temples each state has. Utah has the most temples, above 30, while States like California, Texas, and Idaho follow at around 15. Most other states have a 5 or fewer. A few, such as many states in New England, West Virginia, and Alabama have no temples. States on the West Coast or in the Rocky Mountains tend to have more Mormon temples than those in the South or Great Plains, but exceptions include Florida and Virginia in the South and Missouri in the Great Plains. There are around 1 temple per state in the Midwest, but Illinois, Michigan, and Ohio have more temples. Pennsylvania and New York each have around 5 temples, but New Jersey, Delaware, and Maryland have around 1."
+
 ggplot() +
   geom_sf(data = geospatial_mormon_temples,
           aes(fill = total_temples)) +
@@ -47,6 +74,81 @@ ggplot() +
   theme_void() +
   coord_sf(crs = 5070)
 ```
+
+Interesting. Utah has an incredibly high number of temples. I wonder how temples are distributed spatially in Utah.
+
+## Research Question 2: 
+
+What is the distribution of Mormon temples in Utah by County
+
+
+## Step 1: Load Necessary Packages
+
+Packages were already loaded earlier
+
+
+## Step 2: Import / Clean / Wrangle the Data
+
+
+**Use the already imported data on Mormon temples, and clean / wrangle it**
+
+```{r}
+mormon_temples_utah <- messy_mormon_temples |>
+  filter(Country == "United States") |>
+  filter(State == "Utah") |>
+  group_by(County) |>
+  summarize(total_temples = n())
+```
+
+
+**Import data of county fips codes across the United States, and clean / wrangle it**
+
+```{r}
+messy_county_fips <- read_csv("../data/state_and_county_fips_master.csv")
+
+utah_county_fips <- messy_county_fips |>
+  filter(state == "UT") |>
+  mutate(State = as.numeric(str_sub(fips, start = 0, end = 2)),
+         County = as.numeric(str_sub(fips, start = 3, end = 5))) |>
+  select(County, name)
+```
+
+
+**Import a shapefile of counties in Utah, and clean / wrangle it while also joining the dataset on county fips codes**
+
+```{r}
+messy_utah_counties_sf <- read_sf("../data/tl_2022_49_cousub/tl_2022_49_cousub.shp")
+
+utah_counties_sf <- messy_utah_counties_sf |>
+  select(-NAME) |>
+  mutate(COUNTYFP = as.numeric(COUNTYFP)) |>
+  left_join(utah_county_fips, join_by(COUNTYFP == County)) |>
+  mutate(name = str_replace(name, " County", ""))
+```
+
+
+**Join the data on Mormon temples to the shapefile**
+
+sidenote: make sure any NA values in the total_temples column become 0
+
+```{r}
+mormon_temples_utah_sf <- utah_counties_sf |>
+  left_join(mormon_temples_utah, join_by(name == County)) |>
+  mutate(total_temples = replace_na(total_temples, 0))
+```
+
+
+## Step 3: Create a choropleth map of Utah's counties by total temples in each state
+
+
+```{r}
+ggplot() +
+  geom_sf(data = mormon_temples_utah_sf,
+          aes(fill = total_temples)) +
+  scale_fill_viridis_c(name = "Total Mormon Temples") +
+  theme_void()
+```
+
 
 
 
