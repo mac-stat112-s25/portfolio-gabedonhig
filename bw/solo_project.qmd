@@ -58,14 +58,14 @@ geospatial_mormon_temples <- us_states_sf |>
   mutate(total_temples = replace_na(total_temples, 0)) |>
   mutate(total_temples = cut(total_temples, 
                              breaks = c(0, 1, 6, 11, 16, 16-21, 30, Inf), 
-                             labels = c("0", "1-5", "6-10", "11-15", "16-19", "20-29", "30+"), include.lowest = TRUE))
+                             labels = c("0", "1-4", "5-9", "10-14", "15-19", "20-29", "30+"), include.lowest = TRUE))
 
 my_colors <- c(
   "0" = "#9E3D22",
-  "1-5" = "#CA5621",
-  "6-10" = "#E3732A",
-  "11-15" = "#EFB27E",
-  "16-20" = "#72A6CE",
+  "1-4" = "#CA5621",
+  "5-9" = "#E3732A",
+  "10-14" = "#EFB27E",
+  "15-19" = "#72A6CE",
   "20-29" = "#3A6B99",
   "30+" = "#2B5C8A")
 
