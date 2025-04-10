@@ -405,14 +405,14 @@ dbl  (2): Latitude, Longitude
 <span id="cb12-3"><a href="#cb12-3"></a>  <span class="fu">mutate</span>(<span class="at">total_temples =</span> <span class="fu">replace_na</span>(total_temples, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb12-4"><a href="#cb12-4"></a>  <span class="fu">mutate</span>(<span class="at">total_temples =</span> <span class="fu">cut</span>(total_temples, </span>
 <span id="cb12-5"><a href="#cb12-5"></a>                             <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">6</span>, <span class="dv">11</span>, <span class="dv">16</span>, <span class="dv">16-21</span>, <span class="dv">30</span>, <span class="cn">Inf</span>), </span>
-<span id="cb12-6"><a href="#cb12-6"></a>                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"0"</span>, <span class="st">"1-5"</span>, <span class="st">"6-10"</span>, <span class="st">"11-15"</span>, <span class="st">"16-19"</span>, <span class="st">"20-29"</span>, <span class="st">"30+"</span>), <span class="at">include.lowest =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb12-6"><a href="#cb12-6"></a>                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"0"</span>, <span class="st">"1-4"</span>, <span class="st">"5-9"</span>, <span class="st">"10-14"</span>, <span class="st">"15-19"</span>, <span class="st">"20-29"</span>, <span class="st">"30+"</span>), <span class="at">include.lowest =</span> <span class="cn">TRUE</span>))</span>
 <span id="cb12-7"><a href="#cb12-7"></a></span>
 <span id="cb12-8"><a href="#cb12-8"></a>my_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
 <span id="cb12-9"><a href="#cb12-9"></a>  <span class="st">"0"</span> <span class="ot">=</span> <span class="st">"#9E3D22"</span>,</span>
-<span id="cb12-10"><a href="#cb12-10"></a>  <span class="st">"1-5"</span> <span class="ot">=</span> <span class="st">"#CA5621"</span>,</span>
-<span id="cb12-11"><a href="#cb12-11"></a>  <span class="st">"6-10"</span> <span class="ot">=</span> <span class="st">"#E3732A"</span>,</span>
-<span id="cb12-12"><a href="#cb12-12"></a>  <span class="st">"11-15"</span> <span class="ot">=</span> <span class="st">"#EFB27E"</span>,</span>
-<span id="cb12-13"><a href="#cb12-13"></a>  <span class="st">"16-20"</span> <span class="ot">=</span> <span class="st">"#72A6CE"</span>,</span>
+<span id="cb12-10"><a href="#cb12-10"></a>  <span class="st">"1-4"</span> <span class="ot">=</span> <span class="st">"#CA5621"</span>,</span>
+<span id="cb12-11"><a href="#cb12-11"></a>  <span class="st">"5-9"</span> <span class="ot">=</span> <span class="st">"#E3732A"</span>,</span>
+<span id="cb12-12"><a href="#cb12-12"></a>  <span class="st">"10-14"</span> <span class="ot">=</span> <span class="st">"#EFB27E"</span>,</span>
+<span id="cb12-13"><a href="#cb12-13"></a>  <span class="st">"15-19"</span> <span class="ot">=</span> <span class="st">"#72A6CE"</span>,</span>
 <span id="cb12-14"><a href="#cb12-14"></a>  <span class="st">"20-29"</span> <span class="ot">=</span> <span class="st">"#3A6B99"</span>,</span>
 <span id="cb12-15"><a href="#cb12-15"></a>  <span class="st">"30+"</span> <span class="ot">=</span> <span class="st">"#2B5C8A"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1203,14 +1203,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb20-66"><a href="#cb20-66"></a>  <span class="fu">mutate</span>(<span class="at">total_temples =</span> <span class="fu">replace_na</span>(total_temples, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb20-67"><a href="#cb20-67"></a>  <span class="fu">mutate</span>(<span class="at">total_temples =</span> <span class="fu">cut</span>(total_temples, </span>
 <span id="cb20-68"><a href="#cb20-68"></a>                             <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">6</span>, <span class="dv">11</span>, <span class="dv">16</span>, <span class="dv">16-21</span>, <span class="dv">30</span>, <span class="cn">Inf</span>), </span>
-<span id="cb20-69"><a href="#cb20-69"></a>                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"0"</span>, <span class="st">"1-5"</span>, <span class="st">"6-10"</span>, <span class="st">"11-15"</span>, <span class="st">"16-19"</span>, <span class="st">"20-29"</span>, <span class="st">"30+"</span>), <span class="at">include.lowest =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb20-69"><a href="#cb20-69"></a>                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"0"</span>, <span class="st">"1-4"</span>, <span class="st">"5-9"</span>, <span class="st">"10-14"</span>, <span class="st">"15-19"</span>, <span class="st">"20-29"</span>, <span class="st">"30+"</span>), <span class="at">include.lowest =</span> <span class="cn">TRUE</span>))</span>
 <span id="cb20-70"><a href="#cb20-70"></a></span>
 <span id="cb20-71"><a href="#cb20-71"></a>my_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
 <span id="cb20-72"><a href="#cb20-72"></a>  <span class="st">"0"</span> <span class="ot">=</span> <span class="st">"#9E3D22"</span>,</span>
-<span id="cb20-73"><a href="#cb20-73"></a>  <span class="st">"1-5"</span> <span class="ot">=</span> <span class="st">"#CA5621"</span>,</span>
-<span id="cb20-74"><a href="#cb20-74"></a>  <span class="st">"6-10"</span> <span class="ot">=</span> <span class="st">"#E3732A"</span>,</span>
-<span id="cb20-75"><a href="#cb20-75"></a>  <span class="st">"11-15"</span> <span class="ot">=</span> <span class="st">"#EFB27E"</span>,</span>
-<span id="cb20-76"><a href="#cb20-76"></a>  <span class="st">"16-20"</span> <span class="ot">=</span> <span class="st">"#72A6CE"</span>,</span>
+<span id="cb20-73"><a href="#cb20-73"></a>  <span class="st">"1-4"</span> <span class="ot">=</span> <span class="st">"#CA5621"</span>,</span>
+<span id="cb20-74"><a href="#cb20-74"></a>  <span class="st">"5-9"</span> <span class="ot">=</span> <span class="st">"#E3732A"</span>,</span>
+<span id="cb20-75"><a href="#cb20-75"></a>  <span class="st">"10-14"</span> <span class="ot">=</span> <span class="st">"#EFB27E"</span>,</span>
+<span id="cb20-76"><a href="#cb20-76"></a>  <span class="st">"15-19"</span> <span class="ot">=</span> <span class="st">"#72A6CE"</span>,</span>
 <span id="cb20-77"><a href="#cb20-77"></a>  <span class="st">"20-29"</span> <span class="ot">=</span> <span class="st">"#3A6B99"</span>,</span>
 <span id="cb20-78"><a href="#cb20-78"></a>  <span class="st">"30+"</span> <span class="ot">=</span> <span class="st">"#2B5C8A"</span>)</span>
 <span id="cb20-79"><a href="#cb20-79"></a></span>
