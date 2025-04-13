@@ -1,5 +1,7 @@
 ---
 title: "Solo Project"
+author: "Gabriel Donelly Higgins"
+date: "April 2nd, 2025"
 format: html
 ---
 
@@ -26,7 +28,7 @@ library(dplyr)
 messy_us_states_sf <- read_sf("../data/archive/cb_2018_us_state_500k.shp")
 
 us_states_sf <- messy_us_states_sf |>
-  filter(NAME != "Guam") |>
+  filter(NAME != "Guam") |>  # I am deleting the names of states or territories that are not in the contigious United States so that the dataset does not include States like Hawaii or territories like Guam
   filter(NAME != "Commonwealth of the Northern Mariana Islands") |>
   filter(NAME != "Hawaii") |>
   filter(NAME != "Alaska") |>
@@ -42,25 +44,26 @@ us_states_sf <- messy_us_states_sf |>
 messy_mormon_temples <- read_csv("../data/ChurchofJesusChristTemples.csv")
 
 mormon_temples_national <- messy_mormon_temples |>
-  filter(Country == "United States") |>
-  group_by(State) |>
-  summarize(total_temples = n())
+  filter(Country == "United States") |> # I am using filter to get rid of Mormon temples outside of the USA, so that my dataset is just states within the United States
+  group_by(State) |> # I am making sure my unit of observation is states, as the research question demands the unit of observation be states
+  summarize(total_temples = n()) # I am counting the number of mormon temples per each state, as the research question asks for the number of temples in each unit of observation (state)
 ```
 
 
 **Join the shapefile and the data on Mormon temples**
 
-sidenote: make sure any NA values in the total_temples column become 0
+sidenote: make sure any NA values in the total_temples column become 0, and assign quantitative classes and color classes for the total_temples variable
 
 ```{r}
 geospatial_mormon_temples <- us_states_sf |>
-  left_join(mormon_temples_national, join_by(NAME == State)) |>
-  mutate(total_temples = replace_na(total_temples, 0)) |>
-  mutate(total_temples = cut(total_temples, 
-                             breaks = c(0, 1, 6, 11, 16, 16-21, 30, Inf), 
-                             labels = c("0", "1-4", "5-9", "10-14", "15-19", "20-29", "30+"), include.lowest = TRUE))
+  left_join(mormon_temples_national, join_by(NAME == State)) |> # I am joining the states shapefile and the mormon temples dataset to see the number of mormon temples per state with shapefile data, so that the data can be displayed on a map
+  mutate(total_temples = replace_na(total_temples, 0)) |> # because states with no mormon temples have no match between the shapefile and mormon temples dataset, their value for the total number of temples is NA, when it should be 0. I am correcting it so that the total number of temples variable displays as 0 when the value is NA
+  mutate(total_temples = cut(total_temples, # here I am breaking the quantitative data on temples into classes so that the map does not have proportional color, but instead has clear classes of quantitative data, making it easier to read
+                             breaks = c(0, 1, 6, 11, 16, 16-21, 30, Inf), # here I am setting up the breaks for each class. I am doing it by distribution, and also creating a class for Utah, since it is an especially power outlier compared to all other states. Additionally, a class for states with 0 temples is important to denote states with no temples, and a class for states with 30+ temples is important to denote Utah, which is an outlier in terms of temples
+                             labels = c("0", "1-4", "5-9", "10-14", "15-19", "20-29", "30+"), # this assigns a string to each class, important for assigning colors to each class, later in the code, that will be used to create the choropleth map
+                             include.lowest = TRUE)) # this makes it so that the breaks include the lowest values in the cuts. This is important for creating the class of states with no temples
 
-my_colors <- c(
+my_colors <- c( # this will assign colors to each string previously mentioned in the code about classes. It is done in a gradient from brown to blue, which helps to create a noticeable transition in the choropleth map
   "0" = "#9E3D22",
   "1-4" = "#CA5621",
   "5-9" = "#E3732A",
@@ -81,11 +84,12 @@ Note: this color palette uses a colorblind friendly palette
 #| fig-alt: "A choropleth map of the contigious U.S states, colored by gradient from dark brown / orange to light blue and then to dark blue. The shows the number of Mormon temples each state has. Utah has the most temples, 30 or more, followed by California between 15-19. California is followed by Idaho, Texas, and Nevada at 10-14. Most other states have 5-9 or 1-4. A few, such as West Virginia, Alabamam, and many in New England have no temples. States on the West Coast or in the Rocky Mountains tend to have more Mormon temples than those in the South or Great Plains, but exceptions include Florida and Virginia in the South and Missouri in the Great Plains. There are around 1-4 temples per state in the Midwest, but Illinois, Michigan, and Ohio have more, between 5-9 temples. Pennsylvania and New York have around 5-9 temples, but New Jersey and Maryland have 1-4 and Delaware has 0."
 
 ggplot() +
-  geom_sf(data = geospatial_mormon_temples,
-          aes(fill = total_temples)) +
-  scale_fill_manual(name = "Total Mormon Temples", values = my_colors) +
-  theme_void() +
-  coord_sf(crs = 5070)
+  geom_sf(data = geospatial_mormon_temples, # this imports the data from the file with both geospatial data and spatial data, to create the map
+          aes(fill = total_temples)) + # this uses the data from each state to set the fill to be value in total_temples, assigning one of the quantitative classes to each state
+  scale_fill_manual(name = "Total Mormon Temples", # this sets the name of the legend, renaming the mapped quantitative variable "Total Mormon Temples", for the sake of making the legend understandable
+                    values = my_colors) + # the colors of the classes is changed to the assigned classes in my_colors to make the map a readable choropleth map
+  theme_void() + # this removes the latitude and longitude along the axes because they are add unnecessary to the choropleth map
+  coord_sf(crs = 5070) # this uses a projcetion that is more accurate than the coordinate reference system created by default with geom_sf(). This is for the sake of accuracy, but also allows the map to still be readable (every projection always has distortion)
 ```
 
 Interesting. Utah has an incredibly high number of temples. I wonder how temples are distributed spatially in Utah.
@@ -107,17 +111,19 @@ Packages were already loaded earlier
 
 ```{r}
 mormon_temples_utah <- messy_mormon_temples |>
-  filter(Country == "United States") |>
-  filter(State == "Utah") |>
-  group_by(County) |>
-  summarize(total_temples = n())
+  filter(State == "Utah") |> # make sure we are exclusively working with data in Utah
+  group_by(County) |> # set the unit of observation to counties
+  summarize(total_temples = n()) # use this to count the total temples per county
 ```
 
 
 **Import data of counties' fips codesm and their names, across the United States and clean / wrangle it**
 
 ```{r}
-utah_county_fips <- read_csv("../data/state_and_county_fips_master.csv")
+messy_utah_county_fips <- read_csv("../data/state_and_county_fips_master.csv") 
+
+utah_county_fips <- messy_utah_county_fips |>
+  mutate(name = str_replace(name, " County", "")) # remove " County" from the name variable so that it is easier to join data from this dataset with data from the temples dataset later
 ```
 
 
@@ -127,9 +133,8 @@ utah_county_fips <- read_csv("../data/state_and_county_fips_master.csv")
 messy_utah_counties_sf <- read_sf("../data/UtahCountyBoundaries_6245553605277884471/Counties.shp")
 
 utah_counties_sf <- messy_utah_counties_sf |>
-  mutate(FIPS_STR = as.numeric(FIPS_STR)) |>
-  left_join(utah_county_fips, join_by(FIPS_STR == fips)) |>
-  mutate(name = str_replace(name, " County", ""))
+  mutate(FIPS_STR = as.numeric(FIPS_STR)) |> # change the fips code to be a number so that it is easier to join data from this dataset with the data on fips codes and names
+  left_join(utah_county_fips, join_by(FIPS_STR == fips))
 ```
 
 
@@ -142,10 +147,11 @@ mormon_temples_utah_sf <- utah_counties_sf |>
   left_join(mormon_temples_utah, join_by(name == County)) |>
   mutate(total_temples = replace_na(total_temples, 0)) |>
   mutate(total_temples = cut(total_temples, 
-                             breaks = c(0, 1, 2, 4, 6, 8, Inf), 
-                             labels = c("0", "1", "2-3", "4-5", "6-7", "8+"), include.lowest = TRUE))
+                             breaks = c(0, 1, 2, 4, 6, 8, Inf), # again, create quantitative classes. States with 0 temples should have their own class, and so should states with an especially high number of temples.
+                             labels = c("0", "1", "2-3", "4-5", "6-7", "8+"), # again, use labels
+                             include.lowest = TRUE)) # again, make sure to include the lowest value
 
-my_colors <- c(
+my_colors <- c( # again, create a color palette for the classes in the choropleth map
   "0" = "#F4D166",
   "1" = "#BEC45C",
   "2-3" = "#6EAC56",
@@ -163,9 +169,10 @@ my_colors <- c(
 
 ggplot() +
   geom_sf(data = mormon_temples_utah_sf,
-          aes(fill = total_temples)) +
-  scale_fill_manual(name = "Total Mormon Temples", values = my_colors) +
-  theme_void()
+          aes(fill = total_temples)) + # this imports the data from the file with both geospatial data and spatial data, to create the map
+  scale_fill_manual(name = "Total Mormon Temples", # this sets the name of the legend, renaming the mapped quantitative variable "Total Mormon Temples", for the sake of making the legend understandable
+                    values = my_colors) + # the colors of the classes is changed to the assigned classes in my_colors to make the map a readable choropleth map
+  theme_void() # this removes the latitude and longitude along the axes because they are add unnecessary to the choropleth map
 ```
 
 Interestingly, it seems as though nearly all of the Mormon temples focused themselves into one cluser of counties near the center of the state. There are only 2 other counties that are disconnected from the cluster of counties, one in the north and one in the southwest. Most counties, across the state, have no temples. In the central counties, there is a gradient from the south to north, with a decreasing number of temples in each county, with the only exception being the southernmost county which has only 1 temple.
