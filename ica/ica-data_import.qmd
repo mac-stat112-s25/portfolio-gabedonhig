@@ -123,7 +123,7 @@ In the example below, the file path is **absolute** where it tells us the locati
 
 ```{r eval = FALSE}
 library(tidyverse)
-my_data <- read_csv("~/Desktop/documents/Github/portfolio-gabedonhig/mydata.csv")
+my_data <- read_csv("~/Desktop/documents/Github/portfolio-gabedonhig-2/data/mydata.csv")
 ```
 
 

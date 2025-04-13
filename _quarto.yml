@@ -35,7 +35,7 @@ book:
 
     - part: "In-class Activities"
       chapters: 
-      - ica/ica-uni.qmd
+#      - ica/ica-uni.qmd
       - ica/ica-bi.qmd
       - ica/ica-multi.qmd
       - ica/ica-spatial.qmd
@@ -46,7 +46,7 @@ book:
       - ica/ica-reshaping.qmd
       - ica/ica-factors.qmd
       - ica/ica-dates.qmd
-      - ica/ica-data_import.qmd
+#      - ica/ica-data_import.qmd
       
     - part: "summary"
       chapters: 
