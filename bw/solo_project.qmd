@@ -186,9 +186,9 @@ Throughout the contigious United States, the states with the most Mormon temples
 
 ## References
 - https://churchofjesuschristtemples.org/statistics/ (accessed March 30th)
-- https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html (accessed March 30th)
-- https://github.com/kjhealy/fips-codes/blob/master/state_and_county_fips_master.csv (accessed March 31st)
-- https://hub.arcgis.com/datasets/utah::utah-county-boundaries/explore (accessed March 31st)
+- https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html (accessed: March 30th)
+- https://github.com/kjhealy/fips-codes/blob/master/state_and_county_fips_master.csv (accessed: March 31st)
+- https://hub.arcgis.com/datasets/utah::utah-county-boundaries/explore (accessed: March 31st)
 
 
 

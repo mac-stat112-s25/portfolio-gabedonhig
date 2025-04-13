@@ -3,3 +3,65 @@ title: "Trivariate Viz"
 ---
 
 Use this file to generate a professional looking **trivariate** visualization.  The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
+
+```{r}
+library(forcats)
+library(ggplot2)
+
+messy_euro_households <- read_csv("../data/estat_cens_21m$defaultview_filtered_en.csv")
+
+euro_households <- messy_euro_households |>
+  filter(TIME_PERIOD == 2021) |>
+  select(geo, OBS_VALUE, marsta) |>
+  filter(marsta %in% c("Persons in an same-sex married couple or registered partnership", "Married persons or in registered partnership")) |>
+  arrange(geo) |>
+  mutate(marsta = fct_recode(marsta, 
+                             "homo_couples" = "Persons in an same-sex married couple or registered partnership",
+                             "all_couples" = "Married persons or in registered partnership")) |>
+  pivot_wider(names_from = marsta, values_from = OBS_VALUE) |>
+  mutate(pct_homo_marriages = (homo_couples / all_couples) * 100)
+
+euro_households
+
+messy_euro_gdp <- read_csv("../data/estat_teina010_filtered_en.csv")
+
+euro_gdp <- messy_euro_gdp |>
+  filter(TIME_PERIOD == "2022-Q1") |>
+  select(OBS_VALUE, geo)
+
+euro_gdp_marriages <- euro_households |>
+  left_join(euro_gdp, join_by(geo == geo))
+
+messy_gay_rights <- read_csv("../data/equaldex_equality_index.csv")
+
+gay_rights <- messy_gay_rights |>
+  select(`Region ID`, EI) |>
+  mutate(EI = cut(EI, 
+                  breaks = c(50, 70, 80, 90, Inf),
+                  labels = c("50-69", "70-79", "80-89", "90-100"),
+                  include.lowest = TRUE)) 
+
+my_colors <- c(
+  "50-69" = "#24693D",
+  "70-79" = "#5889B4",
+  "80-89" = "#1F74B1",
+  "90-100" = "#26456E")
+
+euro_gdp_marriages_rights <- euro_gdp_marriages |>
+  left_join(gay_rights, join_by(geo == 'Region ID'))
+
+euro_gdp_marriages_rights
+
+ggplot(euro_gdp_marriages_rights, aes(x = pct_homo_marriages, y = OBS_VALUE, color = EI)) +
+  geom_point(size = 3, alpha = 0.8) +
+  scale_color_manual(name = "Equality Index",
+                     values = my_colors) +
+  theme_solarized() +
+  geom_smooth(method = "lm", se = FALSE, alpha = 0.8) +
+  labs(x = "Percent of Couples Who are Homosexual", y = "National GDP")
+```
+
+## references
+https://ec.europa.eu/eurostat/databrowser/view/cens_21m/default/table?lang=en&category=cens.cens_21.cens_21fh (accessed: April 13th, 2025)
+https://ec.europa.eu/eurostat/databrowser/view/teina010/default/table?lang=en&category=shorties.teieuro_na.teina_gdp (accessed: April 13th, 2025)
+https://www.equaldex.com/equality-index-api (accessed: April 13th, 2025)
