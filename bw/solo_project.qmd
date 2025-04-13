@@ -89,7 +89,8 @@ ggplot() +
   scale_fill_manual(name = "Total Mormon Temples", # this sets the name of the legend, renaming the mapped quantitative variable "Total Mormon Temples", for the sake of making the legend understandable
                     values = my_colors) + # the colors of the classes is changed to the assigned classes in my_colors to make the map a readable choropleth map
   theme_void() + # this removes the latitude and longitude along the axes because they are add unnecessary to the choropleth map
-  coord_sf(crs = 5070) # this uses a projcetion that is more accurate than the coordinate reference system created by default with geom_sf(). This is for the sake of accuracy, but also allows the map to still be readable (every projection always has distortion)
+  coord_sf(crs = 5070) |> # this uses a projcetion that is more accurate than the coordinate reference system created by default with geom_sf(). This is for the sake of accuracy, but also allows the map to still be readable (every projection always has distortion) 
+  labs(title = "Total Mormon Temples by State in the Contigious United States")
 ```
 
 Interesting. Utah has an incredibly high number of temples. I wonder how temples are distributed spatially in Utah.
@@ -172,7 +173,8 @@ ggplot() +
           aes(fill = total_temples)) + # this imports the data from the file with both geospatial data and spatial data, to create the map
   scale_fill_manual(name = "Total Mormon Temples", # this sets the name of the legend, renaming the mapped quantitative variable "Total Mormon Temples", for the sake of making the legend understandable
                     values = my_colors) + # the colors of the classes is changed to the assigned classes in my_colors to make the map a readable choropleth map
-  theme_void() # this removes the latitude and longitude along the axes because they are add unnecessary to the choropleth map
+  theme_void() |> # this removes the latitude and longitude along the axes because they are add unnecessary to the choropleth map
+  labs(title = "Total Mormon Temples by County in Utah")
 ```
 
 Interestingly, it seems as though nearly all of the Mormon temples focused themselves into one cluser of counties near the center of the state. There are only 2 other counties that are disconnected from the cluster of counties, one in the north and one in the southwest. Most counties, across the state, have no temples. In the central counties, there is a gradient from the south to north, with a decreasing number of temples in each county, with the only exception being the southernmost county which has only 1 temple.
