@@ -182,6 +182,11 @@ Interestingly, it seems as though nearly all of the Mormon temples focused thems
 
 Throughout the contigious United States, the states with the most Mormon temples tend to be in the Rocky Mountains or on the West Coast. The region of states with the fewest temples is the Great Plains. But Utah stands out as the state with the highest concentration of temples, far surpassing all other states. When you investigate Utah's spatial distribution of temples by county, you discover that they are focused in a cluster of counties in the center of the state, with 2 other outlier counties (that have only one temple) in the state. The counties clustered in the center have an incredibly dense number of temples, in comparison to the rest of the united cities. One singular county has 8+ temples, more temples than most states have. This leads to the second conclusion about the distribution of Mormon temples in the contigious United States: Utah has an incredibly spatially concentrated distribution of temples near the center of its state, making the state surpass the number of temples per state across the contigious United States
 
+## References
+- https://churchofjesuschristtemples.org/statistics/ (accessed March 30th)
+- https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html (accessed March 30th)
+- https://github.com/kjhealy/fips-codes/blob/master/state_and_county_fips_master.csv (accessed March 31st)
+- https://hub.arcgis.com/datasets/utah::utah-county-boundaries/explore (accessed March 31st)
 
 
 
