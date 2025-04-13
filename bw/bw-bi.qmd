@@ -20,9 +20,9 @@ movies_len <- messy_movies |>
 ggplot(movies_len, aes(x = title_len)) +
   geom_histogram(color = "white", 
                  binwidth = 5,
-                 fill = "orange") +
+                 fill = "#458B74") +
   theme_bw() +
   labs(x = "Total Characters in Title",
-       y = "Total Movies and TV Shows",
+       y = "Movies and TV Shows",
        title = "Movies and TV Shows Versus the Characters in Their Title")
 ```
