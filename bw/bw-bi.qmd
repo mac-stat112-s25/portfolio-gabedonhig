@@ -26,7 +26,7 @@ billionaires <- messy_billionaires |>
 ```
 
 
-## Step 3: Put data into a plot
+## Step 3: Vizualize
 
 ```{r}
 #| fig-cap: "Histogram of Distribution of Gender by Age Among Billionaires"

@@ -1,37 +1,60 @@
 ---
 title: "Trivariate Viz"
+author: "Gabriel Donelly Higgins"
+date: "April 13th, 2025"
 ---
 
-Use this file to generate a professional looking **trivariate** visualization.  The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
+## Research question:
+
+Do rates of gay marriage increase in European countries as GDP per capita increases, or vice versa, and is the correlation different depending on a countries' LGBT Equality Index
+
+## Step 1: Load necessary packages
 
 ```{r}
 library(forcats)
 library(ggplot2)
+library(tidyverse)
+library(dplyr)
+library(ggthemes)
+```
 
+
+## Step 2: Import and clean / wrangle / join data
+
+
+**Data about marriages in European countries:**
+
+```{r}
 messy_euro_households <- read_csv("../data/estat_cens_21m$defaultview_filtered_en.csv")
 
 euro_households <- messy_euro_households |>
-  filter(TIME_PERIOD == 2021) |>
+  filter(TIME_PERIOD == 2021) |> # I am setting the data to come from 2021 so that it matches my data on the GDP per capita of European countries
   select(geo, OBS_VALUE, marsta) |>
-  filter(marsta %in% c("Persons in an same-sex married couple or registered partnership", "Married persons or in registered partnership")) |>
-  arrange(geo) |>
+  filter(marsta %in% c("Persons in an same-sex married couple or registered partnership", "Married persons or in registered partnership")) |> # from this dataset, we want to use the values for couples who are homosexual and the total couples
   mutate(marsta = fct_recode(marsta, 
                              "homo_couples" = "Persons in an same-sex married couple or registered partnership",
-                             "all_couples" = "Married persons or in registered partnership")) |>
-  pivot_wider(names_from = marsta, values_from = OBS_VALUE) |>
-  mutate(pct_homo_marriages = (homo_couples / all_couples) * 100)
+                             "all_couples" = "Married persons or in registered partnership")) |> # I am renaming the code to factors because the current titles cannot be used in r code to do equations
+  pivot_wider(names_from = marsta, values_from = OBS_VALUE) |> # I am making the information spread onto one row so I can then use the values as part of the same row to calculate the percent of the couples who are homosexual
+  mutate(pct_homo_marriages = (homo_couples / all_couples) * 100) # I am making a new variable that represents the percent of each nation's couples which are homosexual, answering a necessary part of my research question
+```
 
-euro_households
 
-messy_euro_gdp <- read_csv("../data/estat_teina010_filtered_en.csv")
+**Data about the GDP of European countries:**
 
-euro_gdp <- messy_euro_gdp |>
-  filter(TIME_PERIOD == "2022-Q1") |>
-  select(OBS_VALUE, geo)
+```{r}
+messy_euro_gdp_capita <- read_csv("../data/estat_sdg_08_10_filtered_en (1).csv")
+
+euro_gdp_capita <- messy_euro_gdp_capita |>
+  filter(TIME_PERIOD == 2021) |>
+  select(geo, OBS_VALUE)
 
 euro_gdp_marriages <- euro_households |>
-  left_join(euro_gdp, join_by(geo == geo))
+  left_join(euro_gdp_capita, join_by(geo == geo)) # I am using left join here to combine the datasets on GDP per capita and the rates of couples that are homosexual in European countries
+```
 
+**Data on the LGBT Equality Index of countries around the world:**
+
+```{r}
 messy_gay_rights <- read_csv("../data/equaldex_equality_index.csv")
 
 gay_rights <- messy_gay_rights |>
@@ -39,29 +62,51 @@ gay_rights <- messy_gay_rights |>
   mutate(EI = cut(EI, 
                   breaks = c(50, 70, 80, 90, Inf),
                   labels = c("50-69", "70-79", "80-89", "90-100"),
-                  include.lowest = TRUE)) 
+                  include.lowest = TRUE)) # I am breaking the equality index of each country into quantitative classes so that it is easier for the viewer to read the plot later
 
 my_colors <- c(
-  "50-69" = "#24693D",
-  "70-79" = "#5889B4",
-  "80-89" = "#1F74B1",
-  "90-100" = "#26456E")
+  "50-69" = "#529985",
+  "70-79" = "#78A269",
+  "80-89" = "#E3C849",
+  "90-100" = "#C26B51") # here I am assigning colors for each of the classes
 
 euro_gdp_marriages_rights <- euro_gdp_marriages |>
   left_join(gay_rights, join_by(geo == 'Region ID'))
-
-euro_gdp_marriages_rights
-
-ggplot(euro_gdp_marriages_rights, aes(x = pct_homo_marriages, y = OBS_VALUE, color = EI)) +
-  geom_point(size = 3, alpha = 0.8) +
-  scale_color_manual(name = "Equality Index",
-                     values = my_colors) +
-  theme_solarized() +
-  geom_smooth(method = "lm", se = FALSE, alpha = 0.8) +
-  labs(x = "Percent of Couples Who are Homosexual", y = "National GDP")
 ```
+
+
+## Step 3: Visualize
+
+```{r}
+#| fig-cap: "A Scatterplot of Countries' Percent of Couples Which Are Homosexual and Real GDP per Capita, with points color coded by their class in the LGBT Equality Index, and using trend lines for each class along with a an overall trend line for all points regardless of class"
+#| fig-alt: "A scatterplot uses 'Percent of Couples Which are Homosexual' on the x-axis and 'Real GDP Per Capita in Euros' on the y-axis. The title above the scatterplot is 'Percent of Couples Which are Homosexual, Real GDP per capita, and the LGBT Equality Index of European Countries'. There is a legend titled 'LGBT Equality Index' to the right of the scatterplot. There are 4 "
+ggplot(euro_gdp_marriages_rights, aes(x = pct_homo_marriages, y = OBS_VALUE, color = EI)) +
+  geom_point(size = 3,
+             alpha = 0.8) +
+  scale_color_manual(name = "LGBT Equality Index",
+                     values = my_colors) + # here I am using my previously assigned colors for the factors
+  theme_solarized() +
+  geom_smooth(method = "lm",
+              se = FALSE) + # I am getting rid of the confidence interval because it obscures much of the graph
+  labs(x = "Percent of Couples Which are Homosexual", 
+       y = "Real GDP Per Capita in Euros", 
+       title = "Percent of Couples Which are Homosexual, Real GDP per capita, and the LGBT Equality Index of European Countries") +
+  geom_smooth(aes(x = pct_homo_marriages, y = OBS_VALUE),
+              method = "lm", 
+              line_type = "dashed",
+              se = FALSE,
+              inherit.aes = FALSE,
+              color = "black",
+              linewidth = 2) # I increase the linewidth to make it clear that this line in the most important, different from the others as a representation of the overall trend
+```
+
+
+## Conclusion:
+
+While this plot is not enough to make definitive conclusions, it does appear to show slight correlations. Interestingly, there are only two situations where the real GDP per capita decreases as the percent of couples that are homosexual increases. Firstly, when the LGBT inequality index is between 90-100, and also when it is between 50-69. It is quite ironic, and possibly suggests that the LGBT equality index isn't even having an actual effect. The decrease observed is relatively small compared to the large increase that can be observed between from countries in the 70-79 range and the 80-89 range. The thick black line represents the overall correlation between real GDP per capita and the percent of couples which are homosexual, regardless of the LGBT equality index, showing a large increase. Whether one causes the other is difficult to say. Perhaps marriages causes the GDP to increase, and as homosexual people become able to marry, their marriages increase the GDP per capita. Or perhaps increasing GDP per capita spurs increased homosexual marriages as a percent of the couples in a country's population. There are a lot of explanations that should be explored, and whether or not there is a strong correlation between LGBT equality index scores, the percent of couples which are homosexual, and the Real GDP per capita should be investigated. 
+
 
 ## references
 https://ec.europa.eu/eurostat/databrowser/view/cens_21m/default/table?lang=en&category=cens.cens_21.cens_21fh (accessed: April 13th, 2025)
-https://ec.europa.eu/eurostat/databrowser/view/teina010/default/table?lang=en&category=shorties.teieuro_na.teina_gdp (accessed: April 13th, 2025)
+https://ec.europa.eu/eurostat/databrowser/view/sdg_08_10/default/table?lang=en (accessed: April 13th, 2025)
 https://www.equaldex.com/equality-index-api (accessed: April 13th, 2025)
