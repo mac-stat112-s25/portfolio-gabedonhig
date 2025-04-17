@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.5.57">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
+<meta name="author" content="Gabriel Donelly Higgins">
 <title>1&nbsp; Univariate Viz – COMP/STAT112 Notebook</title>
 <style>
 code{white-space: pre-wrap;}
@@ -56,7 +54,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -75,8 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -102,18 +98,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-
-
-<link rel="stylesheet" href="../style/custom.css">
+}</script><link rel="stylesheet" href="../style/custom.css">
 </head>
-
 <body class="nav-sidebar docked">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -124,15 +114,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">Your Name Here</a> 
+      <a href="../">Gabriel Donelly Higgins</a> 
         <div class="sidebar-tools-main">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
@@ -150,7 +136,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Welcome</span></a>
@@ -164,8 +150,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../bw/bw-uni.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Univariate Viz</span></span></a>
@@ -208,7 +194,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
@@ -217,8 +203,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../ica/ica-uni.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Univariate Viz</span></span></a>
@@ -284,14 +270,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">dates</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../ica/ica-data_import.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">data_import</span></span></a>
-  </div>
-</li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
@@ -300,53 +280,129 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../summary/exam_1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">exam_1</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">exam_1</span></span></a>
   </div>
 </li>
       </ul>
-  </li>
+</li>
     </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#research-question" id="toc-research-question" class="nav-link active" data-scroll-target="#research-question"><span class="header-section-number">1.1</span> Research question:</a></li>
+  <li><a href="#step-1-load-necessary-packages" id="toc-step-1-load-necessary-packages" class="nav-link" data-scroll-target="#step-1-load-necessary-packages"><span class="header-section-number">1.2</span> Step 1: Load necessary packages</a></li>
+  <li><a href="#step-2-import-and-clean-wrangle-data" id="toc-step-2-import-and-clean-wrangle-data" class="nav-link" data-scroll-target="#step-2-import-and-clean-wrangle-data"><span class="header-section-number">1.3</span> Step 2: Import and clean / wrangle data</a></li>
+  <li><a href="#step-3-put-data-into-a-plot" id="toc-step-3-put-data-into-a-plot" class="nav-link" data-scroll-target="#step-3-put-data-into-a-plot"><span class="header-section-number">1.4</span> Step 3: Put data into a plot</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">1.5</span> Conclusion:</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">1.6</span> References:</a></li>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../bw/bw-uni.html">Best Work</a></li><li class="breadcrumb-item"><a href="../bw/bw-uni.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Univariate Viz</span></a></li></ol></nav>
-<div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Univariate Viz</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../bw/bw-uni.html">Best Work</a></li><li class="breadcrumb-item"><a href="../bw/bw-uni.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Univariate Viz</span></a></li></ol></nav><div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">
+<span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Univariate Viz</span>
+</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Gabriel Donelly Higgins </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">Invalid Date</p>
+    </div>
+  </div>
   
     
   </div>
   
 
 
-</header>
-
-
-<p>Use this file to generate a professional looking <strong>univariate</strong> visualization. The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.</p>
+</header><section id="research-question" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="research-question">
+<span class="header-section-number">1.1</span> Research question:</h2>
+<p>What is the distribution of the length of titles for movies and tv shows on streaming platforms</p>
+</section><section id="step-1-load-necessary-packages" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="step-1-load-necessary-packages">
+<span class="header-section-number">1.2</span> Step 1: Load necessary packages</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">library</span>(ggthemes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="step-2-import-and-clean-wrangle-data" class="level2" data-number="1.3"><h2 data-number="1.3" class="anchored" data-anchor-id="step-2-import-and-clean-wrangle-data">
+<span class="header-section-number">1.3</span> Step 2: Import and clean / wrangle data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>messy_movies <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/MoviesOnStreamingPlatforms.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>New names:
+Rows: 9515 Columns: 11
+── Column specification
+──────────────────────────────────────────────────────── Delimiter: "," chr
+(3): Title, Age, Rotten Tomatoes dbl (8): ...1, ID, Year, Netflix, Hulu, Prime
+Video, Disney+, Type
+ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
+Specify the column types or set `show_col_types = FALSE` to quiet this message.
+• `` -&gt; `...1`</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>movies_len <span class="ot">&lt;-</span> messy_movies <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">mutate</span>(<span class="at">title_len =</span> <span class="fu">str_length</span>(Title)) <span class="sc">|&gt;</span> <span class="co"># I am mutating a variable that counts the length of the Title variable</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="fu">select</span>(title_len) <span class="co"># since the title_len variable is the only thing I need, I am only going to select that variable in this dataset I am creating</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="step-3-put-data-into-a-plot" class="level2" data-number="1.4"><h2 data-number="1.4" class="anchored" data-anchor-id="step-3-put-data-into-a-plot">
+<span class="header-section-number">1.4</span> Step 3: Put data into a plot</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">ggplot</span>(movies_len, <span class="fu">aes</span>(<span class="at">x =</span> title_len)) <span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>  <span class="fu">geom_histogram</span>(<span class="at">color =</span> <span class="st">"cornsilk"</span>, <span class="co"># this helps to make the bars contrast against each other</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>                 <span class="at">binwidth =</span> <span class="dv">5</span>) <span class="sc">+</span> <span class="co"># this allows the data to be broken into classes, making it easier to explain and understand</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>  <span class="fu">theme_solarized</span>() <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Total Characters in Title"</span>,</span>
+<span id="cb7-6"><a href="#cb7-6"></a>       <span class="at">y =</span> <span class="st">"Movies and TV Shows"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7"></a>       <span class="at">title =</span> <span class="st">"Movies and TV Shows on Streaming Services Versus the Total Characters in Their Title"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="bw-uni_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" alt="A histogram with an x-axis titled 'Total Characters in Title' and a y-axis titled 'Movies and TV Shows'. The bars on the histogram have a grey color. The x-axis has a range of 120, and the y-axis has a range of 2500. The bins are have a width of 5, and the bin with the most observations is the 11-15 bin, closely followed by the 6-10 bin. They each have slightly more than 2500 observations, while the only other bin that comes close is the 16-20 bin, with less than 1500 observations. The distribution of movies and TV shows in the bins is initially low, at slightly more than 1000 observations for the 1-5 bin, followed by the peaks of the 6-10 and 11-15 bins, and then decreasing exponentially across each bin. There is no movie or TV show with more than 60 characters in its title" width="672"></p>
+<figcaption>Histogram of the distribution of movies and TV shows by the total number of characters in their title</figcaption></figure>
+</div>
+</div>
+</div>
+</section><section id="conclusion" class="level2" data-number="1.5"><h2 data-number="1.5" class="anchored" data-anchor-id="conclusion">
+<span class="header-section-number">1.5</span> Conclusion:</h2>
+<p>Movies and TV shows on streaming services tends to offer less entertainment as the title of the entertainment more characters than 15. A plurality of the entertainment has 11-15 characters, sharply followed by 6-10. As one looks for movies and tv shows with titles longer than 15 characetrs, the number of observations decreases exponentially. There could be many reasons for this such as audiences’ attention spans preferring shorter titles or writers simply coming up with shorter titles more often than very long ones.</p>
+</section><section id="references" class="level2" data-number="1.6"><h2 data-number="1.6" class="anchored" data-anchor-id="references">
+<span class="header-section-number">1.6</span> References:</h2>
+<p>https://www.kaggle.com/datasets/ruchi798/movies-on-netflix-prime-video-hulu-and-disney (accessed: April 11th, 2025)</p>
 
 
 <!-- -->
 
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -965,9 +1021,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="../index.html" class="pagination-link" aria-label="Welcome">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Welcome</span>
       </a>          
@@ -978,14 +1032,61 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="an">title:</span><span class="co"> "Univariate Viz"</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="co">---</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a></span>
-<span id="cb1-5"><a href="#cb1-5"></a>Use this file to generate a professional looking **univariate** visualization. The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">---</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="an">title:</span><span class="co"> "Univariate Viz"</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="an">author:</span><span class="co"> "Gabriel Donelly Higgins"</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="an">date:</span><span class="co"> "April 12th, 2025"</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="co">---</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="fu">## Research question:</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a></span>
+<span id="cb8-9"><a href="#cb8-9"></a>What is the distribution of the length of titles for movies and tv shows on streaming platforms</span>
+<span id="cb8-10"><a href="#cb8-10"></a></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="fu">## Step 1: Load necessary packages</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a></span>
+<span id="cb8-15"><a href="#cb8-15"></a><span class="in">```{r}</span></span>
+<span id="cb8-16"><a href="#cb8-16"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb8-17"><a href="#cb8-17"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb8-18"><a href="#cb8-18"></a><span class="in">```</span></span>
+<span id="cb8-19"><a href="#cb8-19"></a></span>
+<span id="cb8-20"><a href="#cb8-20"></a></span>
+<span id="cb8-21"><a href="#cb8-21"></a><span class="fu">## Step 2: Import and clean / wrangle data</span></span>
+<span id="cb8-22"><a href="#cb8-22"></a></span>
+<span id="cb8-25"><a href="#cb8-25"></a><span class="in">```{r}</span></span>
+<span id="cb8-26"><a href="#cb8-26"></a>messy_movies <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/MoviesOnStreamingPlatforms.csv"</span>)</span>
+<span id="cb8-27"><a href="#cb8-27"></a></span>
+<span id="cb8-28"><a href="#cb8-28"></a>movies_len <span class="ot">&lt;-</span> messy_movies <span class="sc">|&gt;</span></span>
+<span id="cb8-29"><a href="#cb8-29"></a>  <span class="fu">mutate</span>(<span class="at">title_len =</span> <span class="fu">str_length</span>(Title)) <span class="sc">|&gt;</span> <span class="co"># I am mutating a variable that counts the length of the Title variable</span></span>
+<span id="cb8-30"><a href="#cb8-30"></a>  <span class="fu">select</span>(title_len) <span class="co"># since the title_len variable is the only thing I need, I am only going to select that variable in this dataset I am creating</span></span>
+<span id="cb8-31"><a href="#cb8-31"></a><span class="in">```</span></span>
+<span id="cb8-32"><a href="#cb8-32"></a></span>
+<span id="cb8-33"><a href="#cb8-33"></a></span>
+<span id="cb8-34"><a href="#cb8-34"></a><span class="fu">## Step 3: Put data into a plot</span></span>
+<span id="cb8-35"><a href="#cb8-35"></a></span>
+<span id="cb8-38"><a href="#cb8-38"></a><span class="in">```{r}</span></span>
+<span id="cb8-39"><a href="#cb8-39"></a><span class="co">#| fig-cap: "Histogram of the distribution of movies and TV shows by the total number of characters in their title"</span></span>
+<span id="cb8-40"><a href="#cb8-40"></a><span class="co">#| fig-alt: "A histogram with an x-axis titled 'Total Characters in Title' and a y-axis titled 'Movies and TV Shows'. The bars on the histogram have a grey color. The x-axis has a range of 120, and the y-axis has a range of 2500. The bins are have a width of 5, and the bin with the most observations is the 11-15 bin, closely followed by the 6-10 bin. They each have slightly more than 2500 observations, while the only other bin that comes close is the 16-20 bin, with less than 1500 observations. The distribution of movies and TV shows in the bins is initially low, at slightly more than 1000 observations for the 1-5 bin, followed by the peaks of the 6-10 and 11-15 bins, and then decreasing exponentially across each bin. There is no movie or TV show with more than 60 characters in its title"</span></span>
+<span id="cb8-41"><a href="#cb8-41"></a></span>
+<span id="cb8-42"><a href="#cb8-42"></a><span class="fu">ggplot</span>(movies_len, <span class="fu">aes</span>(<span class="at">x =</span> title_len)) <span class="sc">+</span></span>
+<span id="cb8-43"><a href="#cb8-43"></a>  <span class="fu">geom_histogram</span>(<span class="at">color =</span> <span class="st">"cornsilk"</span>, <span class="co"># this helps to make the bars contrast against each other</span></span>
+<span id="cb8-44"><a href="#cb8-44"></a>                 <span class="at">binwidth =</span> <span class="dv">5</span>) <span class="sc">+</span> <span class="co"># this allows the data to be broken into classes, making it easier to explain and understand</span></span>
+<span id="cb8-45"><a href="#cb8-45"></a>  <span class="fu">theme_solarized</span>() <span class="sc">+</span></span>
+<span id="cb8-46"><a href="#cb8-46"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Total Characters in Title"</span>,</span>
+<span id="cb8-47"><a href="#cb8-47"></a>       <span class="at">y =</span> <span class="st">"Movies and TV Shows"</span>,</span>
+<span id="cb8-48"><a href="#cb8-48"></a>       <span class="at">title =</span> <span class="st">"Movies and TV Shows on Streaming Services Versus the Total Characters in Their Title"</span>)</span>
+<span id="cb8-49"><a href="#cb8-49"></a><span class="in">```</span></span>
+<span id="cb8-50"><a href="#cb8-50"></a></span>
+<span id="cb8-51"><a href="#cb8-51"></a></span>
+<span id="cb8-52"><a href="#cb8-52"></a><span class="fu">## Conclusion:</span></span>
+<span id="cb8-53"><a href="#cb8-53"></a></span>
+<span id="cb8-54"><a href="#cb8-54"></a>Movies and TV shows on streaming services tends to offer less entertainment as the title of the entertainment more characters than 15. A plurality of the entertainment has 11-15 characters, sharply followed by 6-10. As one looks for movies and tv shows with titles longer than 15 characetrs, the number of observations decreases exponentially. There could be many reasons for this such as audiences' attention spans preferring shorter titles or writers simply coming up with shorter titles more often than very long ones. </span>
+<span id="cb8-55"><a href="#cb8-55"></a></span>
+<span id="cb8-56"><a href="#cb8-56"></a></span>
+<span id="cb8-57"><a href="#cb8-57"></a><span class="fu">## References:</span></span>
+<span id="cb8-58"><a href="#cb8-58"></a>https://www.kaggle.com/datasets/ruchi798/movies-on-netflix-prime-video-hulu-and-disney (accessed: April 11th, 2025)</span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
-
 
 
 
