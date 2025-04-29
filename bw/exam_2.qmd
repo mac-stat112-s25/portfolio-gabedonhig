@@ -1,0 +1,35 @@
+---
+title: "Exam 1"
+format: html
+---
+
+* this is a continuation of exam one
+
+## Research question:
+
+**What does the consumption of each food category in each country look like?**
+
+
+## Import Necessary Data and Tools:
+
+**Load in packages:**
+```{r}
+library(tidytuesdayR)
+library(tidyverse)
+library(rnaturalearth)
+library(sf)
+```
+
+
+**Load data:**
+```{r}
+tuesdata <- tt_load('2020-02-18')
+fc <- tuesdata$food_consumption
+```
+
+
+**Inspect Data:**
+```{r}
+str(fc)
+```
+

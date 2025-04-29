@@ -1,5 +1,5 @@
 ---
-title: "exam_2"
+title: "Exam 2 Summary"
 format: html
 ---
 
@@ -22,3 +22,22 @@ We want to numerically, not just visually, explore and summarize various charact
 | `mutate`    | **mutate** or create a *column*                   |
 | `summarize` | calculate a numerical **summary** of a *column*   |
 | `group_by`  | **group** the *rows* by a specified *column*      |
+
+
+We also want to use logical comparison operators oftentimes
+
+| symbol             | meaning                   |
+|:-------------------|:--------------------------|
+| `==`               | equal to                  |
+| `!=`               | not equal to              |
+| `>`                | greater than              |
+| `>=`               | greater than or equal to  |
+| `<`                | less than                 |
+| `<=`               | less than or equal to     |
+| `%in% c(???, ???)` | a list of multiple values |
+
+
+## Exploratory Data Analysis(EDA):
+
+When you get a dataset, you will want to perform EDA. It allows you to understand the dataset you are working with. You can use various functions to learn more about the data you are working with:
+
