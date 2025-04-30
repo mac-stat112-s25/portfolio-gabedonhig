@@ -1,5 +1,5 @@
 ---
-title: "Exam 1"
+title: "Exam 2"
 format: html
 ---
 
@@ -18,6 +18,7 @@ library(tidytuesdayR)
 library(tidyverse)
 library(rnaturalearth)
 library(sf)
+library(ggthemes)
 ```
 
 
@@ -32,4 +33,127 @@ fc <- tuesdata$food_consumption
 ```{r}
 str(fc)
 ```
+
+```{r}
+head(fc, 22)
+```
+
+
+**Inspect Country Variable:**
+```{r}
+fc |>
+  group_by(country) |>
+  summarize(sum(consumption)) |>
+  str()
+```
+
+There are 130 observations, when you set the unit of observation to countries, so there are 130 countries in this dataset
+
+
+**Inspect food_category variable:**
+```{r}
+fc |>
+  distinct(food_category)
+```
+
+Here we have 11 distinct food categories, but it is better to rename them for the sake of making them easier to read in a viz
+
+**Clean data:**
+```{r}
+fc_clean <- fc |>
+  mutate(food_category = as.factor(food_category),
+         food_category = fct_recode(food_category,
+                                    "Lamb" = "Lamb & Goat",
+                                    "Dairy" = "Milk - inc. cheese",
+                                    "Wheat" = "Wheat and Wheat Products",
+                                    "Nuts" = "Nuts inc. Peanut Butter"))
+```
+
+Double checking to make sure all variables are properly renamed
+```{r}
+fc_clean |>
+  distinct(food_category)
+```
+
+## Sub-research Question 1: Which 5 countries consume the most food?
+
+**Expected Dataframe:**
+We want a dataframe in which countries are listed, followed by their total consumption
+
+
+**Reshaping / Wrangling data:**
+```{r}
+country_consumption <- fc_clean |>
+  group_by(country) |>
+  summarize(total_consumption = sum(consumption))
+  # pivot_wider(names_from = food_category, values_from = consumption) |>
+  # mutate(total_consumption = Pork + Poultry + Beef + Lamb + Fish + Eggs + Dairy + Wheat + Rice + Soybeans + Nuts) |>
+  # select(country, total_consumption)
+```
+
+
+**Visualizing Data:**
+```{r}
+country_consumption |>
+  arrange(desc(total_consumption)) |>
+  head(5) |>
+  ggplot(aes(x = country, y = total_consumption)) +
+    geom_col() +
+    theme_solarized()
+```
+
+
+**Observations:**
+Seemingly, the top consumers of food are exclusively European countries. Their geographic location varies from Eastern to Western, Baltics and Balkans and Scandinavian countries. They all consume roughly similar amounts of food, with Findland consuming the most.
+
+
+## Sub-research Question 2: Which 5 countries consume the most of each food?
+
+**Expected Dataframe:**
+We want a dataframe where there is a variable for countries, a variable for the food type, and a variable for the consumption value. The food_category should correspond to the top 5 highest values in the consumption variable for its category. And the countries in the country variable will be the top 5 consumers of whatever food category is in the food variable.
+
+
+**Reshaping / Wrangling Data:**
+```{r}
+top_food_consumers <- fc_clean |>
+  select(-co2_emmission) |>
+  group_by(food_category) |>
+  slice_max(order_by = consumption, n = 5)
+```
+
+
+**Vizualizing Data:**
+```{r}
+ggplot(top_food_consumers, aes(x = food_category, y = consumption, fill = country)) +
+  geom_col() +
+  theme_solarized() +
+  theme(axis.text.x = element_text(angle = 45, 
+                                   hjust = 1, 
+                                   size = 5),
+        axis.text.y = element_text(size = 5))
+```
+
+
+**Observations:**
+Of all categories, dairy, wheat, and rice are the most consumed. The consumption of dairy, wheat, or rice is enough to outmatch the entire consumption of the top 5 countries combined in some categories like nuts or soybeans. What this means is that some of these categories are relatively easy to be a top 5 country in, because their consumption is very low anyway. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

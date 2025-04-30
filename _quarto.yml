@@ -31,11 +31,13 @@ book:
       - bw/bw-quad.qmd
       - bw/bw-spatial.qmd
       - bw/exam_1.qmd
+      - bw/exam_2.qmd
       - bw/solo_project.qmd
 
     - part: "Summary"
       chapters: 
       - summary/exam_1.qmd
+      - summary/exam_2.qmd
 
     - part: "In-class Activities"
       chapters: 

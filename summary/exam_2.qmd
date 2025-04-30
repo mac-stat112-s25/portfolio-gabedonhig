@@ -41,3 +41,28 @@ We also want to use logical comparison operators oftentimes
 
 When you get a dataset, you will want to perform EDA. It allows you to understand the dataset you are working with. You can use various functions to learn more about the data you are working with:
 
+## Useful R Functions Summary
+
+| Function                        | Action                                                                                                                                                                               |
+|-------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `str(dataset1)`                | Shows the number of rows, variables, the type of values in each variable, and values in each variable.                                                                              |
+| `summary(dataset1)`            | Gives a summary of each variable, showing the min / mean / max / median / 1st and 3rd quartiles for numerical variables. Identifies string variables and labels them as such.       |
+| `head(dataset, observationCount)` | Shows the first observations in a dataset, up to `observationCount`.                                                                                                                  |
+| `distinct(variable)`           | Lists all unique values within a variable.                                                                                                                                           |
+
+
+## Factors:
+
+Factors are useful for wrangling variables, especially strings, or for using variables in a viz. Here are some factor functions:
+
+## Common `forcats` Factor Functions
+
+| Function                                                | Result                                                  |
+|---------------------------------------------------------|---------------------------------------------------------|
+| `fct_relevel(variable, c("value1", "value2", "value3"))` | Reorders how the categories are shown in a plot.        |
+| `fct_reorder()`                                         | Relevels according to the values of another variable.   |
+| `fct_infreq()`                                          | Orders levels from highest to lowest frequency.         |
+| `fct_rev()`                                             | Reverses the current order of levels.                   |
+| `fct_recode()`                                          | Manually changes the levels of a factor.                |
+| `fct_lump()`                                            | Groups together the least common levels.                |
+| `fct_relabel()`                                         | Renames factor levels using a function.                 |
