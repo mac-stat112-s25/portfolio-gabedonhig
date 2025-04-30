@@ -287,56 +287,56 @@
   {
     "objectID": "bw/exam_1.html",
     "href": "bw/exam_1.html",
-    "title": "\n6  Exam 1\n",
+    "title": "\n6  exam_1\n",
     "section": "",
     "text": "6.1 Come Up With A Research Question:\nResearch question: what does the consumption of each food category in each country look like?",
     "crumbs": [
       "Best Work",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Exam 1</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>exam_1</span>"
     ]
   },
   {
     "objectID": "bw/exam_1.html#import-necessary-data-and-tools",
     "href": "bw/exam_1.html#import-necessary-data-and-tools",
-    "title": "\n6  Exam 1\n",
+    "title": "\n6  exam_1\n",
     "section": "\n6.2 Import Necessary Data and Tools:",
-    "text": "6.2 Import Necessary Data and Tools:\nLoad in packages:\n\nCodelibrary(tidytuesdayR)\nlibrary(tidyverse)\nlibrary(ggplot2)\nlibrary(forcats)\nlibrary(ggthemes)\n\n\nLoad in the data:\nIt should all be from the same date\n\nCodetuesdata &lt;- tt_load('2020-02-18')\nfc &lt;- tuesdata$food_consumption",
+    "text": "6.2 Import Necessary Data and Tools:\nLoad in packages:\n\nCodelibrary(tidytuesdayR)\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nCodelibrary(ggplot2)\nlibrary(forcats)\nlibrary(ggthemes)\n\n\nLoad in the data:\nIt should all be from the same date\n\nCodetuesdata &lt;- tt_load('2020-02-18')\n\n---- Compiling #TidyTuesday Information for 2020-02-18 ----\n--- There is 1 file available ---\n\n\n── Downloading files ───────────────────────────────────────────────────────────\n\n  1 of 1: \"food_consumption.csv\"\n\nCodefc &lt;- tuesdata$food_consumption",
     "crumbs": [
       "Best Work",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Exam 1</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>exam_1</span>"
     ]
   },
   {
     "objectID": "bw/exam_1.html#distribution-of-variables-and-observations",
     "href": "bw/exam_1.html#distribution-of-variables-and-observations",
-    "title": "\n6  Exam 1\n",
+    "title": "\n6  exam_1\n",
     "section": "\n6.3 Distribution of Variables and Observations:",
     "text": "6.3 Distribution of Variables and Observations:\nFind the number of countries:\n\nCodefc |&gt;\n  distinct(country) |&gt;\n  nrow()\n\n[1] 130\n\n\nFind the number of food categories:\n\nCodefc |&gt;\n  distinct(food_category) |&gt;\n  nrow()\n\n[1] 11\n\n\nFind the total consumption:\n\nCodefc |&gt;\n  summarize(total_consumption = sum(consumption))\n\n# A tibble: 1 × 1\n  total_consumption\n              &lt;dbl&gt;\n1            40198.\n\n\nFind out how much each food category tends to be consumed across countries:\n\nCodeggplot(fc, aes(x = consumption, fill = food_category)) +\n  geom_histogram(bins = 20) +\n  scale_fill_viridis_d(option = \"magma\", name = \"Food Category\") +\n  labs(x = \"Consumption\", y = \"Count\")\n\n\n\n\n\n\nCodeggplot(fc, aes(x = food_category, y = consumption)) +\n  geom_boxplot() +\n  theme(axis.text.x = element_text(angle = 90, size = 8)) +\n  labs(x = \"Food Category\", y = \"Consumption\")",
     "crumbs": [
       "Best Work",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Exam 1</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>exam_1</span>"
     ]
   },
   {
     "objectID": "bw/exam_1.html#answering-the-research-question",
     "href": "bw/exam_1.html#answering-the-research-question",
-    "title": "\n6  Exam 1\n",
+    "title": "\n6  exam_1\n",
     "section": "\n6.4 Answering the Research Question:",
-    "text": "6.4 Answering the Research Question:\nWhat proportion of each country’s total consumption does each food category make up (proportional bar chart)\n\nCodefc |&gt;\n  mutate(country = fct_recode(country,\n                              \"UAE\" = \"United Arab Emirates\",\n                              \"Trinbago\" = \"Trinidad and Tobago\",\n                              \"UK\" = \"United Kingdom\",\n                              \"Hong Kong\" = \"Hong Kong SAR. China\",\n                              \"Bosnia-Herzegovina\" = \"Bosnia and Herzegovina\")) |&gt;\n  ggplot(aes(x = country, y = consumption, fill = food_category)) +\n    geom_col(position = \"fill\") +\n    labs(x = \"Country\", y = \"Consumption\") +\n    theme(axis.title.x = element_text(size = 10),\n          axis.title.y = element_text(size = 10),\n          legend.title = element_text(size = 10),\n          legend.text = element_text(size = 5),\n          axis.text.x = element_text(angle = 90, size = 2)\n          ) +\n    scale_fill_viridis_d(option = \"magma\", name = \"Food Category\")\n\n\n\nProportional Bar Chart of Each Country’s Total Food Consumption with Filling for Each Food Category\n\n\n\nWhat proportion of each country’s total consumption does each food category make up (choropleth maps, faceted by food category)\n\nCodeworld_map &lt;- map_data(\"world\")\n\nworld_map &lt;- world_map |&gt;\n  mutate(region = fct_recode(region, \n                             \"Congo\" = \"Democratic Republic of the Congo\",\n                             \"Mauritius\" = \"Mauritania\",\n                             \"United Kingdom\" = \"UK\",\n                             \"Taiwan. ROC\" = \"Taiwan\",\n                             ))\n\nfc |&gt;\n  group_by(country) |&gt;\n  mutate(total_consumption = sum(consumption)) |&gt;\n  ungroup() |&gt;\n  mutate(percent_consumption = (100 * (consumption / total_consumption))) |&gt;\n  full_join(world_map, join_by(country == region)) |&gt;\n  ggplot(aes(map_id = country, fill = percent_consumption)) +\n    geom_map(map = world_map) +\n    expand_limits(x = world_map$long, y = world_map$lat) +\n    theme_map() +\n    scale_fill_gradient(low = \"lightblue\", \n                        high = \"darkblue\", \n                        name = \"Percent of Total Food Consumption\", \n                        na.value = \"darkgrey\"\n                        ) +\n    facet_wrap(~food_category, nrow = 4) +\n    theme_classic() +\n    labs(x = \"Longitude\", y = \"Latitude\")\n\n\n\nChoropleth Maps of The Percent of a Countries’ Total Food Consumption that Food Categories Occupy",
+    "text": "6.4 Answering the Research Question:\nWhat proportion of each country’s total consumption does each food category make up (proportional bar chart)\n\nCodefc |&gt;\n  mutate(country = fct_recode(country,\n                              \"UAE\" = \"United Arab Emirates\",\n                              \"Trinbago\" = \"Trinidad and Tobago\",\n                              \"UK\" = \"United Kingdom\",\n                              \"Hong Kong\" = \"Hong Kong SAR. China\",\n                              \"Bosnia-Herzegovina\" = \"Bosnia and Herzegovina\")) |&gt;\n  ggplot(aes(x = country, y = consumption, fill = food_category)) +\n    geom_col(position = \"fill\") +\n    labs(x = \"Country\", y = \"Consumption\") +\n    theme(axis.title.x = element_text(size = 10),\n          axis.title.y = element_text(size = 10),\n          legend.title = element_text(size = 10),\n          legend.text = element_text(size = 5),\n          axis.text.x = element_text(angle = 90, size = 2)\n          ) +\n    scale_fill_viridis_d(option = \"magma\", name = \"Food Category\")\n\n\n\nProportional Bar Chart of Each Country’s Total Food Consumption with Filling for Each Food Category\n\n\n\nWhat proportion of each country’s total consumption does each food category make up (choropleth maps, faceted by food category)\n\nCodeworld_map &lt;- map_data(\"world\")\n\nworld_map &lt;- world_map |&gt;\n  mutate(region = fct_recode(region, \n                             \"Congo\" = \"Democratic Republic of the Congo\",\n                             \"Mauritius\" = \"Mauritania\",\n                             \"United Kingdom\" = \"UK\",\n                             \"Taiwan. ROC\" = \"Taiwan\",\n                             ))\n\nfc |&gt;\n  group_by(country) |&gt;\n  mutate(total_consumption = sum(consumption)) |&gt;\n  ungroup() |&gt;\n  mutate(percent_consumption = (100 * (consumption / total_consumption))) |&gt;\n  full_join(world_map, join_by(country == region)) |&gt;\n  ggplot(aes(map_id = country, fill = percent_consumption)) +\n    geom_map(map = world_map) +\n    expand_limits(x = world_map$long, y = world_map$lat) +\n    theme_map() +\n    scale_fill_gradient(low = \"lightblue\", \n                        high = \"darkblue\", \n                        name = \"Percent of Total Food Consumption\", \n                        na.value = \"darkgrey\"\n                        ) +\n    facet_wrap(~food_category, nrow = 4) +\n    theme_classic() +\n    labs(x = \"Longitude\", y = \"Latitude\")\n\nWarning in full_join(mutate(ungroup(mutate(group_by(fc, country), total_consumption = sum(consumption))), : Detected an unexpected many-to-many relationship between `x` and `y`.\nℹ Row 1 of `x` matches multiple rows in `y`.\nℹ Row 1132 of `y` matches multiple rows in `x`.\nℹ If a many-to-many relationship is expected, set `relationship =\n  \"many-to-many\"` to silence this warning.\n\n\n\n\nChoropleth Maps of The Percent of a Countries’ Total Food Consumption that Food Categories Occupy",
     "crumbs": [
       "Best Work",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Exam 1</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>exam_1</span>"
     ]
   },
   {
     "objectID": "bw/exam_1.html#conclusion",
     "href": "bw/exam_1.html#conclusion",
-    "title": "\n6  Exam 1\n",
+    "title": "\n6  exam_1\n",
     "section": "\n6.5 Conclusion:",
     "text": "6.5 Conclusion:\nThese two plots can be used to assess country’s consumption of food categories in relation to their total food consumption, and also in relation to other countries consumption of each food category as a percent of their total consumption. There is a pattern in which the 3 most consumed food categories in countries tend to be wheat and wheat product, rice, and dairy. Dairy tends to be consumed in large portions in at least some countries across all continents, and in high quantities across all of the Americas, Europe, and Oceania. Rice is also consumed internationally, but the countries that consume it most are in East, Southeast, and South Asia along with Africa. Wheat and wheat product is consumed at a moderate rate to high rate across the whole world, with the only countries that consume it at low rates being in Southeast Asia and Africa South of the Sahara. The biggest consumers of wheat and wheat product are Algeria, Egypt, and Iran.",
     "crumbs": [
       "Best Work",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Exam 1</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>exam_1</span>"
     ]
   },
   {
