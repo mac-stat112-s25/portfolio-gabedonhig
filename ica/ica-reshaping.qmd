@@ -1,5 +1,5 @@
 ---
-title: "reshaping"
+title: "Reshaping"
 format: html
 ---
 

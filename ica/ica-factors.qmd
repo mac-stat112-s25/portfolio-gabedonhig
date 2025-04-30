@@ -1,5 +1,5 @@
 ---
-title: "factors"
+title: "Factors"
 format: html
 ---
 
