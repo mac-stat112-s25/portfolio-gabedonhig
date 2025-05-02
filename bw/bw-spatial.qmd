@@ -1,5 +1,8 @@
 ---
 title: "Spatial Viz"
+author: "Gabriel Donelly Higgins"
+date: "April 16, 2025"
+format: html
 ---
 
 ## Research question:

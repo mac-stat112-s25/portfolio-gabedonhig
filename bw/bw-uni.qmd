@@ -2,6 +2,7 @@
 title: "Univariate Viz"
 author: "Gabriel Donelly Higgins"
 date: "April 12th, 2025"
+format: html
 ---
 
 ## Research question:

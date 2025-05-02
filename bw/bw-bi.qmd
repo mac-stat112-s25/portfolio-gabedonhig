@@ -2,6 +2,7 @@
 title: "Bivariate Viz"
 author: "Gabriel Donelly Higgins"
 date: "April 13th, 2025"
+format: html
 ---
 
 ## Research question:

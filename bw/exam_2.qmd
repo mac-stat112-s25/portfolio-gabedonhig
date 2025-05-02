@@ -1,5 +1,7 @@
 ---
 title: "Exam 2"
+author: "Gabriel Donelly Higgins"
+date: "May 2nd, 2025"
 format: html
 ---
 
@@ -94,12 +96,20 @@ country_consumption <- fc_clean |>
 
 **Visualizing Data:**
 ```{r}
+#| fig-cap: ""
+#| fig-alt: ""
 country_consumption |>
   arrange(desc(total_consumption)) |>
   head(5) |>
-  ggplot(aes(x = country, y = total_consumption)) +
+  ggplot(aes(x = country, y = total_consumption, fill = country)) +
     geom_col() +
-    theme_solarized()
+    theme_solarized() +
+  scale_fill_solarized() +
+  labs(x = "Country", y = "Total Consumption", title = "World's Largest Consumers") +
+  theme(plot.title = element_text(size = 25, family = "serif", face = "bold", color = "#586e75", hjust = 0.5),
+        axis.title = element_text(size = 15, family = "serif", face = "bold", color = "#586e75"),
+        axis.text = element_text(size = 10, family = "mono", color = "#586e75"),
+        legend.position = "none")
 ```
 
 
@@ -124,13 +134,18 @@ top_food_consumers <- fc_clean |>
 
 **Vizualizing Data:**
 ```{r}
+#| fig-height: 6
+#| fig-width: 10
 ggplot(top_food_consumers, aes(x = food_category, y = consumption, fill = country)) +
   geom_col() +
   theme_solarized() +
-  theme(axis.text.x = element_text(angle = 45, 
-                                   hjust = 1, 
-                                   size = 5),
-        axis.text.y = element_text(size = 5))
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 10, family = "mono", color = "#586e75"),
+        axis.text.y = element_text(size = 10, family = "mono", color = "#586e75"),
+        axis.title = element_text(size = 14, family = "serif", face = "bold"),
+        legend.text = element_text(size = 10, family = "mono", color = "#586e75"), 
+        legend.title = element_text(size = 14, family = "serif", face = "bold"),
+        plot.title = element_text(size = 18, family = "serif", face = "bold", color = "#586e75")) +
+  labs(fill = "Country", x = "Food Category", y = "Consumption", title = "Largest Consumers by Food Category")
 ```
 
 
@@ -201,7 +216,14 @@ ggplot() +
   facet_wrap(~food_category) +
   coord_sf(crs = "+proj=robin") +
   theme_map() +
-  theme(legend.position = c(0.8, 0.05))
+  labs(title = "Consumption of Food Categories Worldwide") +
+  theme(legend.position = c(0.77, 0.02), 
+        legend.text = element_text(size = 14, family = "serif", face = "bold"), 
+        legend.title = element_text(size = 14, family = "serif", face = "bold"),
+        legend.key.size = unit(0.8, "cm"),
+        strip.text = element_text(size = 14, face = "bold", family = "serif"),
+        plot.title = element_text(size = 25, face = "bold", hjust = 0.5)) +
+  scale_fill_continuous(name = "Consumption")
 ```
 
 **Observations:**
