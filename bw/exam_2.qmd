@@ -88,16 +88,13 @@ We want a dataframe in which countries are listed, followed by their total consu
 country_consumption <- fc_clean |>
   group_by(country) |>
   summarize(total_consumption = sum(consumption))
-  # pivot_wider(names_from = food_category, values_from = consumption) |>
-  # mutate(total_consumption = Pork + Poultry + Beef + Lamb + Fish + Eggs + Dairy + Wheat + Rice + Soybeans + Nuts) |>
-  # select(country, total_consumption)
 ```
 
 
 **Visualizing Data:**
 ```{r}
-#| fig-cap: ""
-#| fig-alt: ""
+#| fig-cap: "A Bar Graph of the World's Largest Consumers"
+#| fig-alt: "A bar graph is displayed. The title of the x-axis is  'Country' and the y axis is 'Total Consumption'. The y-axis goes from 0 to above 600. The x-axis lists the countries of Albania, Finland, Lithuania, Netherlands, and Sweden. Finland's bar is the tallest, above 600 on the y-axis, while the others float above 500. Each bar is colored differently."
 country_consumption |>
   arrange(desc(total_consumption)) |>
   head(5) |>
@@ -136,6 +133,8 @@ top_food_consumers <- fc_clean |>
 ```{r}
 #| fig-height: 6
 #| fig-width: 10
+#| fig-cap: "A Bar Graph of Food Category and Consumption, Colored By The Top 5 Biggest Consumers"
+#| fig-alt: "A bar graph with an x-axis label 'Food Category' and y-axis label 'Consumption' is displayed. The range goes above 1500 on the y-axis. 11 bars represent 11 food categories on the x-axis, which is labeled with each food category. The bars are colored, and a legend on the right is titled 'Country' and lists the colors and their corresponding country. The title of the plot is 'Largest Consumers by Food Category'. The bar with the highest consumption is dairy, whose consumers all color enough of the bar to make their consumption several times larger than that of the soybean bar. The second and third tallest bars are wheat and rice respectively, followed by fish, poultry, pork, and beef."
 ggplot(top_food_consumers, aes(x = food_category, y = consumption, fill = country)) +
   geom_col() +
   theme_solarized() +
@@ -210,6 +209,8 @@ head(global_consumption)
 ```{r}
 #| fig-height: 8
 #| fig-width: 15
+#| fig-cap: "Facet Wrapped World Maps of Consumption by Food Category"
+#| fig-alt: "Eleven world maps are shown, facet wrapped by food category. The categories are beef, dairy, eggs, fish, lamb, nuts, pork, poultry, rice, soybeans, and wheat. They are colored from dark to light blue, representing low to high consumption, as shown in a legend in the bottom right that goes from 0 to 6. Some countries have a grey fill, representing their lack of data. The title of the plot is 'Consumption of Food Categories Worldwide'. The countries with the highest beef consumption tend to be in the Americas. Those with the highest Dairy consumption tend to be in Europe and there is moderate consumption in the Americas. Egg consumption is moderate in North America, China, and Europe. Fish consumption is low worldwide, but moderate in Myanmar. Lamb consumption is high in a few countries like Kazakhstan, Algeria, and Australia. Nut consumption is high in select countries like the United States, Iran, China, and Bolivia. Pork consumption is high in China and Europe. Poultry consumption is high in the Americas. Rice consumption is high in East, Southeast, and South Asia. Soybean consumption is high in Botswana, Zimbabwe, and China. Wheat consumption is high in Algeria, Egypt, Russia, Iran, and Turkey."
 ggplot() +
   geom_sf(data = global_consumption,
           aes(fill = consumption)) +
@@ -227,7 +228,7 @@ ggplot() +
 ```
 
 **Observations:**
-Beef is heavily consumed in many highly countries like the United States, Russia, and Brazil, but also less consumed around most of the world and in other large countries like China, India, and Mexico. Dairy is heavily consumed in smaller countries like Finland and Kazakhstan, with moderate consumption around Europe and North America, and generally less consumption worldwide. Eggs are heavily consumed in China, with moderate consumption across Europe and the Americas. Fish has low consumption worldwide, but Burma stands out as a high consumer. Lamb is heavily consumed in Kazakhstan, Algeria, and Australia, while the rest of the world has considerably less consumption. The largest consumers of nuts are Persia, Canada and North America, and Bolivia. Additionally, countries with more moderate consumption include China, Australia, and Turkey. Pork is highly consumed in Russia, Europe and North America compared to the rest of the world. Poultry products tend to be more consumed in the Americas, Australia, and Saudi Arabia, with less worldwide consumption elsewhere. Rice is highly consumed in East, Southeast, and South Asia. Soybeans are highly consumed in China, Brazil, Botswana, and Zimbabwe. And lastly, Wheat is highly consumed in Algeria, Russia, Egypt, Turkey, and Iran. It is otherwise less consumed elsewhere.
+Beef is heavily consumed in many highly countries like the United States, Russia, and Brazil, but also less consumed around most of the world and in other large countries like China, India, and Mexico. Dairy is heavily consumed in smaller countries like Finland and Kazakhstan, with moderate consumption around Europe and North America, and generally less consumption worldwide. Eggs are heavily consumed in China, with moderate consumption across Europe and the Americas. Fish has low consumption worldwide, but Myanmar stands out as a high consumer. Lamb is heavily consumed in Kazakhstan, Algeria, and Australia, while the rest of the world has considerably less consumption. The largest consumers of nuts are Persia, Canada and North America, and Bolivia. Additionally, countries with more moderate consumption include China, Australia, and Turkey. Pork is highly consumed in Russia, Europe and North America compared to the rest of the world. Poultry products tend to be more consumed in the Americas, Australia, and Saudi Arabia, with less worldwide consumption elsewhere. Rice is highly consumed in East, Southeast, and South Asia. Soybeans are highly consumed in China, Brazil, Botswana, and Zimbabwe. And lastly, Wheat is highly consumed in Algeria, Russia, Egypt, Turkey, and Iran. It is otherwise less consumed elsewhere.
 
 
 ## Conclusion:
