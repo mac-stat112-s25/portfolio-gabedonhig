@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.5.57">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Gabriel Donelly Higgins">
 <title>4&nbsp; Quadvariate Viz – COMP/STAT112 Notebook</title>
 <style>
 code{white-space: pre-wrap;}
@@ -304,8 +305,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#research-question" id="toc-research-question" class="nav-link active" data-scroll-target="#research-question"><span class="header-section-number">4.1</span> Research question:</a></li>
+  <li><a href="#step-1-load-necessary-packages" id="toc-step-1-load-necessary-packages" class="nav-link" data-scroll-target="#step-1-load-necessary-packages"><span class="header-section-number">4.2</span> Step 1: Load necessary packages</a></li>
+  <li><a href="#step-2-import-clean-join-and-wrangle-the-data" id="toc-step-2-import-clean-join-and-wrangle-the-data" class="nav-link" data-scroll-target="#step-2-import-clean-join-and-wrangle-the-data"><span class="header-section-number">4.3</span> Step 2: Import / clean / join and wrangle the data:</a></li>
+  <li><a href="#step-3-put-data-into-a-plot" id="toc-step-3-put-data-into-a-plot" class="nav-link" data-scroll-target="#step-3-put-data-into-a-plot"><span class="header-section-number">4.4</span> Step 3: Put data into a plot</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">4.5</span> References:</a></li>
+  </ul></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../bw/bw-uni.html">Best Work</a></li><li class="breadcrumb-item"><a href="../bw/bw-quad.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Quadvariate Viz</span></a></li></ol></nav><div class="quarto-title">
@@ -318,86 +327,85 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Gabriel Donelly Higgins </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">Invalid Date</p>
+    </div>
+  </div>
   
     
   </div>
   
 
 
-</header><div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.5
-✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-✔ purrr     1.0.2     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</header><section id="research-question" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="research-question">
+<span class="header-section-number">4.1</span> Research question:</h2>
+<p>How does population, internal migration, overseas migration, and the fertility rate relate to each other at Statistical Level 4 areas in Australia</p>
+</section><section id="step-1-load-necessary-packages" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="step-1-load-necessary-packages">
+<span class="header-section-number">4.2</span> Step 1: Load necessary packages</h2>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(ggthemes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">library</span>(ggthemes)</span>
-<span id="cb3-2"><a href="#cb3-2"></a></span>
-<span id="cb3-3"><a href="#cb3-3"></a>messy_aussie_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/ABS,ABS_REGIONAL_ASGS2021,1.3.0+CABEE_5+CABEE_15+CABEE_10+MIGRATION_7+MIGRATION_4+BD_3+BD_4+BD_2+ERP_P_20.SA3..A.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stderr">
-<pre><code>Rows: 3016 Columns: 24
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (13): STRUCTURE, STRUCTURE_ID, STRUCTURE_NAME, ACTION, MEASURE, Data Ite...
-dbl  (3): ASGS_2021, TIME_PERIOD, OBS_VALUE
-lgl  (8): Time Period, Observation Value, UNIT_MULT, Unit of Multiplier, OBS...
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>aussie_data <span class="ot">&lt;-</span> messy_aussie_data <span class="sc">|&gt;</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">select</span>(Region, <span class="st">`</span><span class="at">Data Item</span><span class="st">`</span>, OBS_VALUE) <span class="sc">|&gt;</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Data Item</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">fct_recode</span>(<span class="st">`</span><span class="at">Data Item</span><span class="st">`</span>,</span>
-<span id="cb5-4"><a href="#cb5-4"></a>                                  <span class="st">"fert_rate"</span> <span class="ot">=</span> <span class="st">"Total fertility rate (births per female) (rate)"</span>,</span>
-<span id="cb5-5"><a href="#cb5-5"></a>                                  <span class="st">"net_over_migr"</span> <span class="ot">=</span> <span class="st">"Net overseas migration (no.)"</span>,</span>
-<span id="cb5-6"><a href="#cb5-6"></a>                                  <span class="st">"net_inter_migr"</span> <span class="ot">=</span> <span class="st">"Net internal migration (no.)"</span>,</span>
-<span id="cb5-7"><a href="#cb5-7"></a>                                  <span class="st">"reg_births"</span> <span class="ot">=</span> <span class="st">"Registered births (no.)"</span>,</span>
-<span id="cb5-8"><a href="#cb5-8"></a>                                  <span class="st">"reg_deaths"</span> <span class="ot">=</span> <span class="st">"Registered deaths (no.)"</span>,</span>
-<span id="cb5-9"><a href="#cb5-9"></a>                                  <span class="st">"total_pop"</span> <span class="ot">=</span> <span class="st">"Estimated resident population: Persons (no.)"</span>,</span>
-<span id="cb5-10"><a href="#cb5-10"></a>                                  <span class="st">"total_busi_exits"</span> <span class="ot">=</span> <span class="st">"Total business exits (no.)"</span>,</span>
-<span id="cb5-11"><a href="#cb5-11"></a>                                  <span class="st">"total_busi_entr"</span> <span class="ot">=</span> <span class="st">"Total business entries (no.)"</span>,</span>
-<span id="cb5-12"><a href="#cb5-12"></a>                                  <span class="st">"total_busi"</span> <span class="ot">=</span> <span class="st">"Total businesses (no.)"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">`</span><span class="at">Data Item</span><span class="st">`</span>, <span class="at">values_from =</span> OBS_VALUE) <span class="sc">|&gt;</span></span>
-<span id="cb5-14"><a href="#cb5-14"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(fert_rate)) <span class="sc">|&gt;</span></span>
-<span id="cb5-15"><a href="#cb5-15"></a>  <span class="fu">mutate</span>(<span class="at">net_pop =</span> reg_births <span class="sc">-</span> reg_deaths) <span class="sc">|&gt;</span> <span class="co"># total births - deaths</span></span>
-<span id="cb5-16"><a href="#cb5-16"></a>  <span class="fu">mutate</span>(<span class="at">net_migr =</span> net_over_migr <span class="sc">+</span> net_inter_migr) <span class="sc">|&gt;</span> <span class="co"># the total change in migrants</span></span>
-<span id="cb5-17"><a href="#cb5-17"></a>  <span class="fu">mutate</span>(<span class="at">net_busi =</span> total_busi_entr <span class="sc">-</span> total_busi_exits) <span class="sc">|&gt;</span> <span class="co"># the total change in businesses</span></span>
-<span id="cb5-18"><a href="#cb5-18"></a>  <span class="fu">mutate</span>(<span class="at">pct_inter_migr =</span> (net_inter_migr <span class="sc">/</span> total_pop) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> <span class="co"># net internal migration as a percent of total pop</span></span>
-<span id="cb5-19"><a href="#cb5-19"></a>  <span class="fu">mutate</span>(<span class="at">pct_over_migr =</span> (net_over_migr <span class="sc">/</span> total_pop) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> <span class="co"># net overseas migration as a percent of total pop</span></span>
-<span id="cb5-20"><a href="#cb5-20"></a>  <span class="fu">mutate</span>(<span class="at">pct_migr =</span> (net_migr <span class="sc">/</span> total_pop) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> <span class="co"># the pct change in population by migrants</span></span>
-<span id="cb5-21"><a href="#cb5-21"></a>  <span class="fu">mutate</span>(<span class="at">pct_pop =</span> (net_pop <span class="sc">/</span> total_pop) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> <span class="co"># the pct change in population</span></span>
-<span id="cb5-22"><a href="#cb5-22"></a>  <span class="fu">mutate</span>(<span class="at">pct_busi =</span> (net_busi <span class="sc">/</span> total_busi) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> <span class="co"># the pct change in businesses</span></span>
-<span id="cb5-23"><a href="#cb5-23"></a>  <span class="fu">mutate</span>(<span class="at">yn_fert_rate =</span> <span class="fu">cut</span>(fert_rate,</span>
-<span id="cb5-24"><a href="#cb5-24"></a>                          <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">2.1</span>, <span class="cn">Inf</span>),</span>
-<span id="cb5-25"><a href="#cb5-25"></a>                          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Below replacement rate"</span>, <span class="st">"Above replacement rate"</span>),</span>
-<span id="cb5-26"><a href="#cb5-26"></a>                          <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb5-27"><a href="#cb5-27"></a>  <span class="fu">mutate</span>(<span class="at">yn_net_migr =</span> <span class="fu">cut</span>(net_migr,</span>
-<span id="cb5-28"><a href="#cb5-28"></a>                          <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">99999999</span>, <span class="dv">0</span>, <span class="cn">Inf</span>),</span>
-<span id="cb5-29"><a href="#cb5-29"></a>                          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Lost population through migration"</span>, <span class="st">"Gained population through migration"</span>),</span>
-<span id="cb5-30"><a href="#cb5-30"></a>                          <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb5-31"><a href="#cb5-31"></a>  <span class="fu">mutate</span>(<span class="at">yn_inter_migr =</span> <span class="fu">cut</span>(net_inter_migr,</span>
-<span id="cb5-32"><a href="#cb5-32"></a>                          <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">99999999</span>, <span class="dv">0</span>, <span class="cn">Inf</span>),</span>
-<span id="cb5-33"><a href="#cb5-33"></a>                          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Net Negative internal migration"</span>, <span class="st">"Net Positive internal migration"</span>),</span>
-<span id="cb5-34"><a href="#cb5-34"></a>                          <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb5-35"><a href="#cb5-35"></a>  <span class="fu">mutate</span>(<span class="at">yn_over_migr =</span> <span class="fu">cut</span>(net_over_migr,</span>
-<span id="cb5-36"><a href="#cb5-36"></a>                          <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">99999999</span>, <span class="dv">0</span>, <span class="cn">Inf</span>),</span>
-<span id="cb5-37"><a href="#cb5-37"></a>                          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Lost population through overseas migration"</span>, <span class="st">"Gained population through overseas migration"</span>),</span>
-<span id="cb5-38"><a href="#cb5-38"></a>                          <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb5-39"><a href="#cb5-39"></a>  <span class="fu">mutate</span>(<span class="at">yn_net_busi =</span> <span class="fu">cut</span>(net_busi,</span>
-<span id="cb5-40"><a href="#cb5-40"></a>                          <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">99999999</span>, <span class="dv">0</span>, <span class="cn">Inf</span>),</span>
-<span id="cb5-41"><a href="#cb5-41"></a>                          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Lost more businesses than gained"</span>, <span class="st">"Gained more businesses than lost"</span>),</span>
-<span id="cb5-42"><a href="#cb5-42"></a>                          <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb5-43"><a href="#cb5-43"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(yn_inter_migr))</span>
-<span id="cb5-44"><a href="#cb5-44"></a>  </span>
-<span id="cb5-45"><a href="#cb5-45"></a><span class="fu">summary</span>(aussie_data)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section><section id="step-2-import-clean-join-and-wrangle-the-data" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="step-2-import-clean-join-and-wrangle-the-data">
+<span class="header-section-number">4.3</span> Step 2: Import / clean / join and wrangle the data:</h2>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>messy_aussie_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/ABS,ABS_REGIONAL_ASGS2021,1.3.0+CABEE_5+CABEE_15+CABEE_10+MIGRATION_7+MIGRATION_4+BD_3+BD_4+BD_2+ERP_P_20.SA3..A.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a>aussie_data <span class="ot">&lt;-</span> messy_aussie_data <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>  <span class="fu">select</span>(Region, <span class="st">`</span><span class="at">Data Item</span><span class="st">`</span>, OBS_VALUE) <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Data Item</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">fct_recode</span>(<span class="st">`</span><span class="at">Data Item</span><span class="st">`</span>,</span>
+<span id="cb2-6"><a href="#cb2-6"></a>                                  <span class="st">"fert_rate"</span> <span class="ot">=</span> <span class="st">"Total fertility rate (births per female) (rate)"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7"></a>                                  <span class="st">"net_over_migr"</span> <span class="ot">=</span> <span class="st">"Net overseas migration (no.)"</span>,</span>
+<span id="cb2-8"><a href="#cb2-8"></a>                                  <span class="st">"net_inter_migr"</span> <span class="ot">=</span> <span class="st">"Net internal migration (no.)"</span>,</span>
+<span id="cb2-9"><a href="#cb2-9"></a>                                  <span class="st">"reg_births"</span> <span class="ot">=</span> <span class="st">"Registered births (no.)"</span>,</span>
+<span id="cb2-10"><a href="#cb2-10"></a>                                  <span class="st">"reg_deaths"</span> <span class="ot">=</span> <span class="st">"Registered deaths (no.)"</span>,</span>
+<span id="cb2-11"><a href="#cb2-11"></a>                                  <span class="st">"total_pop"</span> <span class="ot">=</span> <span class="st">"Estimated resident population: Persons (no.)"</span>,</span>
+<span id="cb2-12"><a href="#cb2-12"></a>                                  <span class="st">"total_busi_exits"</span> <span class="ot">=</span> <span class="st">"Total business exits (no.)"</span>,</span>
+<span id="cb2-13"><a href="#cb2-13"></a>                                  <span class="st">"total_busi_entr"</span> <span class="ot">=</span> <span class="st">"Total business entries (no.)"</span>,</span>
+<span id="cb2-14"><a href="#cb2-14"></a>                                  <span class="st">"total_busi"</span> <span class="ot">=</span> <span class="st">"Total businesses (no.)"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">`</span><span class="at">Data Item</span><span class="st">`</span>, <span class="at">values_from =</span> OBS_VALUE) <span class="sc">|&gt;</span></span>
+<span id="cb2-16"><a href="#cb2-16"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(fert_rate)) <span class="sc">|&gt;</span></span>
+<span id="cb2-17"><a href="#cb2-17"></a>  <span class="fu">mutate</span>(<span class="at">net_pop =</span> reg_births <span class="sc">-</span> reg_deaths) <span class="sc">|&gt;</span> <span class="co"># total births - deaths</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a>  <span class="fu">mutate</span>(<span class="at">net_migr =</span> net_over_migr <span class="sc">+</span> net_inter_migr) <span class="sc">|&gt;</span> <span class="co"># the total change in migrants</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a>  <span class="fu">mutate</span>(<span class="at">net_busi =</span> total_busi_entr <span class="sc">-</span> total_busi_exits) <span class="sc">|&gt;</span> <span class="co"># the total change in businesses</span></span>
+<span id="cb2-20"><a href="#cb2-20"></a>  <span class="fu">mutate</span>(<span class="at">pct_inter_migr =</span> (net_inter_migr <span class="sc">/</span> total_pop) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> <span class="co"># net internal migration as a percent of total pop</span></span>
+<span id="cb2-21"><a href="#cb2-21"></a>  <span class="fu">mutate</span>(<span class="at">pct_over_migr =</span> (net_over_migr <span class="sc">/</span> total_pop) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> <span class="co"># net overseas migration as a percent of total pop</span></span>
+<span id="cb2-22"><a href="#cb2-22"></a>  <span class="fu">mutate</span>(<span class="at">pct_migr =</span> (net_migr <span class="sc">/</span> total_pop) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> <span class="co"># the pct change in population by migrants</span></span>
+<span id="cb2-23"><a href="#cb2-23"></a>  <span class="fu">mutate</span>(<span class="at">pct_pop =</span> (net_pop <span class="sc">/</span> total_pop) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> <span class="co"># the pct change in population</span></span>
+<span id="cb2-24"><a href="#cb2-24"></a>  <span class="fu">mutate</span>(<span class="at">pct_busi =</span> (net_busi <span class="sc">/</span> total_busi) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> <span class="co"># the pct change in businesses</span></span>
+<span id="cb2-25"><a href="#cb2-25"></a>  <span class="fu">mutate</span>(<span class="at">yn_fert_rate =</span> <span class="fu">cut</span>(fert_rate,</span>
+<span id="cb2-26"><a href="#cb2-26"></a>                          <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">2.1</span>, <span class="cn">Inf</span>),</span>
+<span id="cb2-27"><a href="#cb2-27"></a>                          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Below replacement rate"</span>, <span class="st">"Above replacement rate"</span>),</span>
+<span id="cb2-28"><a href="#cb2-28"></a>                          <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb2-29"><a href="#cb2-29"></a>  <span class="fu">mutate</span>(<span class="at">yn_net_migr =</span> <span class="fu">cut</span>(net_migr,</span>
+<span id="cb2-30"><a href="#cb2-30"></a>                          <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">99999999</span>, <span class="dv">0</span>, <span class="cn">Inf</span>),</span>
+<span id="cb2-31"><a href="#cb2-31"></a>                          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Lost population through migration"</span>, <span class="st">"Gained population through migration"</span>),</span>
+<span id="cb2-32"><a href="#cb2-32"></a>                          <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb2-33"><a href="#cb2-33"></a>  <span class="fu">mutate</span>(<span class="at">yn_inter_migr =</span> <span class="fu">cut</span>(net_inter_migr,</span>
+<span id="cb2-34"><a href="#cb2-34"></a>                          <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">99999999</span>, <span class="dv">0</span>, <span class="cn">Inf</span>),</span>
+<span id="cb2-35"><a href="#cb2-35"></a>                          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Net Negative internal migration"</span>, <span class="st">"Net Positive internal migration"</span>),</span>
+<span id="cb2-36"><a href="#cb2-36"></a>                          <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb2-37"><a href="#cb2-37"></a>  <span class="fu">mutate</span>(<span class="at">yn_over_migr =</span> <span class="fu">cut</span>(net_over_migr,</span>
+<span id="cb2-38"><a href="#cb2-38"></a>                          <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">99999999</span>, <span class="dv">0</span>, <span class="cn">Inf</span>),</span>
+<span id="cb2-39"><a href="#cb2-39"></a>                          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Lost population through overseas migration"</span>, <span class="st">"Gained population through overseas migration"</span>),</span>
+<span id="cb2-40"><a href="#cb2-40"></a>                          <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb2-41"><a href="#cb2-41"></a>  <span class="fu">mutate</span>(<span class="at">yn_net_busi =</span> <span class="fu">cut</span>(net_busi,</span>
+<span id="cb2-42"><a href="#cb2-42"></a>                          <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">99999999</span>, <span class="dv">0</span>, <span class="cn">Inf</span>),</span>
+<span id="cb2-43"><a href="#cb2-43"></a>                          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Lost more businesses than gained"</span>, <span class="st">"Gained more businesses than lost"</span>),</span>
+<span id="cb2-44"><a href="#cb2-44"></a>                          <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb2-45"><a href="#cb2-45"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(yn_inter_migr))</span>
+<span id="cb2-46"><a href="#cb2-46"></a>  </span>
+<span id="cb2-47"><a href="#cb2-47"></a><span class="fu">summary</span>(aussie_data)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>    Region            total_pop        reg_births       fert_rate    
  Length:331         Min.   :  1969   Min.   :  15.0   Min.   :0.640  
@@ -463,7 +471,7 @@ lgl  (8): Time Period, Observation Value, UNIT_MULT, Unit of Multiplier, OBS...
                                        
                                        </code></pre>
 </div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>aussie_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>aussie_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 331 × 23
    Region total_pop reg_births fert_rate reg_deaths net_inter_migr net_over_migr
@@ -486,36 +494,42 @@ lgl  (8): Time Period, Observation Value, UNIT_MULT, Unit of Multiplier, OBS...
 #   yn_over_migr &lt;fct&gt;, yn_net_busi &lt;fct&gt;</code></pre>
 </div>
 </div>
+</section><section id="step-3-put-data-into-a-plot" class="level2" data-number="4.4"><h2 data-number="4.4" class="anchored" data-anchor-id="step-3-put-data-into-a-plot">
+<span class="header-section-number">4.4</span> Step 3: Put data into a plot</h2>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">ggplot</span>(aussie_data, <span class="fu">aes</span>(<span class="at">x =</span> total_pop, <span class="at">y =</span> pct_over_migr, <span class="at">color =</span> yn_fert_rate)) <span class="sc">+</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>,</span>
-<span id="cb9-3"><a href="#cb9-3"></a>             <span class="at">size =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>yn_inter_migr) <span class="sc">+</span></span>
-<span id="cb9-5"><a href="#cb9-5"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,</span>
-<span id="cb9-6"><a href="#cb9-6"></a>              <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb9-7"><a href="#cb9-7"></a>  <span class="fu">theme_solarized</span>(<span class="at">light =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb9-8"><a href="#cb9-8"></a>  <span class="fu">scale_color_solarized</span>() <span class="sc">+</span></span>
-<span id="cb9-9"><a href="#cb9-9"></a>  <span class="fu">scale_color_solarized</span>(<span class="at">name =</span> <span class="st">"Fertility Rate"</span>) <span class="sc">+</span></span>
-<span id="cb9-10"><a href="#cb9-10"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Population"</span>, <span class="at">y =</span> <span class="st">"New Overseas Migrants as % of Pop."</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stderr">
-<pre><code>Scale for colour is already present.
-Adding another scale for colour, which will replace the existing scale.
-`geom_smooth()` using formula = 'y ~ x'</code></pre>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">ggplot</span>(aussie_data, <span class="fu">aes</span>(<span class="at">x =</span> total_pop, <span class="at">y =</span> pct_over_migr, <span class="at">color =</span> yn_fert_rate)) <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>,</span>
+<span id="cb6-3"><a href="#cb6-3"></a>             <span class="at">size =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>yn_inter_migr) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6"></a>              <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a>  <span class="fu">theme_solarized</span>(<span class="at">light =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>  <span class="fu">scale_color_solarized</span>() <span class="sc">+</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a>  <span class="fu">scale_color_solarized</span>(<span class="at">name =</span> <span class="st">"Fertility Rate"</span>) <span class="sc">+</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Population"</span>, <span class="at">y =</span> <span class="st">"Net Overseas Migration as % of Pop."</span>, <span class="at">title =</span> <span class="st">"Fertility Rates, Internal / Overseas Migration, and Population"</span>) <span class="sc">+</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a>  <span class="fu">theme</span>(<span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">family =</span> <span class="st">"mono"</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb6-12"><a href="#cb6-12"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fl">12.5</span>, <span class="at">family =</span> <span class="st">"mono"</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb6-13"><a href="#cb6-13"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>, <span class="at">family =</span> <span class="st">"mono"</span>, <span class="at">color =</span> <span class="st">"#93a1a1"</span>),</span>
+<span id="cb6-14"><a href="#cb6-14"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">family =</span> <span class="st">"mono"</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb6-15"><a href="#cb6-15"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">family =</span> <span class="st">"mono"</span>, <span class="at">color =</span> <span class="st">"#93a1a1"</span>),</span>
+<span id="cb6-16"><a href="#cb6-16"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">family =</span> <span class="st">"mono"</span>, <span class="at">face =</span> <span class="st">"bold"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="bw-quad_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" alt="There is a scatterplot which uses net overseas migration standardized as a percentage of the population on the y-axis, and the population of points on the x-axis. It is faceted by whether or not the points experienced a net positive or negative internal migration, and the points are colored either red or blue. The legend shows that red points are above replacement rate, and blue points are below. The title is 'Fertility Rates, Internal / Overseas Migration, and Population'. The points are slightly transparent, so you can see how intensely red or blue a part of the plot is where there are many points. There are trend lines for the red and blue dots on both of the scattered plots. On the net negative internal migration scatterplot, there is a similar positive correlation between population and overseas migration between red and blue points, but the red trend line starts at a lower point, nearer to 0%, while the blue trend line starts nearer to 1%. On the scatterplot for points with a net positive internal migration, there was the same positive correlation among red and blue points, but the trend lines were flatter. Again, the blue trend line started above the red point, but below 0.5% (whereas in the other scatterplot the blue trend line started above 0.5%). The red trend line starts above as close to 0% as in the previous scatterplot, and in below the blue trend line. The blue trend lines extend further on the x-axis because they have points which extend further." width="672"></p>
+<figcaption>A Scatterplot of Population and Overseas Migration Faceted by Internal Migration and Colored by Fertility Rate</figcaption></figure>
 </div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="bw-quad_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
 </div>
 </div>
-</div>
+<p><strong>Conclusion:</strong></p>
+<p>It seems like when Statistical Level 4 Areas(SL4A) in Australia have a negative internal migration, they get more overseas immigrants per capita, indicating that overseas immigrants may be more attracted to SL4A’s that have a net negative internal migration. Perhaps this is because the labor pool is smaller, allowing them to more easily fill it, or perhaps there are other reasons. However, even if the trend was more positive for both SL4A’s with fertility rates below and above replace rate, the y-intercept for both the net negative and net positive internal migration above replacement lines were the same. What this means is that in SL4A’s with low populations and a fertility rate above replacement rate, the net overseas migration per capita is roughly similar, but that trend changes in SL4A’s that have higher populations as immigrants tend to go to the ones with net negative internal migration. The reason why there are more SL4A’s with positive internal migration and high populations is possibly because an SL4A with a high population is necessarily more likely to have a more active economy, attracting people internally for jobs. This may make it so that more natives go to these SL4A’s, and perhaps overseas immigrants may have difficulty competing with natives. Lastly, the outliers which really increase the range of the y-axis tend to be outliers from the net negative internal migration SL4A’s, and they are all also below replacement rate. Approaching this through the lens of the United States’ urban development and history, the reason these outliers may have such high overseas migration per capita is because they serve as ethnic enclaves, where overseas immigrants of certain regons tend to concentrate. These SL4A’s may have lower fertility rates and are losing natives to internal migration, which indicates that there are fewer natives occupying the area, making room for new overseas immigrant communities</p>
+</section><section id="references" class="level2" data-number="4.5"><h2 data-number="4.5" class="anchored" data-anchor-id="references">
+<span class="header-section-number">4.5</span> References:</h2>
 <p>https://dataexplorer.abs.gov.au/vis?fs[0]=Data%20by%20region%2C0%7CMain%20Structure%20and%20Greater%20Capital%20City%20Statistical%20Areas%23ASGS%23&amp;pg=0&amp;fc=Data%20by%20region&amp;df[ds]=DATA_BY_REGION_TOPICS&amp;df[id]=ABS_REGIONAL_ASGS2021&amp;df[ag]=ABS&amp;df[vs]=1.3.0&amp;pd=2022%2C2022&amp;dq=CABEE_5%2BCABEE_15%2BCABEE_10%2BMIGRATION_7%2BMIGRATION_4%2BBD_3%2BBD_4%2BBD_2%2BERP_P_20.SA3..A&amp;ly[cl]=MEASURE&amp;ly[rw]=ASGS_2021&amp;to[TIME_PERIOD]=false&amp;isAvailabilityDisabled=false&amp;snb=2 (accessed: April 18th, 2025)</p>
 
 
 <!-- -->
 
-
-</main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -1145,81 +1159,112 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb11" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1"></a><span class="co">---</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="an">title:</span><span class="co"> "Quadvariate Viz"</span></span>
-<span id="cb11-3"><a href="#cb11-3"></a><span class="co">---</span></span>
-<span id="cb11-4"><a href="#cb11-4"></a></span>
-<span id="cb11-7"><a href="#cb11-7"></a><span class="in">```{r}</span></span>
-<span id="cb11-8"><a href="#cb11-8"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb11-9"><a href="#cb11-9"></a><span class="fu">library</span>(ggthemes)</span>
-<span id="cb11-10"><a href="#cb11-10"></a></span>
-<span id="cb11-11"><a href="#cb11-11"></a>messy_aussie_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/ABS,ABS_REGIONAL_ASGS2021,1.3.0+CABEE_5+CABEE_15+CABEE_10+MIGRATION_7+MIGRATION_4+BD_3+BD_4+BD_2+ERP_P_20.SA3..A.csv"</span>)</span>
-<span id="cb11-12"><a href="#cb11-12"></a></span>
-<span id="cb11-13"><a href="#cb11-13"></a>aussie_data <span class="ot">&lt;-</span> messy_aussie_data <span class="sc">|&gt;</span></span>
-<span id="cb11-14"><a href="#cb11-14"></a>  <span class="fu">select</span>(Region, <span class="st">`</span><span class="at">Data Item</span><span class="st">`</span>, OBS_VALUE) <span class="sc">|&gt;</span></span>
-<span id="cb11-15"><a href="#cb11-15"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Data Item</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">fct_recode</span>(<span class="st">`</span><span class="at">Data Item</span><span class="st">`</span>,</span>
-<span id="cb11-16"><a href="#cb11-16"></a>                                  <span class="st">"fert_rate"</span> <span class="ot">=</span> <span class="st">"Total fertility rate (births per female) (rate)"</span>,</span>
-<span id="cb11-17"><a href="#cb11-17"></a>                                  <span class="st">"net_over_migr"</span> <span class="ot">=</span> <span class="st">"Net overseas migration (no.)"</span>,</span>
-<span id="cb11-18"><a href="#cb11-18"></a>                                  <span class="st">"net_inter_migr"</span> <span class="ot">=</span> <span class="st">"Net internal migration (no.)"</span>,</span>
-<span id="cb11-19"><a href="#cb11-19"></a>                                  <span class="st">"reg_births"</span> <span class="ot">=</span> <span class="st">"Registered births (no.)"</span>,</span>
-<span id="cb11-20"><a href="#cb11-20"></a>                                  <span class="st">"reg_deaths"</span> <span class="ot">=</span> <span class="st">"Registered deaths (no.)"</span>,</span>
-<span id="cb11-21"><a href="#cb11-21"></a>                                  <span class="st">"total_pop"</span> <span class="ot">=</span> <span class="st">"Estimated resident population: Persons (no.)"</span>,</span>
-<span id="cb11-22"><a href="#cb11-22"></a>                                  <span class="st">"total_busi_exits"</span> <span class="ot">=</span> <span class="st">"Total business exits (no.)"</span>,</span>
-<span id="cb11-23"><a href="#cb11-23"></a>                                  <span class="st">"total_busi_entr"</span> <span class="ot">=</span> <span class="st">"Total business entries (no.)"</span>,</span>
-<span id="cb11-24"><a href="#cb11-24"></a>                                  <span class="st">"total_busi"</span> <span class="ot">=</span> <span class="st">"Total businesses (no.)"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb11-25"><a href="#cb11-25"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">`</span><span class="at">Data Item</span><span class="st">`</span>, <span class="at">values_from =</span> OBS_VALUE) <span class="sc">|&gt;</span></span>
-<span id="cb11-26"><a href="#cb11-26"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(fert_rate)) <span class="sc">|&gt;</span></span>
-<span id="cb11-27"><a href="#cb11-27"></a>  <span class="fu">mutate</span>(<span class="at">net_pop =</span> reg_births <span class="sc">-</span> reg_deaths) <span class="sc">|&gt;</span> <span class="co"># total births - deaths</span></span>
-<span id="cb11-28"><a href="#cb11-28"></a>  <span class="fu">mutate</span>(<span class="at">net_migr =</span> net_over_migr <span class="sc">+</span> net_inter_migr) <span class="sc">|&gt;</span> <span class="co"># the total change in migrants</span></span>
-<span id="cb11-29"><a href="#cb11-29"></a>  <span class="fu">mutate</span>(<span class="at">net_busi =</span> total_busi_entr <span class="sc">-</span> total_busi_exits) <span class="sc">|&gt;</span> <span class="co"># the total change in businesses</span></span>
-<span id="cb11-30"><a href="#cb11-30"></a>  <span class="fu">mutate</span>(<span class="at">pct_inter_migr =</span> (net_inter_migr <span class="sc">/</span> total_pop) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> <span class="co"># net internal migration as a percent of total pop</span></span>
-<span id="cb11-31"><a href="#cb11-31"></a>  <span class="fu">mutate</span>(<span class="at">pct_over_migr =</span> (net_over_migr <span class="sc">/</span> total_pop) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> <span class="co"># net overseas migration as a percent of total pop</span></span>
-<span id="cb11-32"><a href="#cb11-32"></a>  <span class="fu">mutate</span>(<span class="at">pct_migr =</span> (net_migr <span class="sc">/</span> total_pop) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> <span class="co"># the pct change in population by migrants</span></span>
-<span id="cb11-33"><a href="#cb11-33"></a>  <span class="fu">mutate</span>(<span class="at">pct_pop =</span> (net_pop <span class="sc">/</span> total_pop) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> <span class="co"># the pct change in population</span></span>
-<span id="cb11-34"><a href="#cb11-34"></a>  <span class="fu">mutate</span>(<span class="at">pct_busi =</span> (net_busi <span class="sc">/</span> total_busi) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> <span class="co"># the pct change in businesses</span></span>
-<span id="cb11-35"><a href="#cb11-35"></a>  <span class="fu">mutate</span>(<span class="at">yn_fert_rate =</span> <span class="fu">cut</span>(fert_rate,</span>
-<span id="cb11-36"><a href="#cb11-36"></a>                          <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">2.1</span>, <span class="cn">Inf</span>),</span>
-<span id="cb11-37"><a href="#cb11-37"></a>                          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Below replacement rate"</span>, <span class="st">"Above replacement rate"</span>),</span>
-<span id="cb11-38"><a href="#cb11-38"></a>                          <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb11-39"><a href="#cb11-39"></a>  <span class="fu">mutate</span>(<span class="at">yn_net_migr =</span> <span class="fu">cut</span>(net_migr,</span>
-<span id="cb11-40"><a href="#cb11-40"></a>                          <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">99999999</span>, <span class="dv">0</span>, <span class="cn">Inf</span>),</span>
-<span id="cb11-41"><a href="#cb11-41"></a>                          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Lost population through migration"</span>, <span class="st">"Gained population through migration"</span>),</span>
-<span id="cb11-42"><a href="#cb11-42"></a>                          <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb11-43"><a href="#cb11-43"></a>  <span class="fu">mutate</span>(<span class="at">yn_inter_migr =</span> <span class="fu">cut</span>(net_inter_migr,</span>
-<span id="cb11-44"><a href="#cb11-44"></a>                          <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">99999999</span>, <span class="dv">0</span>, <span class="cn">Inf</span>),</span>
-<span id="cb11-45"><a href="#cb11-45"></a>                          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Net Negative internal migration"</span>, <span class="st">"Net Positive internal migration"</span>),</span>
-<span id="cb11-46"><a href="#cb11-46"></a>                          <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb11-47"><a href="#cb11-47"></a>  <span class="fu">mutate</span>(<span class="at">yn_over_migr =</span> <span class="fu">cut</span>(net_over_migr,</span>
-<span id="cb11-48"><a href="#cb11-48"></a>                          <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">99999999</span>, <span class="dv">0</span>, <span class="cn">Inf</span>),</span>
-<span id="cb11-49"><a href="#cb11-49"></a>                          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Lost population through overseas migration"</span>, <span class="st">"Gained population through overseas migration"</span>),</span>
-<span id="cb11-50"><a href="#cb11-50"></a>                          <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb11-51"><a href="#cb11-51"></a>  <span class="fu">mutate</span>(<span class="at">yn_net_busi =</span> <span class="fu">cut</span>(net_busi,</span>
-<span id="cb11-52"><a href="#cb11-52"></a>                          <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">99999999</span>, <span class="dv">0</span>, <span class="cn">Inf</span>),</span>
-<span id="cb11-53"><a href="#cb11-53"></a>                          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Lost more businesses than gained"</span>, <span class="st">"Gained more businesses than lost"</span>),</span>
-<span id="cb11-54"><a href="#cb11-54"></a>                          <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb11-55"><a href="#cb11-55"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(yn_inter_migr))</span>
-<span id="cb11-56"><a href="#cb11-56"></a>  </span>
-<span id="cb11-57"><a href="#cb11-57"></a><span class="fu">summary</span>(aussie_data)  </span>
-<span id="cb11-58"><a href="#cb11-58"></a></span>
-<span id="cb11-59"><a href="#cb11-59"></a>aussie_data</span>
-<span id="cb11-60"><a href="#cb11-60"></a><span class="in">```</span></span>
-<span id="cb11-61"><a href="#cb11-61"></a></span>
-<span id="cb11-64"><a href="#cb11-64"></a><span class="in">```{r}</span></span>
-<span id="cb11-65"><a href="#cb11-65"></a><span class="fu">ggplot</span>(aussie_data, <span class="fu">aes</span>(<span class="at">x =</span> total_pop, <span class="at">y =</span> pct_over_migr, <span class="at">color =</span> yn_fert_rate)) <span class="sc">+</span></span>
-<span id="cb11-66"><a href="#cb11-66"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>,</span>
-<span id="cb11-67"><a href="#cb11-67"></a>             <span class="at">size =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
-<span id="cb11-68"><a href="#cb11-68"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>yn_inter_migr) <span class="sc">+</span></span>
-<span id="cb11-69"><a href="#cb11-69"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,</span>
-<span id="cb11-70"><a href="#cb11-70"></a>              <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb11-71"><a href="#cb11-71"></a>  <span class="fu">theme_solarized</span>(<span class="at">light =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb11-72"><a href="#cb11-72"></a>  <span class="fu">scale_color_solarized</span>() <span class="sc">+</span></span>
-<span id="cb11-73"><a href="#cb11-73"></a>  <span class="fu">scale_color_solarized</span>(<span class="at">name =</span> <span class="st">"Fertility Rate"</span>) <span class="sc">+</span></span>
-<span id="cb11-74"><a href="#cb11-74"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Population"</span>, <span class="at">y =</span> <span class="st">"New Overseas Migrants as % of Pop."</span>) </span>
-<span id="cb11-75"><a href="#cb11-75"></a><span class="in">```</span></span>
-<span id="cb11-76"><a href="#cb11-76"></a></span>
-<span id="cb11-77"><a href="#cb11-77"></a></span>
-<span id="cb11-78"><a href="#cb11-78"></a></span>
-<span id="cb11-79"><a href="#cb11-79"></a>https://dataexplorer.abs.gov.au/vis?fs[0]=Data%20by%20region%2C0%7CMain%20Structure%20and%20Greater%20Capital%20City%20Statistical%20Areas%23ASGS%23&amp;pg=0&amp;fc=Data%20by%20region&amp;df[ds]=DATA_BY_REGION_TOPICS&amp;df[id]=ABS_REGIONAL_ASGS2021&amp;df[ag]=ABS&amp;df[vs]=1.3.0&amp;pd=2022%2C2022&amp;dq=CABEE_5%2BCABEE_15%2BCABEE_10%2BMIGRATION_7%2BMIGRATION_4%2BBD_3%2BBD_4%2BBD_2%2BERP_P_20.SA3..A&amp;ly[cl]=MEASURE&amp;ly[rw]=ASGS_2021&amp;to[TIME_PERIOD]=false&amp;isAvailabilityDisabled=false&amp;snb=2 (accessed: April 18th, 2025)</span>
+<div class="sourceCode" id="cb7" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">---</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="an">title:</span><span class="co"> "Quadvariate Viz"</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="an">author:</span><span class="co"> "Gabriel Donelly Higgins"</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="an">date:</span><span class="co"> "May 2nd, 2025"</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="co">---</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="fu">## Research question:</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a></span>
+<span id="cb7-10"><a href="#cb7-10"></a>How does population, internal migration, overseas migration, and the fertility rate relate to each other at Statistical Level 4 areas in Australia</span>
+<span id="cb7-11"><a href="#cb7-11"></a></span>
+<span id="cb7-12"><a href="#cb7-12"></a><span class="fu">## Step 1: Load necessary packages</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a></span>
+<span id="cb7-16"><a href="#cb7-16"></a><span class="in">```{r}</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb7-18"><a href="#cb7-18"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb7-19"><a href="#cb7-19"></a><span class="in">```</span></span>
+<span id="cb7-20"><a href="#cb7-20"></a></span>
+<span id="cb7-21"><a href="#cb7-21"></a></span>
+<span id="cb7-22"><a href="#cb7-22"></a><span class="fu">## Step 2: Import / clean / join and wrangle the data:</span></span>
+<span id="cb7-23"><a href="#cb7-23"></a></span>
+<span id="cb7-26"><a href="#cb7-26"></a><span class="in">```{r}</span></span>
+<span id="cb7-27"><a href="#cb7-27"></a>messy_aussie_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/ABS,ABS_REGIONAL_ASGS2021,1.3.0+CABEE_5+CABEE_15+CABEE_10+MIGRATION_7+MIGRATION_4+BD_3+BD_4+BD_2+ERP_P_20.SA3..A.csv"</span>)</span>
+<span id="cb7-28"><a href="#cb7-28"></a></span>
+<span id="cb7-29"><a href="#cb7-29"></a>aussie_data <span class="ot">&lt;-</span> messy_aussie_data <span class="sc">|&gt;</span></span>
+<span id="cb7-30"><a href="#cb7-30"></a>  <span class="fu">select</span>(Region, <span class="st">`</span><span class="at">Data Item</span><span class="st">`</span>, OBS_VALUE) <span class="sc">|&gt;</span></span>
+<span id="cb7-31"><a href="#cb7-31"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Data Item</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">fct_recode</span>(<span class="st">`</span><span class="at">Data Item</span><span class="st">`</span>,</span>
+<span id="cb7-32"><a href="#cb7-32"></a>                                  <span class="st">"fert_rate"</span> <span class="ot">=</span> <span class="st">"Total fertility rate (births per female) (rate)"</span>,</span>
+<span id="cb7-33"><a href="#cb7-33"></a>                                  <span class="st">"net_over_migr"</span> <span class="ot">=</span> <span class="st">"Net overseas migration (no.)"</span>,</span>
+<span id="cb7-34"><a href="#cb7-34"></a>                                  <span class="st">"net_inter_migr"</span> <span class="ot">=</span> <span class="st">"Net internal migration (no.)"</span>,</span>
+<span id="cb7-35"><a href="#cb7-35"></a>                                  <span class="st">"reg_births"</span> <span class="ot">=</span> <span class="st">"Registered births (no.)"</span>,</span>
+<span id="cb7-36"><a href="#cb7-36"></a>                                  <span class="st">"reg_deaths"</span> <span class="ot">=</span> <span class="st">"Registered deaths (no.)"</span>,</span>
+<span id="cb7-37"><a href="#cb7-37"></a>                                  <span class="st">"total_pop"</span> <span class="ot">=</span> <span class="st">"Estimated resident population: Persons (no.)"</span>,</span>
+<span id="cb7-38"><a href="#cb7-38"></a>                                  <span class="st">"total_busi_exits"</span> <span class="ot">=</span> <span class="st">"Total business exits (no.)"</span>,</span>
+<span id="cb7-39"><a href="#cb7-39"></a>                                  <span class="st">"total_busi_entr"</span> <span class="ot">=</span> <span class="st">"Total business entries (no.)"</span>,</span>
+<span id="cb7-40"><a href="#cb7-40"></a>                                  <span class="st">"total_busi"</span> <span class="ot">=</span> <span class="st">"Total businesses (no.)"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-41"><a href="#cb7-41"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">`</span><span class="at">Data Item</span><span class="st">`</span>, <span class="at">values_from =</span> OBS_VALUE) <span class="sc">|&gt;</span></span>
+<span id="cb7-42"><a href="#cb7-42"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(fert_rate)) <span class="sc">|&gt;</span></span>
+<span id="cb7-43"><a href="#cb7-43"></a>  <span class="fu">mutate</span>(<span class="at">net_pop =</span> reg_births <span class="sc">-</span> reg_deaths) <span class="sc">|&gt;</span> <span class="co"># total births - deaths</span></span>
+<span id="cb7-44"><a href="#cb7-44"></a>  <span class="fu">mutate</span>(<span class="at">net_migr =</span> net_over_migr <span class="sc">+</span> net_inter_migr) <span class="sc">|&gt;</span> <span class="co"># the total change in migrants</span></span>
+<span id="cb7-45"><a href="#cb7-45"></a>  <span class="fu">mutate</span>(<span class="at">net_busi =</span> total_busi_entr <span class="sc">-</span> total_busi_exits) <span class="sc">|&gt;</span> <span class="co"># the total change in businesses</span></span>
+<span id="cb7-46"><a href="#cb7-46"></a>  <span class="fu">mutate</span>(<span class="at">pct_inter_migr =</span> (net_inter_migr <span class="sc">/</span> total_pop) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> <span class="co"># net internal migration as a percent of total pop</span></span>
+<span id="cb7-47"><a href="#cb7-47"></a>  <span class="fu">mutate</span>(<span class="at">pct_over_migr =</span> (net_over_migr <span class="sc">/</span> total_pop) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> <span class="co"># net overseas migration as a percent of total pop</span></span>
+<span id="cb7-48"><a href="#cb7-48"></a>  <span class="fu">mutate</span>(<span class="at">pct_migr =</span> (net_migr <span class="sc">/</span> total_pop) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> <span class="co"># the pct change in population by migrants</span></span>
+<span id="cb7-49"><a href="#cb7-49"></a>  <span class="fu">mutate</span>(<span class="at">pct_pop =</span> (net_pop <span class="sc">/</span> total_pop) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> <span class="co"># the pct change in population</span></span>
+<span id="cb7-50"><a href="#cb7-50"></a>  <span class="fu">mutate</span>(<span class="at">pct_busi =</span> (net_busi <span class="sc">/</span> total_busi) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> <span class="co"># the pct change in businesses</span></span>
+<span id="cb7-51"><a href="#cb7-51"></a>  <span class="fu">mutate</span>(<span class="at">yn_fert_rate =</span> <span class="fu">cut</span>(fert_rate,</span>
+<span id="cb7-52"><a href="#cb7-52"></a>                          <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">2.1</span>, <span class="cn">Inf</span>),</span>
+<span id="cb7-53"><a href="#cb7-53"></a>                          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Below replacement rate"</span>, <span class="st">"Above replacement rate"</span>),</span>
+<span id="cb7-54"><a href="#cb7-54"></a>                          <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-55"><a href="#cb7-55"></a>  <span class="fu">mutate</span>(<span class="at">yn_net_migr =</span> <span class="fu">cut</span>(net_migr,</span>
+<span id="cb7-56"><a href="#cb7-56"></a>                          <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">99999999</span>, <span class="dv">0</span>, <span class="cn">Inf</span>),</span>
+<span id="cb7-57"><a href="#cb7-57"></a>                          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Lost population through migration"</span>, <span class="st">"Gained population through migration"</span>),</span>
+<span id="cb7-58"><a href="#cb7-58"></a>                          <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-59"><a href="#cb7-59"></a>  <span class="fu">mutate</span>(<span class="at">yn_inter_migr =</span> <span class="fu">cut</span>(net_inter_migr,</span>
+<span id="cb7-60"><a href="#cb7-60"></a>                          <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">99999999</span>, <span class="dv">0</span>, <span class="cn">Inf</span>),</span>
+<span id="cb7-61"><a href="#cb7-61"></a>                          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Net Negative internal migration"</span>, <span class="st">"Net Positive internal migration"</span>),</span>
+<span id="cb7-62"><a href="#cb7-62"></a>                          <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-63"><a href="#cb7-63"></a>  <span class="fu">mutate</span>(<span class="at">yn_over_migr =</span> <span class="fu">cut</span>(net_over_migr,</span>
+<span id="cb7-64"><a href="#cb7-64"></a>                          <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">99999999</span>, <span class="dv">0</span>, <span class="cn">Inf</span>),</span>
+<span id="cb7-65"><a href="#cb7-65"></a>                          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Lost population through overseas migration"</span>, <span class="st">"Gained population through overseas migration"</span>),</span>
+<span id="cb7-66"><a href="#cb7-66"></a>                          <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-67"><a href="#cb7-67"></a>  <span class="fu">mutate</span>(<span class="at">yn_net_busi =</span> <span class="fu">cut</span>(net_busi,</span>
+<span id="cb7-68"><a href="#cb7-68"></a>                          <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">99999999</span>, <span class="dv">0</span>, <span class="cn">Inf</span>),</span>
+<span id="cb7-69"><a href="#cb7-69"></a>                          <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Lost more businesses than gained"</span>, <span class="st">"Gained more businesses than lost"</span>),</span>
+<span id="cb7-70"><a href="#cb7-70"></a>                          <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-71"><a href="#cb7-71"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(yn_inter_migr))</span>
+<span id="cb7-72"><a href="#cb7-72"></a>  </span>
+<span id="cb7-73"><a href="#cb7-73"></a><span class="fu">summary</span>(aussie_data)  </span>
+<span id="cb7-74"><a href="#cb7-74"></a></span>
+<span id="cb7-75"><a href="#cb7-75"></a>aussie_data</span>
+<span id="cb7-76"><a href="#cb7-76"></a><span class="in">```</span></span>
+<span id="cb7-77"><a href="#cb7-77"></a></span>
+<span id="cb7-78"><a href="#cb7-78"></a></span>
+<span id="cb7-79"><a href="#cb7-79"></a><span class="fu">## Step 3: Put data into a plot</span></span>
+<span id="cb7-80"><a href="#cb7-80"></a></span>
+<span id="cb7-83"><a href="#cb7-83"></a><span class="in">```{r}</span></span>
+<span id="cb7-84"><a href="#cb7-84"></a><span class="co">#| fig-cap: "A Scatterplot of Population and Overseas Migration Faceted by Internal Migration and Colored by Fertility Rate"</span></span>
+<span id="cb7-85"><a href="#cb7-85"></a><span class="co">#| fig-alt: "There is a scatterplot which uses net overseas migration standardized as a percentage of the population on the y-axis, and the population of points on the x-axis. It is faceted by whether or not the points experienced a net positive or negative internal migration, and the points are colored either red or blue. The legend shows that red points are above replacement rate, and blue points are below. The title is 'Fertility Rates, Internal / Overseas Migration, and Population'. The points are slightly transparent, so you can see how intensely red or blue a part of the plot is where there are many points. There are trend lines for the red and blue dots on both of the scattered plots. On the net negative internal migration scatterplot, there is a similar positive correlation between population and overseas migration between red and blue points, but the red trend line starts at a lower point, nearer to 0%, while the blue trend line starts nearer to 1%. On the scatterplot for points with a net positive internal migration, there was the same positive correlation among red and blue points, but the trend lines were flatter. Again, the blue trend line started above the red point, but below 0.5% (whereas in the other scatterplot the blue trend line started above 0.5%). The red trend line starts above as close to 0% as in the previous scatterplot, and in below the blue trend line. The blue trend lines extend further on the x-axis because they have points which extend further."</span></span>
+<span id="cb7-86"><a href="#cb7-86"></a></span>
+<span id="cb7-87"><a href="#cb7-87"></a><span class="fu">ggplot</span>(aussie_data, <span class="fu">aes</span>(<span class="at">x =</span> total_pop, <span class="at">y =</span> pct_over_migr, <span class="at">color =</span> yn_fert_rate)) <span class="sc">+</span></span>
+<span id="cb7-88"><a href="#cb7-88"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>,</span>
+<span id="cb7-89"><a href="#cb7-89"></a>             <span class="at">size =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
+<span id="cb7-90"><a href="#cb7-90"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>yn_inter_migr) <span class="sc">+</span></span>
+<span id="cb7-91"><a href="#cb7-91"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,</span>
+<span id="cb7-92"><a href="#cb7-92"></a>              <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb7-93"><a href="#cb7-93"></a>  <span class="fu">theme_solarized</span>(<span class="at">light =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb7-94"><a href="#cb7-94"></a>  <span class="fu">scale_color_solarized</span>() <span class="sc">+</span></span>
+<span id="cb7-95"><a href="#cb7-95"></a>  <span class="fu">scale_color_solarized</span>(<span class="at">name =</span> <span class="st">"Fertility Rate"</span>) <span class="sc">+</span></span>
+<span id="cb7-96"><a href="#cb7-96"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Population"</span>, <span class="at">y =</span> <span class="st">"Net Overseas Migration as % of Pop."</span>, <span class="at">title =</span> <span class="st">"Fertility Rates, Internal / Overseas Migration, and Population"</span>) <span class="sc">+</span></span>
+<span id="cb7-97"><a href="#cb7-97"></a>  <span class="fu">theme</span>(<span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">family =</span> <span class="st">"mono"</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb7-98"><a href="#cb7-98"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fl">12.5</span>, <span class="at">family =</span> <span class="st">"mono"</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb7-99"><a href="#cb7-99"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>, <span class="at">family =</span> <span class="st">"mono"</span>, <span class="at">color =</span> <span class="st">"#93a1a1"</span>),</span>
+<span id="cb7-100"><a href="#cb7-100"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">family =</span> <span class="st">"mono"</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb7-101"><a href="#cb7-101"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">family =</span> <span class="st">"mono"</span>, <span class="at">color =</span> <span class="st">"#93a1a1"</span>),</span>
+<span id="cb7-102"><a href="#cb7-102"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">family =</span> <span class="st">"mono"</span>, <span class="at">face =</span> <span class="st">"bold"</span>))</span>
+<span id="cb7-103"><a href="#cb7-103"></a><span class="in">```</span></span>
+<span id="cb7-104"><a href="#cb7-104"></a></span>
+<span id="cb7-105"><a href="#cb7-105"></a></span>
+<span id="cb7-106"><a href="#cb7-106"></a>**Conclusion:**</span>
+<span id="cb7-107"><a href="#cb7-107"></a></span>
+<span id="cb7-108"><a href="#cb7-108"></a>It seems like when Statistical Level 4 Areas(SL4A) in Australia have a negative internal migration, they get more overseas immigrants per capita, indicating that overseas immigrants may be more attracted to SL4A's that have a net negative internal migration. Perhaps this is because the labor pool is smaller, allowing them to more easily fill it, or perhaps there are other reasons. However, even if the trend was more positive for both SL4A's with fertility rates below and above replace rate, the y-intercept for both the net negative and net positive internal migration above replacement lines were the same. What this means is that in SL4A's with low populations and a fertility rate above replacement rate, the net overseas migration per capita is roughly similar, but that trend changes in SL4A's that have higher populations as immigrants tend to go to the ones with net negative internal migration. The reason why there are more SL4A's with positive internal migration and high populations is possibly because an SL4A with a high population is necessarily more likely to have a more active economy, attracting people internally for jobs. This may make it so that more natives go to these SL4A's, and perhaps overseas immigrants may have difficulty competing with natives. Lastly, the outliers which really increase the range of the y-axis tend to be outliers from the net negative internal migration SL4A's, and they are all also below replacement rate. Approaching this through the lens of the United States' urban development and history, the reason these outliers may have such high overseas migration per capita is because they serve as ethnic enclaves, where overseas immigrants of certain regons tend to concentrate. These SL4A's may have lower fertility rates and are losing natives to internal migration, which indicates that there are fewer natives occupying the area, making room for new overseas immigrant communities</span>
+<span id="cb7-109"><a href="#cb7-109"></a></span>
+<span id="cb7-110"><a href="#cb7-110"></a></span>
+<span id="cb7-111"><a href="#cb7-111"></a><span class="fu">## References:</span></span>
+<span id="cb7-112"><a href="#cb7-112"></a>https://dataexplorer.abs.gov.au/vis?fs[0]=Data%20by%20region%2C0%7CMain%20Structure%20and%20Greater%20Capital%20City%20Statistical%20Areas%23ASGS%23&amp;pg=0&amp;fc=Data%20by%20region&amp;df[ds]=DATA_BY_REGION_TOPICS&amp;df[id]=ABS_REGIONAL_ASGS2021&amp;df[ag]=ABS&amp;df[vs]=1.3.0&amp;pd=2022%2C2022&amp;dq=CABEE_5%2BCABEE_15%2BCABEE_10%2BMIGRATION_7%2BMIGRATION_4%2BBD_3%2BBD_4%2BBD_2%2BERP_P_20.SA3..A&amp;ly[cl]=MEASURE&amp;ly[rw]=ASGS_2021&amp;to[TIME_PERIOD]=false&amp;isAvailabilityDisabled=false&amp;snb=2 (accessed: April 18th, 2025)</span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.5.57">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Gabriel Donelly Higgins">
+<meta name="dcterms.date" content="2025-04-16">
 <title>5&nbsp; Spatial Viz – COMP/STAT112 Notebook</title>
 <style>
 code{white-space: pre-wrap;}
@@ -327,7 +329,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Gabriel Donelly Higgins </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 16, 2025</p>
+    </div>
+  </div>
   
     
   </div>
@@ -340,106 +354,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section><section id="step-1-load-necessary-packages" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="step-1-load-necessary-packages">
 <span class="header-section-number">5.2</span> Step 1: Load necessary packages</h2>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.5
-✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-✔ purrr     1.0.2     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stderr">
-<pre><code>Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE</code></pre>
-</div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section><section id="step-2-import-and-clean-wrangle-join-data" class="level2" data-number="5.3"><h2 data-number="5.3" class="anchored" data-anchor-id="step-2-import-and-clean-wrangle-join-data">
 <span class="header-section-number">5.3</span> Step 2: Import and clean / wrangle / join data</h2>
 <p><strong>Shapefile data across Australia for Level 4 Statistical Areas:</strong></p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>messy_sf <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"../data/SA4_2021_AUST_SHP_GDA2020/SA4_2021_AUST_GDA2020.shp"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2"></a></span>
-<span id="cb5-3"><a href="#cb5-3"></a>sydney_sf <span class="ot">&lt;-</span> messy_sf <span class="sc">|&gt;</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a>  <span class="fu">select</span>(SA4_NAME21, geometry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>messy_sf <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"../data/SA4_2021_AUST_SHP_GDA2020/SA4_2021_AUST_GDA2020.shp"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a>sydney_sf <span class="ot">&lt;-</span> messy_sf <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>  <span class="fu">select</span>(SA4_NAME21, geometry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p><strong>Data about the working age population across Greater Sydney’s Level 4 Statistical Areas:</strong></p>
 <p>Sidenote: Working age is counted as being between 15-64 years old</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>messy_working_age_pop <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/ABS,ABS_REGIONAL_ASGS2021,1.3.0+ERP_18..128+127+126+125+124+123+121+122+120+119+118+117+116+115+102.A.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stderr">
-<pre><code>Rows: 15 Columns: 24
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (13): STRUCTURE, STRUCTURE_ID, STRUCTURE_NAME, ACTION, MEASURE, Data Ite...
-dbl  (3): ASGS_2021, TIME_PERIOD, OBS_VALUE
-lgl  (8): Time Period, Observation Value, UNIT_MULT, Unit of Multiplier, OBS...
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>working_age_pop <span class="ot">&lt;-</span> messy_working_age_pop <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">mutate</span>(<span class="at">working_age_pop =</span> OBS_VALUE) <span class="sc">|&gt;</span></span>
-<span id="cb8-3"><a href="#cb8-3"></a>  <span class="fu">select</span>(Region, working_age_pop) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>messy_working_age_pop <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/ABS,ABS_REGIONAL_ASGS2021,1.3.0+ERP_18..128+127+126+125+124+123+121+122+120+119+118+117+116+115+102.A.csv"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a>working_age_pop <span class="ot">&lt;-</span> messy_working_age_pop <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>  <span class="fu">mutate</span>(<span class="at">working_age_pop =</span> OBS_VALUE) <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>  <span class="fu">select</span>(Region, working_age_pop) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p><strong>Data about the total businesses across Greater Sydney’s Level 4 Statistical Areas:</strong></p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>messy_total_businesses <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/ABS,ABS_REGIONAL_ASGS2021,1.3.0+CABEE_5..128+127+126+125+124+123+121+122+120+119+118+117+116+115+102.A.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stderr">
-<pre><code>Rows: 15 Columns: 24
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (13): STRUCTURE, STRUCTURE_ID, STRUCTURE_NAME, ACTION, MEASURE, Data Ite...
-dbl  (3): ASGS_2021, TIME_PERIOD, OBS_VALUE
-lgl  (8): Time Period, Observation Value, UNIT_MULT, Unit of Multiplier, OBS...
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>total_businesses <span class="ot">&lt;-</span> messy_total_businesses <span class="sc">|&gt;</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a>  <span class="fu">mutate</span>(<span class="at">total_businesses =</span> OBS_VALUE) <span class="sc">|&gt;</span></span>
-<span id="cb11-3"><a href="#cb11-3"></a>  <span class="fu">select</span>(Region, total_businesses)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>messy_total_businesses <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/ABS,ABS_REGIONAL_ASGS2021,1.3.0+CABEE_5..128+127+126+125+124+123+121+122+120+119+118+117+116+115+102.A.csv"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a>total_businesses <span class="ot">&lt;-</span> messy_total_businesses <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="fu">mutate</span>(<span class="at">total_businesses =</span> OBS_VALUE) <span class="sc">|&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>  <span class="fu">select</span>(Region, total_businesses)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p><strong>Combine the three datasets into one:</strong></p>
 <p>Sidenote: Also, wrangle the data, and turn the results of the ratio of working age persons to businesses into factors. And lastly, create a color palette for each of these factor levels on the map</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>employee_businesses_sf <span class="ot">&lt;-</span> sydney_sf <span class="sc">|&gt;</span></span>
-<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">inner_join</span>(working_age_pop, <span class="fu">join_by</span>(SA4_NAME21 <span class="sc">==</span> Region)) <span class="sc">|&gt;</span></span>
-<span id="cb12-3"><a href="#cb12-3"></a>  <span class="fu">inner_join</span>(total_businesses, <span class="fu">join_by</span>(SA4_NAME21 <span class="sc">==</span> Region)) <span class="sc">|&gt;</span></span>
-<span id="cb12-4"><a href="#cb12-4"></a>  <span class="fu">mutate</span>(<span class="at">working_persons_per_business =</span> working_age_pop <span class="sc">/</span> total_businesses) <span class="sc">|&gt;</span></span>
-<span id="cb12-5"><a href="#cb12-5"></a>  <span class="fu">mutate</span>(<span class="at">working_persons_per_business =</span> <span class="fu">cut</span>(working_persons_per_business,</span>
-<span id="cb12-6"><a href="#cb12-6"></a>                                            <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="fl">4.5</span>, <span class="dv">5</span>, <span class="fl">5.5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="fl">8.5</span>, <span class="dv">9</span>),</span>
-<span id="cb12-7"><a href="#cb12-7"></a>                                            <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"3 - 4.4"</span>, <span class="st">"4.5 - 4.9"</span>, <span class="st">"5 - 5.4"</span>, <span class="st">"5.5 - 5.9"</span>, <span class="st">"6 - 7.9"</span>, <span class="st">"8 - 8.4"</span>, <span class="st">"8.5 - 9"</span>),</span>
-<span id="cb12-8"><a href="#cb12-8"></a>                                            <span class="at">include.lowest =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb12-9"><a href="#cb12-9"></a></span>
-<span id="cb12-10"><a href="#cb12-10"></a>my_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb12-11"><a href="#cb12-11"></a>  <span class="st">"3 - 4.4"</span> <span class="ot">=</span> <span class="st">"#f46d43"</span>,</span>
-<span id="cb12-12"><a href="#cb12-12"></a>  <span class="st">"4.5 - 4.9"</span> <span class="ot">=</span> <span class="st">"#fdae61"</span>,</span>
-<span id="cb12-13"><a href="#cb12-13"></a>  <span class="st">"5 - 5.4"</span> <span class="ot">=</span> <span class="st">"#fee08b"</span>,</span>
-<span id="cb12-14"><a href="#cb12-14"></a>  <span class="st">"5.5 - 5.9"</span> <span class="ot">=</span> <span class="st">"#d9ef8b"</span>,</span>
-<span id="cb12-15"><a href="#cb12-15"></a>  <span class="st">"6 - 7.9"</span> <span class="ot">=</span> <span class="st">"#a6d96a"</span>,</span>
-<span id="cb12-16"><a href="#cb12-16"></a>  <span class="st">"8 - 8.4"</span> <span class="ot">=</span> <span class="st">"#66bd63"</span>,</span>
-<span id="cb12-17"><a href="#cb12-17"></a>  <span class="st">"8.5 - 9"</span> <span class="ot">=</span> <span class="st">"#1a9850"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>employee_businesses_sf <span class="ot">&lt;-</span> sydney_sf <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">inner_join</span>(working_age_pop, <span class="fu">join_by</span>(SA4_NAME21 <span class="sc">==</span> Region)) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">inner_join</span>(total_businesses, <span class="fu">join_by</span>(SA4_NAME21 <span class="sc">==</span> Region)) <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a>  <span class="fu">mutate</span>(<span class="at">working_persons_per_business =</span> working_age_pop <span class="sc">/</span> total_businesses) <span class="sc">|&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>  <span class="fu">mutate</span>(<span class="at">working_persons_per_business =</span> <span class="fu">cut</span>(working_persons_per_business,</span>
+<span id="cb5-6"><a href="#cb5-6"></a>                                            <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="fl">4.5</span>, <span class="dv">5</span>, <span class="fl">5.5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="fl">8.5</span>, <span class="dv">9</span>),</span>
+<span id="cb5-7"><a href="#cb5-7"></a>                                            <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"3 - 4.4"</span>, <span class="st">"4.5 - 4.9"</span>, <span class="st">"5 - 5.4"</span>, <span class="st">"5.5 - 5.9"</span>, <span class="st">"6 - 7.9"</span>, <span class="st">"8 - 8.4"</span>, <span class="st">"8.5 - 9"</span>),</span>
+<span id="cb5-8"><a href="#cb5-8"></a>                                            <span class="at">include.lowest =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb5-9"><a href="#cb5-9"></a></span>
+<span id="cb5-10"><a href="#cb5-10"></a>my_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb5-11"><a href="#cb5-11"></a>  <span class="st">"3 - 4.4"</span> <span class="ot">=</span> <span class="st">"#f46d43"</span>,</span>
+<span id="cb5-12"><a href="#cb5-12"></a>  <span class="st">"4.5 - 4.9"</span> <span class="ot">=</span> <span class="st">"#fdae61"</span>,</span>
+<span id="cb5-13"><a href="#cb5-13"></a>  <span class="st">"5 - 5.4"</span> <span class="ot">=</span> <span class="st">"#fee08b"</span>,</span>
+<span id="cb5-14"><a href="#cb5-14"></a>  <span class="st">"5.5 - 5.9"</span> <span class="ot">=</span> <span class="st">"#d9ef8b"</span>,</span>
+<span id="cb5-15"><a href="#cb5-15"></a>  <span class="st">"6 - 7.9"</span> <span class="ot">=</span> <span class="st">"#a6d96a"</span>,</span>
+<span id="cb5-16"><a href="#cb5-16"></a>  <span class="st">"8 - 8.4"</span> <span class="ot">=</span> <span class="st">"#66bd63"</span>,</span>
+<span id="cb5-17"><a href="#cb5-17"></a>  <span class="st">"8.5 - 9"</span> <span class="ot">=</span> <span class="st">"#1a9850"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section><section id="step-3-visualize" class="level2" data-number="5.4"><h2 data-number="5.4" class="anchored" data-anchor-id="step-3-visualize">
 <span class="header-section-number">5.4</span> Step 3: Visualize</h2>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> employee_businesses_sf,</span>
-<span id="cb13-3"><a href="#cb13-3"></a>          <span class="fu">aes</span>(<span class="at">fill =</span> working_persons_per_business)) <span class="sc">+</span></span>
-<span id="cb13-4"><a href="#cb13-4"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb13-5"><a href="#cb13-5"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">name =</span> <span class="st">"People of Working Age per Business"</span>,</span>
-<span id="cb13-6"><a href="#cb13-6"></a>                    <span class="at">values =</span> my_colors) <span class="sc">+</span></span>
-<span id="cb13-7"><a href="#cb13-7"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="dv">7856</span>) <span class="sc">+</span></span>
-<span id="cb13-8"><a href="#cb13-8"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Ratio of People of Working Age to Businesses Across Greater Sydney"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> employee_businesses_sf,</span>
+<span id="cb6-3"><a href="#cb6-3"></a>          <span class="fu">aes</span>(<span class="at">fill =</span> working_persons_per_business)) <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">name =</span> <span class="st">"People of Working Age per Business"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6"></a>                    <span class="at">values =</span> my_colors) <span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="dv">7856</span>) <span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Ratio of People of Working Age to Businesses Across Greater Sydney"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="bw-spatial_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" alt="A choropleth map of the Level 4 Statistical Areas across Greater Sydney, colored by gradient from orange to yellow to green. This shows the number of people of working age there are per business. Lying on an eastern peninsula of the map, there is a small Statistical Area with the fewest working age people per business, between 3 and 4. To its east, extending to the end of the peninsula, and to the north there are other areas with fewer people of working age per business, one with 4.5 - 4.9 and some with 5 - 5.4. To its west and southwest, there are Statistical Areas with a ratio of 5.5 - 5.9 or 6 - 7.9 people of working age per business. As one gets moves further north / west / south away from this Statistical Area with a low ratio, the statistical areas get larger in size and tend to have more people of working age per business. There is an exception, a Statistical Area in the north, with a lower ratio of 5 - 5.4, which also borders (on its east) the Statistical Area with the second lowest ratio (4.5 - 4.9). The statistical areas on the eastern side of the map clearly border some body of water, as they have peninsulas that jut throughout multiple bays, while the borders on the western, northern, and southernmost parts of the map seem to be more straight and organized, like a human made their borders." width="672"></p>
@@ -1087,109 +1067,112 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb14" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1"></a><span class="co">---</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="an">title:</span><span class="co"> "Spatial Viz"</span></span>
-<span id="cb14-3"><a href="#cb14-3"></a><span class="co">---</span></span>
-<span id="cb14-4"><a href="#cb14-4"></a></span>
-<span id="cb14-5"><a href="#cb14-5"></a><span class="fu">## Research question:</span></span>
-<span id="cb14-6"><a href="#cb14-6"></a></span>
-<span id="cb14-7"><a href="#cb14-7"></a>Across Greater Sydney what is the ratio of working age people to businesses. </span>
-<span id="cb14-8"><a href="#cb14-8"></a></span>
-<span id="cb14-9"><a href="#cb14-9"></a><span class="fu">## Step 1: Load necessary packages</span></span>
-<span id="cb14-10"><a href="#cb14-10"></a></span>
-<span id="cb14-13"><a href="#cb14-13"></a><span class="in">```{r}</span></span>
-<span id="cb14-14"><a href="#cb14-14"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb14-15"><a href="#cb14-15"></a><span class="fu">library</span>(sf)</span>
-<span id="cb14-16"><a href="#cb14-16"></a><span class="in">```</span></span>
-<span id="cb14-17"><a href="#cb14-17"></a></span>
-<span id="cb14-18"><a href="#cb14-18"></a><span class="fu">## Step 2: Import and clean / wrangle / join data</span></span>
-<span id="cb14-19"><a href="#cb14-19"></a></span>
-<span id="cb14-20"><a href="#cb14-20"></a></span>
-<span id="cb14-21"><a href="#cb14-21"></a>**Shapefile data across Australia for Level 4 Statistical Areas:**</span>
-<span id="cb14-22"><a href="#cb14-22"></a></span>
-<span id="cb14-25"><a href="#cb14-25"></a><span class="in">```{r}</span></span>
-<span id="cb14-26"><a href="#cb14-26"></a>messy_sf <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"../data/SA4_2021_AUST_SHP_GDA2020/SA4_2021_AUST_GDA2020.shp"</span>)</span>
-<span id="cb14-27"><a href="#cb14-27"></a></span>
-<span id="cb14-28"><a href="#cb14-28"></a>sydney_sf <span class="ot">&lt;-</span> messy_sf <span class="sc">|&gt;</span></span>
-<span id="cb14-29"><a href="#cb14-29"></a>  <span class="fu">select</span>(SA4_NAME21, geometry)</span>
-<span id="cb14-30"><a href="#cb14-30"></a><span class="in">```</span></span>
-<span id="cb14-31"><a href="#cb14-31"></a></span>
-<span id="cb14-32"><a href="#cb14-32"></a></span>
-<span id="cb14-33"><a href="#cb14-33"></a>**Data about the working age population across Greater Sydney's Level 4 Statistical Areas:**</span>
-<span id="cb14-34"><a href="#cb14-34"></a></span>
-<span id="cb14-35"><a href="#cb14-35"></a>Sidenote: Working age is counted as being between 15-64 years old</span>
-<span id="cb14-36"><a href="#cb14-36"></a></span>
-<span id="cb14-39"><a href="#cb14-39"></a><span class="in">```{r}</span></span>
-<span id="cb14-40"><a href="#cb14-40"></a>messy_working_age_pop <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/ABS,ABS_REGIONAL_ASGS2021,1.3.0+ERP_18..128+127+126+125+124+123+121+122+120+119+118+117+116+115+102.A.csv"</span>)</span>
-<span id="cb14-41"><a href="#cb14-41"></a></span>
-<span id="cb14-42"><a href="#cb14-42"></a>working_age_pop <span class="ot">&lt;-</span> messy_working_age_pop <span class="sc">|&gt;</span></span>
-<span id="cb14-43"><a href="#cb14-43"></a>  <span class="fu">mutate</span>(<span class="at">working_age_pop =</span> OBS_VALUE) <span class="sc">|&gt;</span></span>
-<span id="cb14-44"><a href="#cb14-44"></a>  <span class="fu">select</span>(Region, working_age_pop) </span>
-<span id="cb14-45"><a href="#cb14-45"></a><span class="in">```</span></span>
-<span id="cb14-46"><a href="#cb14-46"></a></span>
-<span id="cb14-47"><a href="#cb14-47"></a></span>
-<span id="cb14-48"><a href="#cb14-48"></a>**Data about the total businesses across Greater Sydney's Level 4 Statistical Areas:**</span>
-<span id="cb14-49"><a href="#cb14-49"></a></span>
-<span id="cb14-52"><a href="#cb14-52"></a><span class="in">```{r}</span></span>
-<span id="cb14-53"><a href="#cb14-53"></a>messy_total_businesses <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/ABS,ABS_REGIONAL_ASGS2021,1.3.0+CABEE_5..128+127+126+125+124+123+121+122+120+119+118+117+116+115+102.A.csv"</span>)</span>
-<span id="cb14-54"><a href="#cb14-54"></a></span>
-<span id="cb14-55"><a href="#cb14-55"></a>total_businesses <span class="ot">&lt;-</span> messy_total_businesses <span class="sc">|&gt;</span></span>
-<span id="cb14-56"><a href="#cb14-56"></a>  <span class="fu">mutate</span>(<span class="at">total_businesses =</span> OBS_VALUE) <span class="sc">|&gt;</span></span>
-<span id="cb14-57"><a href="#cb14-57"></a>  <span class="fu">select</span>(Region, total_businesses)</span>
-<span id="cb14-58"><a href="#cb14-58"></a><span class="in">```</span></span>
-<span id="cb14-59"><a href="#cb14-59"></a></span>
-<span id="cb14-60"><a href="#cb14-60"></a></span>
-<span id="cb14-61"><a href="#cb14-61"></a>**Combine the three datasets into one:**</span>
-<span id="cb14-62"><a href="#cb14-62"></a></span>
-<span id="cb14-63"><a href="#cb14-63"></a>Sidenote: Also, wrangle the data, and turn the results of the ratio of working age persons to businesses into factors. And lastly, create a color palette for each of these factor levels on the map</span>
-<span id="cb14-64"><a href="#cb14-64"></a></span>
-<span id="cb14-67"><a href="#cb14-67"></a><span class="in">```{r}</span></span>
-<span id="cb14-68"><a href="#cb14-68"></a>employee_businesses_sf <span class="ot">&lt;-</span> sydney_sf <span class="sc">|&gt;</span></span>
-<span id="cb14-69"><a href="#cb14-69"></a>  <span class="fu">inner_join</span>(working_age_pop, <span class="fu">join_by</span>(SA4_NAME21 <span class="sc">==</span> Region)) <span class="sc">|&gt;</span></span>
-<span id="cb14-70"><a href="#cb14-70"></a>  <span class="fu">inner_join</span>(total_businesses, <span class="fu">join_by</span>(SA4_NAME21 <span class="sc">==</span> Region)) <span class="sc">|&gt;</span></span>
-<span id="cb14-71"><a href="#cb14-71"></a>  <span class="fu">mutate</span>(<span class="at">working_persons_per_business =</span> working_age_pop <span class="sc">/</span> total_businesses) <span class="sc">|&gt;</span></span>
-<span id="cb14-72"><a href="#cb14-72"></a>  <span class="fu">mutate</span>(<span class="at">working_persons_per_business =</span> <span class="fu">cut</span>(working_persons_per_business,</span>
-<span id="cb14-73"><a href="#cb14-73"></a>                                            <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="fl">4.5</span>, <span class="dv">5</span>, <span class="fl">5.5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="fl">8.5</span>, <span class="dv">9</span>),</span>
-<span id="cb14-74"><a href="#cb14-74"></a>                                            <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"3 - 4.4"</span>, <span class="st">"4.5 - 4.9"</span>, <span class="st">"5 - 5.4"</span>, <span class="st">"5.5 - 5.9"</span>, <span class="st">"6 - 7.9"</span>, <span class="st">"8 - 8.4"</span>, <span class="st">"8.5 - 9"</span>),</span>
-<span id="cb14-75"><a href="#cb14-75"></a>                                            <span class="at">include.lowest =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb14-76"><a href="#cb14-76"></a></span>
-<span id="cb14-77"><a href="#cb14-77"></a>my_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb14-78"><a href="#cb14-78"></a>  <span class="st">"3 - 4.4"</span> <span class="ot">=</span> <span class="st">"#f46d43"</span>,</span>
-<span id="cb14-79"><a href="#cb14-79"></a>  <span class="st">"4.5 - 4.9"</span> <span class="ot">=</span> <span class="st">"#fdae61"</span>,</span>
-<span id="cb14-80"><a href="#cb14-80"></a>  <span class="st">"5 - 5.4"</span> <span class="ot">=</span> <span class="st">"#fee08b"</span>,</span>
-<span id="cb14-81"><a href="#cb14-81"></a>  <span class="st">"5.5 - 5.9"</span> <span class="ot">=</span> <span class="st">"#d9ef8b"</span>,</span>
-<span id="cb14-82"><a href="#cb14-82"></a>  <span class="st">"6 - 7.9"</span> <span class="ot">=</span> <span class="st">"#a6d96a"</span>,</span>
-<span id="cb14-83"><a href="#cb14-83"></a>  <span class="st">"8 - 8.4"</span> <span class="ot">=</span> <span class="st">"#66bd63"</span>,</span>
-<span id="cb14-84"><a href="#cb14-84"></a>  <span class="st">"8.5 - 9"</span> <span class="ot">=</span> <span class="st">"#1a9850"</span>)</span>
-<span id="cb14-85"><a href="#cb14-85"></a><span class="in">```</span></span>
-<span id="cb14-86"><a href="#cb14-86"></a></span>
-<span id="cb14-87"><a href="#cb14-87"></a></span>
-<span id="cb14-88"><a href="#cb14-88"></a><span class="fu">## Step 3: Visualize</span></span>
-<span id="cb14-89"><a href="#cb14-89"></a></span>
-<span id="cb14-92"><a href="#cb14-92"></a><span class="in">```{r}</span></span>
-<span id="cb14-93"><a href="#cb14-93"></a><span class="co">#| fig-cap: "Choropleth map of the ratio of working age people to businesses in Level 4 Statistical Areas across Greater Sydney, using quantitative classes"</span></span>
-<span id="cb14-94"><a href="#cb14-94"></a><span class="co">#| fig-alt: "A choropleth map of the Level 4 Statistical Areas across Greater Sydney, colored by gradient from orange to yellow to green. This shows the number of people of working age there are per business. Lying on an eastern peninsula of the map, there is a small Statistical Area with the fewest working age people per business, between 3 and 4. To its east, extending to the end of the peninsula, and to the north there are other areas with fewer people of working age per business, one with 4.5 - 4.9 and some with 5 - 5.4. To its west and southwest, there are Statistical Areas with a ratio of 5.5 - 5.9 or 6 - 7.9 people of working age per business. As one gets moves further north / west / south away from this Statistical Area with a low ratio, the statistical areas get larger in size and tend to have more people of working age per business. There is an exception, a Statistical Area in the north, with a lower ratio of 5 - 5.4, which also borders (on its east) the Statistical Area with the second lowest ratio (4.5 - 4.9). The statistical areas on the eastern side of the map clearly border some body of water, as they have peninsulas that jut throughout multiple bays, while the borders on the western, northern, and southernmost parts of the map seem to be more straight and organized, like a human made their borders."</span></span>
-<span id="cb14-95"><a href="#cb14-95"></a></span>
-<span id="cb14-96"><a href="#cb14-96"></a></span>
-<span id="cb14-97"><a href="#cb14-97"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb14-98"><a href="#cb14-98"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> employee_businesses_sf,</span>
-<span id="cb14-99"><a href="#cb14-99"></a>          <span class="fu">aes</span>(<span class="at">fill =</span> working_persons_per_business)) <span class="sc">+</span></span>
-<span id="cb14-100"><a href="#cb14-100"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb14-101"><a href="#cb14-101"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">name =</span> <span class="st">"People of Working Age per Business"</span>,</span>
-<span id="cb14-102"><a href="#cb14-102"></a>                    <span class="at">values =</span> my_colors) <span class="sc">+</span></span>
-<span id="cb14-103"><a href="#cb14-103"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="dv">7856</span>) <span class="sc">+</span></span>
-<span id="cb14-104"><a href="#cb14-104"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Ratio of People of Working Age to Businesses Across Greater Sydney"</span>)</span>
-<span id="cb14-105"><a href="#cb14-105"></a><span class="in">```</span></span>
-<span id="cb14-106"><a href="#cb14-106"></a></span>
-<span id="cb14-107"><a href="#cb14-107"></a></span>
-<span id="cb14-108"><a href="#cb14-108"></a><span class="fu">## Conclusion:</span></span>
-<span id="cb14-109"><a href="#cb14-109"></a></span>
-<span id="cb14-110"><a href="#cb14-110"></a>Interestingly, it seems like coastal Level 4 Statistical Areas tend to have lower ratios of working age people than those inland. The Statistical Areas with the lowest ratios tended to be concentrated to the left of the center of the map, on the coast. The lowest ratio Statistical area was in the middle of a peninsula. It was positioned so that Statistical areas wth lower ratios were to its north and east, but it also bordered a cluster of Statistical areas with some more mid ranged ratios. There is the possibility that this low ratio Statistical Area is the central business district of Sydney and therefore has few residents overall (which includes residents of working age) in comparison to businesses, therefore making its ratio unique. It would also explain why surrounding Statistical Areas have lower to medium ratios. They could be suburbs, where there is still some investment into businesses, but also a larger population of working age people to balance the ratio. The larger (in size) statistical areas to the west and north have higher ratios. An explanation for this would be that they are rural areas far away from the central business district. Their economic activity is depressed, reducing investment in businesses, and throwing off their ratios. </span>
-<span id="cb14-111"><a href="#cb14-111"></a></span>
-<span id="cb14-112"><a href="#cb14-112"></a></span>
-<span id="cb14-113"><a href="#cb14-113"></a><span class="fu">## References:</span></span>
-<span id="cb14-114"><a href="#cb14-114"></a>https://dataexplorer.abs.gov.au/vis?fs[0]=Data%20by%20region%2C0%7CMain%20Structure%20and%20Greater%20Capital%20City%20Statistical%20Areas%23ASGS%23&amp;pg=0&amp;fc=Data%20by%20region&amp;df[ds]=DATA_BY_REGION_TOPICS&amp;df[id]=ABS_REGIONAL_ASGS2021&amp;df[ag]=ABS&amp;df[vs]=1.3.0&amp;pd=2020%2C&amp;dq=..118%2B117%2B116%2B115%2B102.A&amp;ly[cl]=TIME_PERIOD&amp;ly[rw]=ASGS_2021%2CMEASURE&amp;to[TIME_PERIOD]=false (accessed: April 16th, 2025)</span>
-<span id="cb14-115"><a href="#cb14-115"></a>https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026/access-and-downloads/digital-boundary-files (accessed: April 16th, 2025)</span>
+<div class="sourceCode" id="cb7" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">---</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="an">title:</span><span class="co"> "Spatial Viz"</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="an">author:</span><span class="co"> "Gabriel Donelly Higgins"</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="an">date:</span><span class="co"> "April 16, 2025"</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="co">---</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="fu">## Research question:</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a></span>
+<span id="cb7-10"><a href="#cb7-10"></a>Across Greater Sydney what is the ratio of working age people to businesses. </span>
+<span id="cb7-11"><a href="#cb7-11"></a></span>
+<span id="cb7-12"><a href="#cb7-12"></a><span class="fu">## Step 1: Load necessary packages</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a></span>
+<span id="cb7-16"><a href="#cb7-16"></a><span class="in">```{r}</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb7-18"><a href="#cb7-18"></a><span class="fu">library</span>(sf)</span>
+<span id="cb7-19"><a href="#cb7-19"></a><span class="in">```</span></span>
+<span id="cb7-20"><a href="#cb7-20"></a></span>
+<span id="cb7-21"><a href="#cb7-21"></a><span class="fu">## Step 2: Import and clean / wrangle / join data</span></span>
+<span id="cb7-22"><a href="#cb7-22"></a></span>
+<span id="cb7-23"><a href="#cb7-23"></a></span>
+<span id="cb7-24"><a href="#cb7-24"></a>**Shapefile data across Australia for Level 4 Statistical Areas:**</span>
+<span id="cb7-25"><a href="#cb7-25"></a></span>
+<span id="cb7-28"><a href="#cb7-28"></a><span class="in">```{r}</span></span>
+<span id="cb7-29"><a href="#cb7-29"></a>messy_sf <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"../data/SA4_2021_AUST_SHP_GDA2020/SA4_2021_AUST_GDA2020.shp"</span>)</span>
+<span id="cb7-30"><a href="#cb7-30"></a></span>
+<span id="cb7-31"><a href="#cb7-31"></a>sydney_sf <span class="ot">&lt;-</span> messy_sf <span class="sc">|&gt;</span></span>
+<span id="cb7-32"><a href="#cb7-32"></a>  <span class="fu">select</span>(SA4_NAME21, geometry)</span>
+<span id="cb7-33"><a href="#cb7-33"></a><span class="in">```</span></span>
+<span id="cb7-34"><a href="#cb7-34"></a></span>
+<span id="cb7-35"><a href="#cb7-35"></a></span>
+<span id="cb7-36"><a href="#cb7-36"></a>**Data about the working age population across Greater Sydney's Level 4 Statistical Areas:**</span>
+<span id="cb7-37"><a href="#cb7-37"></a></span>
+<span id="cb7-38"><a href="#cb7-38"></a>Sidenote: Working age is counted as being between 15-64 years old</span>
+<span id="cb7-39"><a href="#cb7-39"></a></span>
+<span id="cb7-42"><a href="#cb7-42"></a><span class="in">```{r}</span></span>
+<span id="cb7-43"><a href="#cb7-43"></a>messy_working_age_pop <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/ABS,ABS_REGIONAL_ASGS2021,1.3.0+ERP_18..128+127+126+125+124+123+121+122+120+119+118+117+116+115+102.A.csv"</span>)</span>
+<span id="cb7-44"><a href="#cb7-44"></a></span>
+<span id="cb7-45"><a href="#cb7-45"></a>working_age_pop <span class="ot">&lt;-</span> messy_working_age_pop <span class="sc">|&gt;</span></span>
+<span id="cb7-46"><a href="#cb7-46"></a>  <span class="fu">mutate</span>(<span class="at">working_age_pop =</span> OBS_VALUE) <span class="sc">|&gt;</span></span>
+<span id="cb7-47"><a href="#cb7-47"></a>  <span class="fu">select</span>(Region, working_age_pop) </span>
+<span id="cb7-48"><a href="#cb7-48"></a><span class="in">```</span></span>
+<span id="cb7-49"><a href="#cb7-49"></a></span>
+<span id="cb7-50"><a href="#cb7-50"></a></span>
+<span id="cb7-51"><a href="#cb7-51"></a>**Data about the total businesses across Greater Sydney's Level 4 Statistical Areas:**</span>
+<span id="cb7-52"><a href="#cb7-52"></a></span>
+<span id="cb7-55"><a href="#cb7-55"></a><span class="in">```{r}</span></span>
+<span id="cb7-56"><a href="#cb7-56"></a>messy_total_businesses <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/ABS,ABS_REGIONAL_ASGS2021,1.3.0+CABEE_5..128+127+126+125+124+123+121+122+120+119+118+117+116+115+102.A.csv"</span>)</span>
+<span id="cb7-57"><a href="#cb7-57"></a></span>
+<span id="cb7-58"><a href="#cb7-58"></a>total_businesses <span class="ot">&lt;-</span> messy_total_businesses <span class="sc">|&gt;</span></span>
+<span id="cb7-59"><a href="#cb7-59"></a>  <span class="fu">mutate</span>(<span class="at">total_businesses =</span> OBS_VALUE) <span class="sc">|&gt;</span></span>
+<span id="cb7-60"><a href="#cb7-60"></a>  <span class="fu">select</span>(Region, total_businesses)</span>
+<span id="cb7-61"><a href="#cb7-61"></a><span class="in">```</span></span>
+<span id="cb7-62"><a href="#cb7-62"></a></span>
+<span id="cb7-63"><a href="#cb7-63"></a></span>
+<span id="cb7-64"><a href="#cb7-64"></a>**Combine the three datasets into one:**</span>
+<span id="cb7-65"><a href="#cb7-65"></a></span>
+<span id="cb7-66"><a href="#cb7-66"></a>Sidenote: Also, wrangle the data, and turn the results of the ratio of working age persons to businesses into factors. And lastly, create a color palette for each of these factor levels on the map</span>
+<span id="cb7-67"><a href="#cb7-67"></a></span>
+<span id="cb7-70"><a href="#cb7-70"></a><span class="in">```{r}</span></span>
+<span id="cb7-71"><a href="#cb7-71"></a>employee_businesses_sf <span class="ot">&lt;-</span> sydney_sf <span class="sc">|&gt;</span></span>
+<span id="cb7-72"><a href="#cb7-72"></a>  <span class="fu">inner_join</span>(working_age_pop, <span class="fu">join_by</span>(SA4_NAME21 <span class="sc">==</span> Region)) <span class="sc">|&gt;</span></span>
+<span id="cb7-73"><a href="#cb7-73"></a>  <span class="fu">inner_join</span>(total_businesses, <span class="fu">join_by</span>(SA4_NAME21 <span class="sc">==</span> Region)) <span class="sc">|&gt;</span></span>
+<span id="cb7-74"><a href="#cb7-74"></a>  <span class="fu">mutate</span>(<span class="at">working_persons_per_business =</span> working_age_pop <span class="sc">/</span> total_businesses) <span class="sc">|&gt;</span></span>
+<span id="cb7-75"><a href="#cb7-75"></a>  <span class="fu">mutate</span>(<span class="at">working_persons_per_business =</span> <span class="fu">cut</span>(working_persons_per_business,</span>
+<span id="cb7-76"><a href="#cb7-76"></a>                                            <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="fl">4.5</span>, <span class="dv">5</span>, <span class="fl">5.5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="fl">8.5</span>, <span class="dv">9</span>),</span>
+<span id="cb7-77"><a href="#cb7-77"></a>                                            <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"3 - 4.4"</span>, <span class="st">"4.5 - 4.9"</span>, <span class="st">"5 - 5.4"</span>, <span class="st">"5.5 - 5.9"</span>, <span class="st">"6 - 7.9"</span>, <span class="st">"8 - 8.4"</span>, <span class="st">"8.5 - 9"</span>),</span>
+<span id="cb7-78"><a href="#cb7-78"></a>                                            <span class="at">include.lowest =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb7-79"><a href="#cb7-79"></a></span>
+<span id="cb7-80"><a href="#cb7-80"></a>my_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb7-81"><a href="#cb7-81"></a>  <span class="st">"3 - 4.4"</span> <span class="ot">=</span> <span class="st">"#f46d43"</span>,</span>
+<span id="cb7-82"><a href="#cb7-82"></a>  <span class="st">"4.5 - 4.9"</span> <span class="ot">=</span> <span class="st">"#fdae61"</span>,</span>
+<span id="cb7-83"><a href="#cb7-83"></a>  <span class="st">"5 - 5.4"</span> <span class="ot">=</span> <span class="st">"#fee08b"</span>,</span>
+<span id="cb7-84"><a href="#cb7-84"></a>  <span class="st">"5.5 - 5.9"</span> <span class="ot">=</span> <span class="st">"#d9ef8b"</span>,</span>
+<span id="cb7-85"><a href="#cb7-85"></a>  <span class="st">"6 - 7.9"</span> <span class="ot">=</span> <span class="st">"#a6d96a"</span>,</span>
+<span id="cb7-86"><a href="#cb7-86"></a>  <span class="st">"8 - 8.4"</span> <span class="ot">=</span> <span class="st">"#66bd63"</span>,</span>
+<span id="cb7-87"><a href="#cb7-87"></a>  <span class="st">"8.5 - 9"</span> <span class="ot">=</span> <span class="st">"#1a9850"</span>)</span>
+<span id="cb7-88"><a href="#cb7-88"></a><span class="in">```</span></span>
+<span id="cb7-89"><a href="#cb7-89"></a></span>
+<span id="cb7-90"><a href="#cb7-90"></a></span>
+<span id="cb7-91"><a href="#cb7-91"></a><span class="fu">## Step 3: Visualize</span></span>
+<span id="cb7-92"><a href="#cb7-92"></a></span>
+<span id="cb7-95"><a href="#cb7-95"></a><span class="in">```{r}</span></span>
+<span id="cb7-96"><a href="#cb7-96"></a><span class="co">#| fig-cap: "Choropleth map of the ratio of working age people to businesses in Level 4 Statistical Areas across Greater Sydney, using quantitative classes"</span></span>
+<span id="cb7-97"><a href="#cb7-97"></a><span class="co">#| fig-alt: "A choropleth map of the Level 4 Statistical Areas across Greater Sydney, colored by gradient from orange to yellow to green. This shows the number of people of working age there are per business. Lying on an eastern peninsula of the map, there is a small Statistical Area with the fewest working age people per business, between 3 and 4. To its east, extending to the end of the peninsula, and to the north there are other areas with fewer people of working age per business, one with 4.5 - 4.9 and some with 5 - 5.4. To its west and southwest, there are Statistical Areas with a ratio of 5.5 - 5.9 or 6 - 7.9 people of working age per business. As one gets moves further north / west / south away from this Statistical Area with a low ratio, the statistical areas get larger in size and tend to have more people of working age per business. There is an exception, a Statistical Area in the north, with a lower ratio of 5 - 5.4, which also borders (on its east) the Statistical Area with the second lowest ratio (4.5 - 4.9). The statistical areas on the eastern side of the map clearly border some body of water, as they have peninsulas that jut throughout multiple bays, while the borders on the western, northern, and southernmost parts of the map seem to be more straight and organized, like a human made their borders."</span></span>
+<span id="cb7-98"><a href="#cb7-98"></a></span>
+<span id="cb7-99"><a href="#cb7-99"></a></span>
+<span id="cb7-100"><a href="#cb7-100"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb7-101"><a href="#cb7-101"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> employee_businesses_sf,</span>
+<span id="cb7-102"><a href="#cb7-102"></a>          <span class="fu">aes</span>(<span class="at">fill =</span> working_persons_per_business)) <span class="sc">+</span></span>
+<span id="cb7-103"><a href="#cb7-103"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb7-104"><a href="#cb7-104"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">name =</span> <span class="st">"People of Working Age per Business"</span>,</span>
+<span id="cb7-105"><a href="#cb7-105"></a>                    <span class="at">values =</span> my_colors) <span class="sc">+</span></span>
+<span id="cb7-106"><a href="#cb7-106"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="dv">7856</span>) <span class="sc">+</span></span>
+<span id="cb7-107"><a href="#cb7-107"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Ratio of People of Working Age to Businesses Across Greater Sydney"</span>)</span>
+<span id="cb7-108"><a href="#cb7-108"></a><span class="in">```</span></span>
+<span id="cb7-109"><a href="#cb7-109"></a></span>
+<span id="cb7-110"><a href="#cb7-110"></a></span>
+<span id="cb7-111"><a href="#cb7-111"></a><span class="fu">## Conclusion:</span></span>
+<span id="cb7-112"><a href="#cb7-112"></a></span>
+<span id="cb7-113"><a href="#cb7-113"></a>Interestingly, it seems like coastal Level 4 Statistical Areas tend to have lower ratios of working age people than those inland. The Statistical Areas with the lowest ratios tended to be concentrated to the left of the center of the map, on the coast. The lowest ratio Statistical area was in the middle of a peninsula. It was positioned so that Statistical areas wth lower ratios were to its north and east, but it also bordered a cluster of Statistical areas with some more mid ranged ratios. There is the possibility that this low ratio Statistical Area is the central business district of Sydney and therefore has few residents overall (which includes residents of working age) in comparison to businesses, therefore making its ratio unique. It would also explain why surrounding Statistical Areas have lower to medium ratios. They could be suburbs, where there is still some investment into businesses, but also a larger population of working age people to balance the ratio. The larger (in size) statistical areas to the west and north have higher ratios. An explanation for this would be that they are rural areas far away from the central business district. Their economic activity is depressed, reducing investment in businesses, and throwing off their ratios. </span>
+<span id="cb7-114"><a href="#cb7-114"></a></span>
+<span id="cb7-115"><a href="#cb7-115"></a></span>
+<span id="cb7-116"><a href="#cb7-116"></a><span class="fu">## References:</span></span>
+<span id="cb7-117"><a href="#cb7-117"></a>https://dataexplorer.abs.gov.au/vis?fs[0]=Data%20by%20region%2C0%7CMain%20Structure%20and%20Greater%20Capital%20City%20Statistical%20Areas%23ASGS%23&amp;pg=0&amp;fc=Data%20by%20region&amp;df[ds]=DATA_BY_REGION_TOPICS&amp;df[id]=ABS_REGIONAL_ASGS2021&amp;df[ag]=ABS&amp;df[vs]=1.3.0&amp;pd=2020%2C&amp;dq=..118%2B117%2B116%2B115%2B102.A&amp;ly[cl]=TIME_PERIOD&amp;ly[rw]=ASGS_2021%2CMEASURE&amp;to[TIME_PERIOD]=false (accessed: April 16th, 2025)</span>
+<span id="cb7-118"><a href="#cb7-118"></a>https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026/access-and-downloads/digital-boundary-files (accessed: April 16th, 2025)</span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
