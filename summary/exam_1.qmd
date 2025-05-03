@@ -1,5 +1,7 @@
 ---
 title: "Exam 1 Summary"
+author: "Gabriel Donelly Higgins"
+date: "March 30, 2025"
 format: html
 ---
 ```{r}

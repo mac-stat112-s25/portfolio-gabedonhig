@@ -1,5 +1,7 @@
 ---
 title: "Exam 2 Summary"
+author: "Gabriel Donelly Higgins"
+date: "May 2, 2025"
 format: html
 ---
 
@@ -43,12 +45,15 @@ When you get a dataset, you will want to perform EDA. It allows you to understan
 
 ## Useful R Functions Summary
 
-| Function                        | Action                                                                                                                                                                               |
-|-------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `str(dataset1)`                | Shows the number of rows, variables, the type of values in each variable, and values in each variable.                                                                              |
-| `summary(dataset1)`            | Gives a summary of each variable, showing the min / mean / max / median / 1st and 3rd quartiles for numerical variables. Identifies string variables and labels them as such.       |
-| `head(dataset, observationCount)` | Shows the first observations in a dataset, up to `observationCount`.                                                                                                                  |
-| `distinct(variable)`           | Lists all unique values within a variable.                                                                                                                                           |
+| Function                                | Action                                                                                                                                                                                                       |
+|:---------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `str(dataset1)`                         | Shows the number of rows, variables, the type of values in each variable, and values in each variable.                                                                                                       |
+| `summary(dataset1)`                    | Gives a summary of each variable, showing min / mean / max / median / 1st and 3rd quartile for numeric variables. Also identifies string variables.                                                         |
+| `head(dataset, observation_count)`     | Shows the first observations in a dataset up to `observation_count`.                                                                                                                                         |
+| `distinct(variable)`                   | Lists all unique values within a variable.                                                                                                                                                                   |
+| `slice_max(order_by = variable1, n = x)` | Shows the observations with the highest values in `variable1`. The number of rows shown is determined by `x` (e.g., top 100 values).                                                                         |
+| `variable1 = replace_na(variable1, x)`| Replaces `NA` values in `variable1` with `x`, typically used within a `mutate()` statement.                                                                                                                  |
+
 
 
 ## Factors:
@@ -66,3 +71,113 @@ Factors are useful for wrangling variables, especially strings, or for using var
 | `fct_recode()`                                          | Manually changes the levels of a factor.                |
 | `fct_lump()`                                            | Groups together the least common levels.                |
 | `fct_relabel()`                                         | Renames factor levels using a function.                 |
+
+## Effective Viz:
+
+
+**Using theme():**
+
+To effectively vizualize, you need to know how to use theme(). Firstly, here is a table with the names of different components in a plot and their name in theme():
+
+| Item in plot                             | Name in `theme()`    |
+|:----------------------------------------|:---------------------|
+| Numbers / characters next to the axes    | `axis.text`          |
+| Numbers / characters next to the x-axis  | `axis.text.x`        |
+| Numbers / characters next to the y-axis  | `axis.text.y`        |
+| Title of the axes                        | `axis.title`         |
+| Title of the x-axis                      | `axis.title.x`       |
+| Title of the y-axis                      | `axis.title.y`       |
+| Legend position                          | `legend.position`    |
+| Legend size                              | `legend.key.size`    |
+| Legend title                             | `legend.title`       |
+| Legend text                              | `legend.text`        |
+| Facet wrapped text                       | `strip.text`         |
+| Name of the plot                         | `plot.title`         |
+
+
+**Using element_text():**
+
+Secondly, there are different arguments you can use within the element_text() argument for theme items. They are:
+
+| Argument         | What it does                                       |
+|:----------------|:---------------------------------------------------|
+| `size = x`       | Sets the text size.                                |
+| `family = "font"`| Sets the font family.                              |
+| `face = "face"`  | Sets the font style: `"plain"`, `"bold"`, `"italic"`, or `"bold.italic"`. |
+| `color = "color"`| Sets the color of the text.                        |
+| `angle = x`      | Sets the angle of the text (e.g., 45 for diagonal).|
+| `hjust = x`      | Adjusts horizontal justification (e.g., 0 = left, 1 = right). |
+| `vjust = x`      | Adjusts vertical justification (e.g., 0 = bottom, 1 = top). |
+
+
+Some useful goto fonts in the family argument include:
+ - "sans"
+ - "serif"
+ - "mono"
+
+
+**How to use different items in theme:**
+
+| Item             | How to use it                                      | Outcome                                                                                                                                       |
+|:----------------|:---------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------|
+| `legend.position`| `= c(x, y)`                                        | Places the legend proportionally within the plot area. For example, `c(0.5, 0.75)` centers it horizontally and places it 75% up vertically.   |
+| `legend.position`| `= "top"`, `"left"`, `"right"`, `"bottom"`, `"none"`| Sets the legend position to a fixed side of the plot, or removes it entirely with `"none"`.                                                  |
+| `legend.key.size`| `= unit(x, "cm")`                                  | Sets the size of legend keys using a numeric value `x` and a measurement unit (commonly `"cm"`).                                              |
+
+
+**Using ggthemes():**
+
+Some useful ggthemes() include:
+  - theme_economist()
+  - theme_solarized()
+    - can also use theme_solarized(light = FALSE)
+  - theme_wsj()
+  - theme_excel()
+  - theme_fivethirtyeight
+  
+  
+When to use different ggtheme() scale functions:
+
+| Situation                        | Correct command (using `solarized`) |
+|:--------------------------------|:------------------------------------|
+| You are using color             | `scale_color_solarized()`           |
+| You are using a fill            | `scale_fill_solarized()`            |
+| You are using binned categories | `scale_binned_solarized()`          |
+  
+You can also use name = "text" in these commands to name your legend  
+  
+  
+**Changing Plot Dimensions:**
+
+If you want to change the height of your figure, use #| fig-height: y
+
+If you want to change the width of your figure, use #| fig-width: x
+
+
+**Adding captions to Your Plot:**
+
+To add figure captions that summarize the plot for someone listening, use #| fig-cap: "text"
+
+To add alt-text that explains what is on the plot for someone listening, use #| fig-alt: "text"
+
+
+**Using labs():**
+
+You use labs to add / change labels of various parts of your plot:
+
+## Customizing Labels in `labs()`
+
+| Item            | What it does                          |
+|:----------------|:--------------------------------------|
+| `fill = "name"`  | Sets the legend title for fill color. |
+| `color = "name"` | Sets the legend title for line/point color. |
+| `title = "name"` | Sets the main plot title.            |
+| `x = "name"`     | Sets the x-axis label.               |
+| `y = "name"`     | Sets the y-axis label.               |
+
+
+
+
+
+
+
