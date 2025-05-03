@@ -313,7 +313,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#import-necessary-data-and-tools" id="toc-import-necessary-data-and-tools" class="nav-link" data-scroll-target="#import-necessary-data-and-tools"><span class="header-section-number">7.2</span> Import Necessary Data and Tools:</a></li>
   <li><a href="#sub-research-question-1-which-5-countries-consume-the-most-food" id="toc-sub-research-question-1-which-5-countries-consume-the-most-food" class="nav-link" data-scroll-target="#sub-research-question-1-which-5-countries-consume-the-most-food"><span class="header-section-number">7.3</span> Sub-research Question 1: Which 5 countries consume the most food?</a></li>
   <li><a href="#sub-research-question-2-which-5-countries-consume-the-most-of-each-food" id="toc-sub-research-question-2-which-5-countries-consume-the-most-of-each-food" class="nav-link" data-scroll-target="#sub-research-question-2-which-5-countries-consume-the-most-of-each-food"><span class="header-section-number">7.4</span> Sub-research Question 2: Which 5 countries consume the most of each food?</a></li>
-  <li><a href="#sub-research-question-1-what-does-the-consumption-of-each-food-look-like" id="toc-sub-research-question-1-what-does-the-consumption-of-each-food-look-like" class="nav-link" data-scroll-target="#sub-research-question-1-what-does-the-consumption-of-each-food-look-like"><span class="header-section-number">7.5</span> Sub-research Question 1: What does the consumption of each food look like?</a></li>
+  <li><a href="#sub-research-question-3-what-does-the-consumption-of-each-food-look-like" id="toc-sub-research-question-3-what-does-the-consumption-of-each-food-look-like" class="nav-link" data-scroll-target="#sub-research-question-3-what-does-the-consumption-of-each-food-look-like"><span class="header-section-number">7.5</span> Sub-research Question 3: What does the consumption of each food look like?</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">7.6</span> Conclusion:</a></li>
   </ul></nav>
     </div>
@@ -538,8 +538,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p><strong>Observations:</strong> Of all categories, dairy, wheat, and rice are the most consumed. The consumption of dairy, wheat, or rice is enough to outmatch the entire consumption of the top 5 countries combined in some categories like nuts or soybeans. What this means is that some of these categories are relatively easy to be a top 5 country in, because their consumption is very low anyway.</p>
-</section><section id="sub-research-question-1-what-does-the-consumption-of-each-food-look-like" class="level2" data-number="7.5"><h2 data-number="7.5" class="anchored" data-anchor-id="sub-research-question-1-what-does-the-consumption-of-each-food-look-like">
-<span class="header-section-number">7.5</span> Sub-research Question 1: What does the consumption of each food look like?</h2>
+</section><section id="sub-research-question-3-what-does-the-consumption-of-each-food-look-like" class="level2" data-number="7.5"><h2 data-number="7.5" class="anchored" data-anchor-id="sub-research-question-3-what-does-the-consumption-of-each-food-look-like">
+<span class="header-section-number">7.5</span> Sub-research Question 3: What does the consumption of each food look like?</h2>
 <p><strong>Expected Dataframe:</strong> We want a dataframe in which there is a country variable, a variable for food type, a corresponding variable for consumption, and a variable for the geometry of each country.</p>
 <p><strong>Reshaping, Wrangling, and importing data:</strong></p>
 <p>Find out which countries don’t have a match in the geometry dataset</p>
@@ -659,33 +659,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb22-15"><a href="#cb22-15"></a>                              <span class="st">"The Bahamas"</span> <span class="ot">=</span> <span class="st">"Bahamas"</span>,</span>
 <span id="cb22-16"><a href="#cb22-16"></a>                              <span class="st">"Taiwan"</span> <span class="ot">=</span> <span class="st">"Taiwan. ROC"</span>))</span>
 <span id="cb22-17"><a href="#cb22-17"></a></span>
-<span id="cb22-18"><a href="#cb22-18"></a>temp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1,430 × 3
-# Groups:   food_category [11]
-   country   food_category consumption
-   &lt;fct&gt;     &lt;fct&gt;               &lt;dbl&gt;
- 1 Argentina Pork               -0.357
- 2 Argentina Poultry             1.20 
- 3 Argentina Beef                4.49 
- 4 Argentina Lamb               -0.284
- 5 Argentina Fish               -0.680
- 6 Argentina Eggs                0.641
- 7 Argentina Dairy               0.743
- 8 Argentina Wheat               0.714
- 9 Argentina Rice               -0.552
-10 Argentina Soybeans           -0.413
-# ℹ 1,420 more rows</code></pre>
-</div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>global_consumption <span class="ot">&lt;-</span> <span class="fu">ne_countries</span>() <span class="sc">|&gt;</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">select</span>(admin, geometry) <span class="sc">|&gt;</span></span>
-<span id="cb24-3"><a href="#cb24-3"></a>  <span class="fu">left_join</span>(temp, <span class="fu">join_by</span>(admin <span class="sc">==</span> country)) <span class="sc">|&gt;</span></span>
-<span id="cb24-4"><a href="#cb24-4"></a>  <span class="fu">mutate</span>(<span class="at">consumption =</span> <span class="fu">replace_na</span>(consumption, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb24-5"><a href="#cb24-5"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> food_category, <span class="at">values_from =</span> consumption) <span class="sc">|&gt;</span></span>
-<span id="cb24-6"><a href="#cb24-6"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="st">`</span><span class="at">NA</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
-<span id="cb24-7"><a href="#cb24-7"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="sc">-</span>geometry, <span class="sc">-</span>admin), <span class="at">names_to =</span> <span class="st">"food_category"</span>, <span class="at">values_to =</span> <span class="st">"consumption"</span>)</span>
-<span id="cb24-8"><a href="#cb24-8"></a></span>
-<span id="cb24-9"><a href="#cb24-9"></a><span class="fu">head</span>(global_consumption)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-18"><a href="#cb22-18"></a>global_consumption <span class="ot">&lt;-</span> <span class="fu">ne_countries</span>() <span class="sc">|&gt;</span></span>
+<span id="cb22-19"><a href="#cb22-19"></a>  <span class="fu">select</span>(admin, geometry) <span class="sc">|&gt;</span></span>
+<span id="cb22-20"><a href="#cb22-20"></a>  <span class="fu">left_join</span>(temp, <span class="fu">join_by</span>(admin <span class="sc">==</span> country)) <span class="sc">|&gt;</span></span>
+<span id="cb22-21"><a href="#cb22-21"></a>  <span class="fu">mutate</span>(<span class="at">consumption =</span> <span class="fu">replace_na</span>(consumption, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb22-22"><a href="#cb22-22"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> food_category, <span class="at">values_from =</span> consumption) <span class="sc">|&gt;</span></span>
+<span id="cb22-23"><a href="#cb22-23"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="st">`</span><span class="at">NA</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-24"><a href="#cb22-24"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="sc">-</span>geometry, <span class="sc">-</span>admin), <span class="at">names_to =</span> <span class="st">"food_category"</span>, <span class="at">values_to =</span> <span class="st">"consumption"</span>)</span>
+<span id="cb22-25"><a href="#cb22-25"></a></span>
+<span id="cb22-26"><a href="#cb22-26"></a><span class="fu">head</span>(global_consumption)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 6 features and 3 fields
 Geometry type: MULTIPOLYGON
@@ -705,20 +687,20 @@ Geodetic CRS:  WGS 84
 </div>
 <p><strong>Vizualizing Data:</strong></p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb26-2"><a href="#cb26-2"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> global_consumption,</span>
-<span id="cb26-3"><a href="#cb26-3"></a>          <span class="fu">aes</span>(<span class="at">fill =</span> consumption)) <span class="sc">+</span></span>
-<span id="cb26-4"><a href="#cb26-4"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>food_category) <span class="sc">+</span></span>
-<span id="cb26-5"><a href="#cb26-5"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="st">"+proj=robin"</span>) <span class="sc">+</span></span>
-<span id="cb26-6"><a href="#cb26-6"></a>  <span class="fu">theme_map</span>() <span class="sc">+</span></span>
-<span id="cb26-7"><a href="#cb26-7"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Consumption of Food Categories Worldwide"</span>) <span class="sc">+</span></span>
-<span id="cb26-8"><a href="#cb26-8"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.77</span>, <span class="fl">0.02</span>), </span>
-<span id="cb26-9"><a href="#cb26-9"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>, <span class="at">family =</span> <span class="st">"serif"</span>, <span class="at">face =</span> <span class="st">"bold"</span>), </span>
-<span id="cb26-10"><a href="#cb26-10"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>, <span class="at">family =</span> <span class="st">"serif"</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb26-11"><a href="#cb26-11"></a>        <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.8</span>, <span class="st">"cm"</span>),</span>
-<span id="cb26-12"><a href="#cb26-12"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">family =</span> <span class="st">"serif"</span>),</span>
-<span id="cb26-13"><a href="#cb26-13"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>)) <span class="sc">+</span></span>
-<span id="cb26-14"><a href="#cb26-14"></a>  <span class="fu">scale_fill_continuous</span>(<span class="at">name =</span> <span class="st">"Consumption"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> global_consumption,</span>
+<span id="cb24-3"><a href="#cb24-3"></a>          <span class="fu">aes</span>(<span class="at">fill =</span> consumption)) <span class="sc">+</span></span>
+<span id="cb24-4"><a href="#cb24-4"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>food_category) <span class="sc">+</span></span>
+<span id="cb24-5"><a href="#cb24-5"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="st">"+proj=robin"</span>) <span class="sc">+</span></span>
+<span id="cb24-6"><a href="#cb24-6"></a>  <span class="fu">theme_map</span>() <span class="sc">+</span></span>
+<span id="cb24-7"><a href="#cb24-7"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Consumption of Food Categories Worldwide"</span>) <span class="sc">+</span></span>
+<span id="cb24-8"><a href="#cb24-8"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.77</span>, <span class="fl">0.02</span>), </span>
+<span id="cb24-9"><a href="#cb24-9"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>, <span class="at">family =</span> <span class="st">"serif"</span>, <span class="at">face =</span> <span class="st">"bold"</span>), </span>
+<span id="cb24-10"><a href="#cb24-10"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>, <span class="at">family =</span> <span class="st">"serif"</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb24-11"><a href="#cb24-11"></a>        <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.8</span>, <span class="st">"cm"</span>),</span>
+<span id="cb24-12"><a href="#cb24-12"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">family =</span> <span class="st">"serif"</span>),</span>
+<span id="cb24-13"><a href="#cb24-13"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb24-14"><a href="#cb24-14"></a>  <span class="fu">scale_fill_continuous</span>(<span class="at">name =</span> <span class="st">"Consumption"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="exam_2_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" alt="Eleven world maps are shown, facet wrapped by food category. The categories are beef, dairy, eggs, fish, lamb, nuts, pork, poultry, rice, soybeans, and wheat. They are colored from dark to light blue, representing low to high consumption, as shown in a legend in the bottom right that goes from 0 to 6. Some countries have a grey fill, representing their lack of data. The title of the plot is 'Consumption of Food Categories Worldwide'. The countries with the highest beef consumption tend to be in the Americas. Those with the highest Dairy consumption tend to be in Europe and there is moderate consumption in the Americas. Egg consumption is moderate in North America, China, and Europe. Fish consumption is low worldwide, but moderate in Myanmar. Lamb consumption is high in a few countries like Kazakhstan, Algeria, and Australia. Nut consumption is high in select countries like the United States, Iran, China, and Bolivia. Pork consumption is high in China and Europe. Poultry consumption is high in the Americas. Rice consumption is high in East, Southeast, and South Asia. Soybean consumption is high in Botswana, Zimbabwe, and China. Wheat consumption is high in Algeria, Egypt, Russia, Iran, and Turkey." width="1440"></p>
@@ -1364,253 +1346,251 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb27" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb27-1"><a href="#cb27-1"></a><span class="co">---</span></span>
-<span id="cb27-2"><a href="#cb27-2"></a><span class="an">title:</span><span class="co"> "Exam 2"</span></span>
-<span id="cb27-3"><a href="#cb27-3"></a><span class="an">author:</span><span class="co"> "Gabriel Donelly Higgins"</span></span>
-<span id="cb27-4"><a href="#cb27-4"></a><span class="an">date:</span><span class="co"> "May 2nd, 2025"</span></span>
-<span id="cb27-5"><a href="#cb27-5"></a><span class="an">format:</span><span class="co"> html</span></span>
-<span id="cb27-6"><a href="#cb27-6"></a><span class="co">---</span></span>
-<span id="cb27-7"><a href="#cb27-7"></a></span>
-<span id="cb27-8"><a href="#cb27-8"></a><span class="ss">* </span>this is a continuation of exam one</span>
-<span id="cb27-9"><a href="#cb27-9"></a></span>
-<span id="cb27-10"><a href="#cb27-10"></a><span class="fu">## Research question:</span></span>
-<span id="cb27-11"><a href="#cb27-11"></a></span>
-<span id="cb27-12"><a href="#cb27-12"></a>**What does the consumption of each food category in each country look like?**</span>
-<span id="cb27-13"><a href="#cb27-13"></a></span>
-<span id="cb27-14"><a href="#cb27-14"></a></span>
-<span id="cb27-15"><a href="#cb27-15"></a><span class="fu">## Import Necessary Data and Tools:</span></span>
-<span id="cb27-16"><a href="#cb27-16"></a></span>
-<span id="cb27-17"><a href="#cb27-17"></a>**Load in packages:**</span>
-<span id="cb27-20"><a href="#cb27-20"></a><span class="in">```{r}</span></span>
-<span id="cb27-21"><a href="#cb27-21"></a><span class="fu">library</span>(tidytuesdayR)</span>
-<span id="cb27-22"><a href="#cb27-22"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb27-23"><a href="#cb27-23"></a><span class="fu">library</span>(rnaturalearth)</span>
-<span id="cb27-24"><a href="#cb27-24"></a><span class="fu">library</span>(sf)</span>
-<span id="cb27-25"><a href="#cb27-25"></a><span class="fu">library</span>(ggthemes)</span>
-<span id="cb27-26"><a href="#cb27-26"></a><span class="in">```</span></span>
-<span id="cb27-27"><a href="#cb27-27"></a></span>
-<span id="cb27-28"><a href="#cb27-28"></a></span>
-<span id="cb27-29"><a href="#cb27-29"></a>**Load data:**</span>
-<span id="cb27-32"><a href="#cb27-32"></a><span class="in">```{r}</span></span>
-<span id="cb27-33"><a href="#cb27-33"></a>tuesdata <span class="ot">&lt;-</span> <span class="fu">tt_load</span>(<span class="st">'2020-02-18'</span>)</span>
-<span id="cb27-34"><a href="#cb27-34"></a>fc <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>food_consumption</span>
-<span id="cb27-35"><a href="#cb27-35"></a><span class="in">```</span></span>
-<span id="cb27-36"><a href="#cb27-36"></a></span>
-<span id="cb27-37"><a href="#cb27-37"></a></span>
-<span id="cb27-38"><a href="#cb27-38"></a>**Inspect Data:**</span>
-<span id="cb27-41"><a href="#cb27-41"></a><span class="in">```{r}</span></span>
-<span id="cb27-42"><a href="#cb27-42"></a><span class="fu">str</span>(fc)</span>
-<span id="cb27-43"><a href="#cb27-43"></a><span class="in">```</span></span>
-<span id="cb27-44"><a href="#cb27-44"></a></span>
-<span id="cb27-47"><a href="#cb27-47"></a><span class="in">```{r}</span></span>
-<span id="cb27-48"><a href="#cb27-48"></a><span class="fu">head</span>(fc, <span class="dv">22</span>)</span>
-<span id="cb27-49"><a href="#cb27-49"></a><span class="in">```</span></span>
-<span id="cb27-50"><a href="#cb27-50"></a></span>
-<span id="cb27-51"><a href="#cb27-51"></a></span>
-<span id="cb27-52"><a href="#cb27-52"></a>**Inspect Country Variable:**</span>
-<span id="cb27-55"><a href="#cb27-55"></a><span class="in">```{r}</span></span>
-<span id="cb27-56"><a href="#cb27-56"></a>fc <span class="sc">|&gt;</span></span>
-<span id="cb27-57"><a href="#cb27-57"></a>  <span class="fu">group_by</span>(country) <span class="sc">|&gt;</span></span>
-<span id="cb27-58"><a href="#cb27-58"></a>  <span class="fu">summarize</span>(<span class="fu">sum</span>(consumption)) <span class="sc">|&gt;</span></span>
-<span id="cb27-59"><a href="#cb27-59"></a>  <span class="fu">str</span>()</span>
-<span id="cb27-60"><a href="#cb27-60"></a><span class="in">```</span></span>
-<span id="cb27-61"><a href="#cb27-61"></a></span>
-<span id="cb27-62"><a href="#cb27-62"></a>There are 130 observations, when you set the unit of observation to countries, so there are 130 countries in this dataset</span>
-<span id="cb27-63"><a href="#cb27-63"></a></span>
-<span id="cb27-64"><a href="#cb27-64"></a></span>
-<span id="cb27-65"><a href="#cb27-65"></a>**Inspect food_category variable:**</span>
-<span id="cb27-68"><a href="#cb27-68"></a><span class="in">```{r}</span></span>
-<span id="cb27-69"><a href="#cb27-69"></a>fc <span class="sc">|&gt;</span></span>
-<span id="cb27-70"><a href="#cb27-70"></a>  <span class="fu">distinct</span>(food_category)</span>
-<span id="cb27-71"><a href="#cb27-71"></a><span class="in">```</span></span>
-<span id="cb27-72"><a href="#cb27-72"></a></span>
-<span id="cb27-73"><a href="#cb27-73"></a>Here we have 11 distinct food categories, but it is better to rename them for the sake of making them easier to read in a viz</span>
-<span id="cb27-74"><a href="#cb27-74"></a></span>
-<span id="cb27-75"><a href="#cb27-75"></a>**Clean data:**</span>
-<span id="cb27-78"><a href="#cb27-78"></a><span class="in">```{r}</span></span>
-<span id="cb27-79"><a href="#cb27-79"></a>fc_clean <span class="ot">&lt;-</span> fc <span class="sc">|&gt;</span></span>
-<span id="cb27-80"><a href="#cb27-80"></a>  <span class="fu">mutate</span>(<span class="at">food_category =</span> <span class="fu">as.factor</span>(food_category),</span>
-<span id="cb27-81"><a href="#cb27-81"></a>         <span class="at">food_category =</span> <span class="fu">fct_recode</span>(food_category,</span>
-<span id="cb27-82"><a href="#cb27-82"></a>                                    <span class="st">"Lamb"</span> <span class="ot">=</span> <span class="st">"Lamb &amp; Goat"</span>,</span>
-<span id="cb27-83"><a href="#cb27-83"></a>                                    <span class="st">"Dairy"</span> <span class="ot">=</span> <span class="st">"Milk - inc. cheese"</span>,</span>
-<span id="cb27-84"><a href="#cb27-84"></a>                                    <span class="st">"Wheat"</span> <span class="ot">=</span> <span class="st">"Wheat and Wheat Products"</span>,</span>
-<span id="cb27-85"><a href="#cb27-85"></a>                                    <span class="st">"Nuts"</span> <span class="ot">=</span> <span class="st">"Nuts inc. Peanut Butter"</span>))</span>
-<span id="cb27-86"><a href="#cb27-86"></a><span class="in">```</span></span>
-<span id="cb27-87"><a href="#cb27-87"></a></span>
-<span id="cb27-88"><a href="#cb27-88"></a>Double checking to make sure all variables are properly renamed</span>
-<span id="cb27-91"><a href="#cb27-91"></a><span class="in">```{r}</span></span>
-<span id="cb27-92"><a href="#cb27-92"></a>fc_clean <span class="sc">|&gt;</span></span>
-<span id="cb27-93"><a href="#cb27-93"></a>  <span class="fu">distinct</span>(food_category)</span>
-<span id="cb27-94"><a href="#cb27-94"></a><span class="in">```</span></span>
-<span id="cb27-95"><a href="#cb27-95"></a></span>
-<span id="cb27-96"><a href="#cb27-96"></a><span class="fu">## Sub-research Question 1: Which 5 countries consume the most food?</span></span>
-<span id="cb27-97"><a href="#cb27-97"></a></span>
-<span id="cb27-98"><a href="#cb27-98"></a>**Expected Dataframe:**</span>
-<span id="cb27-99"><a href="#cb27-99"></a>We want a dataframe in which countries are listed, followed by their total consumption</span>
-<span id="cb27-100"><a href="#cb27-100"></a></span>
-<span id="cb27-101"><a href="#cb27-101"></a></span>
-<span id="cb27-102"><a href="#cb27-102"></a>**Reshaping / Wrangling data:**</span>
-<span id="cb27-105"><a href="#cb27-105"></a><span class="in">```{r}</span></span>
-<span id="cb27-106"><a href="#cb27-106"></a>country_consumption <span class="ot">&lt;-</span> fc_clean <span class="sc">|&gt;</span></span>
-<span id="cb27-107"><a href="#cb27-107"></a>  <span class="fu">group_by</span>(country) <span class="sc">|&gt;</span></span>
-<span id="cb27-108"><a href="#cb27-108"></a>  <span class="fu">summarize</span>(<span class="at">total_consumption =</span> <span class="fu">sum</span>(consumption))</span>
-<span id="cb27-109"><a href="#cb27-109"></a><span class="in">```</span></span>
-<span id="cb27-110"><a href="#cb27-110"></a></span>
-<span id="cb27-111"><a href="#cb27-111"></a></span>
-<span id="cb27-112"><a href="#cb27-112"></a>**Visualizing Data:**</span>
-<span id="cb27-115"><a href="#cb27-115"></a><span class="in">```{r}</span></span>
-<span id="cb27-116"><a href="#cb27-116"></a><span class="co">#| fig-cap: "A Bar Graph of the World's Largest Consumers"</span></span>
-<span id="cb27-117"><a href="#cb27-117"></a><span class="co">#| fig-alt: "A bar graph is displayed. The title of the x-axis is  'Country' and the y axis is 'Total Consumption'. The y-axis goes from 0 to above 600. The x-axis lists the countries of Albania, Finland, Lithuania, Netherlands, and Sweden. Finland's bar is the tallest, above 600 on the y-axis, while the others float above 500. Each bar is colored differently."</span></span>
-<span id="cb27-118"><a href="#cb27-118"></a>country_consumption <span class="sc">|&gt;</span></span>
-<span id="cb27-119"><a href="#cb27-119"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_consumption)) <span class="sc">|&gt;</span></span>
-<span id="cb27-120"><a href="#cb27-120"></a>  <span class="fu">head</span>(<span class="dv">5</span>) <span class="sc">|&gt;</span></span>
-<span id="cb27-121"><a href="#cb27-121"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> country, <span class="at">y =</span> total_consumption, <span class="at">fill =</span> country)) <span class="sc">+</span></span>
-<span id="cb27-122"><a href="#cb27-122"></a>    <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb27-123"><a href="#cb27-123"></a>    <span class="fu">theme_solarized</span>() <span class="sc">+</span></span>
-<span id="cb27-124"><a href="#cb27-124"></a>  <span class="fu">scale_fill_solarized</span>() <span class="sc">+</span></span>
-<span id="cb27-125"><a href="#cb27-125"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Country"</span>, <span class="at">y =</span> <span class="st">"Total Consumption"</span>, <span class="at">title =</span> <span class="st">"World's Largest Consumers"</span>) <span class="sc">+</span></span>
-<span id="cb27-126"><a href="#cb27-126"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>, <span class="at">family =</span> <span class="st">"serif"</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"#586e75"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb27-127"><a href="#cb27-127"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>, <span class="at">family =</span> <span class="st">"serif"</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"#586e75"</span>),</span>
-<span id="cb27-128"><a href="#cb27-128"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">family =</span> <span class="st">"mono"</span>, <span class="at">color =</span> <span class="st">"#586e75"</span>),</span>
-<span id="cb27-129"><a href="#cb27-129"></a>        <span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
-<span id="cb27-130"><a href="#cb27-130"></a><span class="in">```</span></span>
-<span id="cb27-131"><a href="#cb27-131"></a></span>
-<span id="cb27-132"><a href="#cb27-132"></a></span>
-<span id="cb27-133"><a href="#cb27-133"></a>**Observations:**</span>
-<span id="cb27-134"><a href="#cb27-134"></a>Seemingly, the top consumers of food are exclusively European countries. Their geographic location varies from Eastern to Western, Baltics and Balkans and Scandinavian countries. They all consume roughly similar amounts of food, with Findland consuming the most.</span>
-<span id="cb27-135"><a href="#cb27-135"></a></span>
-<span id="cb27-136"><a href="#cb27-136"></a></span>
-<span id="cb27-137"><a href="#cb27-137"></a><span class="fu">## Sub-research Question 2: Which 5 countries consume the most of each food?</span></span>
-<span id="cb27-138"><a href="#cb27-138"></a></span>
-<span id="cb27-139"><a href="#cb27-139"></a>**Expected Dataframe:**</span>
-<span id="cb27-140"><a href="#cb27-140"></a>We want a dataframe where there is a variable for countries, a variable for the food type, and a variable for the consumption value. The food_category should correspond to the top 5 highest values in the consumption variable for its category. And the countries in the country variable will be the top 5 consumers of whatever food category is in the food variable.</span>
-<span id="cb27-141"><a href="#cb27-141"></a></span>
-<span id="cb27-142"><a href="#cb27-142"></a></span>
-<span id="cb27-143"><a href="#cb27-143"></a>**Reshaping / Wrangling Data:**</span>
-<span id="cb27-146"><a href="#cb27-146"></a><span class="in">```{r}</span></span>
-<span id="cb27-147"><a href="#cb27-147"></a>top_food_consumers <span class="ot">&lt;-</span> fc_clean <span class="sc">|&gt;</span></span>
-<span id="cb27-148"><a href="#cb27-148"></a>  <span class="fu">select</span>(<span class="sc">-</span>co2_emmission) <span class="sc">|&gt;</span></span>
-<span id="cb27-149"><a href="#cb27-149"></a>  <span class="fu">group_by</span>(food_category) <span class="sc">|&gt;</span></span>
-<span id="cb27-150"><a href="#cb27-150"></a>  <span class="fu">slice_max</span>(<span class="at">order_by =</span> consumption, <span class="at">n =</span> <span class="dv">5</span>)</span>
-<span id="cb27-151"><a href="#cb27-151"></a><span class="in">```</span></span>
-<span id="cb27-152"><a href="#cb27-152"></a></span>
-<span id="cb27-153"><a href="#cb27-153"></a></span>
-<span id="cb27-154"><a href="#cb27-154"></a>**Vizualizing Data:**</span>
-<span id="cb27-157"><a href="#cb27-157"></a><span class="in">```{r}</span></span>
-<span id="cb27-158"><a href="#cb27-158"></a><span class="co">#| fig-height: 6</span></span>
-<span id="cb27-159"><a href="#cb27-159"></a><span class="co">#| fig-width: 10</span></span>
-<span id="cb27-160"><a href="#cb27-160"></a><span class="co">#| fig-cap: "A Bar Graph of Food Category and Consumption, Colored By The Top 5 Biggest Consumers"</span></span>
-<span id="cb27-161"><a href="#cb27-161"></a><span class="co">#| fig-alt: "A bar graph with an x-axis label 'Food Category' and y-axis label 'Consumption' is displayed. The range goes above 1500 on the y-axis. 11 bars represent 11 food categories on the x-axis, which is labeled with each food category. The bars are colored, and a legend on the right is titled 'Country' and lists the colors and their corresponding country. The title of the plot is 'Largest Consumers by Food Category'. The bar with the highest consumption is dairy, whose consumers all color enough of the bar to make their consumption several times larger than that of the soybean bar. The second and third tallest bars are wheat and rice respectively, followed by fish, poultry, pork, and beef."</span></span>
-<span id="cb27-162"><a href="#cb27-162"></a><span class="fu">ggplot</span>(top_food_consumers, <span class="fu">aes</span>(<span class="at">x =</span> food_category, <span class="at">y =</span> consumption, <span class="at">fill =</span> country)) <span class="sc">+</span></span>
-<span id="cb27-163"><a href="#cb27-163"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb27-164"><a href="#cb27-164"></a>  <span class="fu">theme_solarized</span>() <span class="sc">+</span></span>
-<span id="cb27-165"><a href="#cb27-165"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">family =</span> <span class="st">"mono"</span>, <span class="at">color =</span> <span class="st">"#586e75"</span>),</span>
-<span id="cb27-166"><a href="#cb27-166"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">family =</span> <span class="st">"mono"</span>, <span class="at">color =</span> <span class="st">"#586e75"</span>),</span>
-<span id="cb27-167"><a href="#cb27-167"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>, <span class="at">family =</span> <span class="st">"serif"</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb27-168"><a href="#cb27-168"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">family =</span> <span class="st">"mono"</span>, <span class="at">color =</span> <span class="st">"#586e75"</span>), </span>
-<span id="cb27-169"><a href="#cb27-169"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>, <span class="at">family =</span> <span class="st">"serif"</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb27-170"><a href="#cb27-170"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>, <span class="at">family =</span> <span class="st">"serif"</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"#586e75"</span>)) <span class="sc">+</span></span>
-<span id="cb27-171"><a href="#cb27-171"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Country"</span>, <span class="at">x =</span> <span class="st">"Food Category"</span>, <span class="at">y =</span> <span class="st">"Consumption"</span>, <span class="at">title =</span> <span class="st">"Largest Consumers by Food Category"</span>)</span>
-<span id="cb27-172"><a href="#cb27-172"></a><span class="in">```</span></span>
-<span id="cb27-173"><a href="#cb27-173"></a></span>
-<span id="cb27-174"><a href="#cb27-174"></a></span>
-<span id="cb27-175"><a href="#cb27-175"></a>**Observations:**</span>
-<span id="cb27-176"><a href="#cb27-176"></a>Of all categories, dairy, wheat, and rice are the most consumed. The consumption of dairy, wheat, or rice is enough to outmatch the entire consumption of the top 5 countries combined in some categories like nuts or soybeans. What this means is that some of these categories are relatively easy to be a top 5 country in, because their consumption is very low anyway. </span>
-<span id="cb27-177"><a href="#cb27-177"></a></span>
-<span id="cb27-178"><a href="#cb27-178"></a></span>
-<span id="cb27-179"><a href="#cb27-179"></a><span class="fu">## Sub-research Question 1: What does the consumption of each food look like?</span></span>
-<span id="cb27-180"><a href="#cb27-180"></a></span>
-<span id="cb27-181"><a href="#cb27-181"></a>**Expected Dataframe:**</span>
-<span id="cb27-182"><a href="#cb27-182"></a>We want a dataframe in which there is a country variable, a variable for food type, a corresponding variable for consumption, and a variable for the geometry of each country.</span>
-<span id="cb27-183"><a href="#cb27-183"></a></span>
-<span id="cb27-184"><a href="#cb27-184"></a></span>
-<span id="cb27-185"><a href="#cb27-185"></a>**Reshaping, Wrangling, and importing data:**</span>
-<span id="cb27-186"><a href="#cb27-186"></a></span>
-<span id="cb27-187"><a href="#cb27-187"></a>Find out which countries don't have a match in the geometry dataset</span>
-<span id="cb27-190"><a href="#cb27-190"></a><span class="in">```{r}</span></span>
-<span id="cb27-191"><a href="#cb27-191"></a>fc_clean <span class="sc">|&gt;</span></span>
-<span id="cb27-192"><a href="#cb27-192"></a>  <span class="fu">anti_join</span>(<span class="fu">ne_countries</span>(), <span class="fu">join_by</span>(country <span class="sc">==</span> admin)) <span class="sc">|&gt;</span></span>
-<span id="cb27-193"><a href="#cb27-193"></a>  <span class="fu">distinct</span>(country)</span>
-<span id="cb27-194"><a href="#cb27-194"></a></span>
-<span id="cb27-195"><a href="#cb27-195"></a><span class="fu">st_set_geometry</span>(<span class="fu">ne_countries</span>(), <span class="cn">NULL</span>) <span class="sc">|&gt;</span></span>
-<span id="cb27-196"><a href="#cb27-196"></a>  <span class="fu">anti_join</span>(fc_clean, <span class="fu">join_by</span>(admin <span class="sc">==</span> country)) <span class="sc">|&gt;</span></span>
-<span id="cb27-197"><a href="#cb27-197"></a>  <span class="fu">distinct</span>(admin)</span>
-<span id="cb27-198"><a href="#cb27-198"></a><span class="in">```</span></span>
-<span id="cb27-199"><a href="#cb27-199"></a></span>
-<span id="cb27-200"><a href="#cb27-200"></a></span>
-<span id="cb27-201"><a href="#cb27-201"></a>Rename the countries so that they have a match and join the shapefile</span>
-<span id="cb27-204"><a href="#cb27-204"></a><span class="in">```{r}</span></span>
-<span id="cb27-205"><a href="#cb27-205"></a>temp <span class="ot">&lt;-</span> fc_clean <span class="sc">|&gt;</span></span>
-<span id="cb27-206"><a href="#cb27-206"></a>  <span class="fu">select</span>(<span class="sc">-</span>co2_emmission) <span class="sc">|&gt;</span></span>
-<span id="cb27-207"><a href="#cb27-207"></a>  <span class="fu">group_by</span>(food_category) <span class="sc">|&gt;</span></span>
-<span id="cb27-208"><a href="#cb27-208"></a>  <span class="fu">mutate</span>(<span class="at">consumption =</span> (consumption <span class="sc">-</span> <span class="fu">mean</span>(consumption)) <span class="sc">/</span> <span class="fu">sd</span>(consumption)) <span class="sc">|&gt;</span></span>
-<span id="cb27-209"><a href="#cb27-209"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">fct_recode</span>(country,</span>
-<span id="cb27-210"><a href="#cb27-210"></a>                              <span class="st">"United States of America"</span> <span class="ot">=</span> <span class="st">"USA"</span>,</span>
-<span id="cb27-211"><a href="#cb27-211"></a>                              <span class="st">"Czechia"</span> <span class="ot">=</span> <span class="st">"Czech Republic"</span>,</span>
-<span id="cb27-212"><a href="#cb27-212"></a>                              <span class="st">"Republic of Serbia"</span> <span class="ot">=</span> <span class="st">"Serbia"</span>,</span>
-<span id="cb27-213"><a href="#cb27-213"></a>                              <span class="st">"eSwatini"</span> <span class="ot">=</span> <span class="st">"Swaziland"</span>,</span>
-<span id="cb27-214"><a href="#cb27-214"></a>                              <span class="st">"North Macedonia"</span> <span class="ot">=</span> <span class="st">"Macedonia"</span>,</span>
-<span id="cb27-215"><a href="#cb27-215"></a>                              <span class="st">"Mauritania"</span> <span class="ot">=</span> <span class="st">"Mauritius"</span>,</span>
-<span id="cb27-216"><a href="#cb27-216"></a>                              <span class="st">"United Republic of Tanzania"</span> <span class="ot">=</span> <span class="st">"Tanzania"</span>,</span>
-<span id="cb27-217"><a href="#cb27-217"></a>                              <span class="st">"Democratic Republic of the Congo"</span> <span class="ot">=</span> <span class="st">"Congo"</span>,</span>
-<span id="cb27-218"><a href="#cb27-218"></a>                              <span class="st">"United Republic of Tanzania"</span> <span class="ot">=</span> <span class="st">"Tanzania"</span>,</span>
-<span id="cb27-219"><a href="#cb27-219"></a>                              <span class="st">"The Bahamas"</span> <span class="ot">=</span> <span class="st">"Bahamas"</span>,</span>
-<span id="cb27-220"><a href="#cb27-220"></a>                              <span class="st">"Taiwan"</span> <span class="ot">=</span> <span class="st">"Taiwan. ROC"</span>))</span>
-<span id="cb27-221"><a href="#cb27-221"></a></span>
-<span id="cb27-222"><a href="#cb27-222"></a>temp</span>
-<span id="cb27-223"><a href="#cb27-223"></a></span>
-<span id="cb27-224"><a href="#cb27-224"></a>global_consumption <span class="ot">&lt;-</span> <span class="fu">ne_countries</span>() <span class="sc">|&gt;</span></span>
-<span id="cb27-225"><a href="#cb27-225"></a>  <span class="fu">select</span>(admin, geometry) <span class="sc">|&gt;</span></span>
-<span id="cb27-226"><a href="#cb27-226"></a>  <span class="fu">left_join</span>(temp, <span class="fu">join_by</span>(admin <span class="sc">==</span> country)) <span class="sc">|&gt;</span></span>
-<span id="cb27-227"><a href="#cb27-227"></a>  <span class="fu">mutate</span>(<span class="at">consumption =</span> <span class="fu">replace_na</span>(consumption, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb27-228"><a href="#cb27-228"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> food_category, <span class="at">values_from =</span> consumption) <span class="sc">|&gt;</span></span>
-<span id="cb27-229"><a href="#cb27-229"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="st">`</span><span class="at">NA</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
-<span id="cb27-230"><a href="#cb27-230"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="sc">-</span>geometry, <span class="sc">-</span>admin), <span class="at">names_to =</span> <span class="st">"food_category"</span>, <span class="at">values_to =</span> <span class="st">"consumption"</span>)</span>
-<span id="cb27-231"><a href="#cb27-231"></a></span>
-<span id="cb27-232"><a href="#cb27-232"></a><span class="fu">head</span>(global_consumption)</span>
-<span id="cb27-233"><a href="#cb27-233"></a><span class="in">```</span></span>
-<span id="cb27-234"><a href="#cb27-234"></a></span>
-<span id="cb27-235"><a href="#cb27-235"></a></span>
-<span id="cb27-236"><a href="#cb27-236"></a>**Vizualizing Data:**</span>
-<span id="cb27-239"><a href="#cb27-239"></a><span class="in">```{r}</span></span>
-<span id="cb27-240"><a href="#cb27-240"></a><span class="co">#| fig-height: 8</span></span>
-<span id="cb27-241"><a href="#cb27-241"></a><span class="co">#| fig-width: 15</span></span>
-<span id="cb27-242"><a href="#cb27-242"></a><span class="co">#| fig-cap: "Facet Wrapped World Maps of Consumption by Food Category"</span></span>
-<span id="cb27-243"><a href="#cb27-243"></a><span class="co">#| fig-alt: "Eleven world maps are shown, facet wrapped by food category. The categories are beef, dairy, eggs, fish, lamb, nuts, pork, poultry, rice, soybeans, and wheat. They are colored from dark to light blue, representing low to high consumption, as shown in a legend in the bottom right that goes from 0 to 6. Some countries have a grey fill, representing their lack of data. The title of the plot is 'Consumption of Food Categories Worldwide'. The countries with the highest beef consumption tend to be in the Americas. Those with the highest Dairy consumption tend to be in Europe and there is moderate consumption in the Americas. Egg consumption is moderate in North America, China, and Europe. Fish consumption is low worldwide, but moderate in Myanmar. Lamb consumption is high in a few countries like Kazakhstan, Algeria, and Australia. Nut consumption is high in select countries like the United States, Iran, China, and Bolivia. Pork consumption is high in China and Europe. Poultry consumption is high in the Americas. Rice consumption is high in East, Southeast, and South Asia. Soybean consumption is high in Botswana, Zimbabwe, and China. Wheat consumption is high in Algeria, Egypt, Russia, Iran, and Turkey."</span></span>
-<span id="cb27-244"><a href="#cb27-244"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb27-245"><a href="#cb27-245"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> global_consumption,</span>
-<span id="cb27-246"><a href="#cb27-246"></a>          <span class="fu">aes</span>(<span class="at">fill =</span> consumption)) <span class="sc">+</span></span>
-<span id="cb27-247"><a href="#cb27-247"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>food_category) <span class="sc">+</span></span>
-<span id="cb27-248"><a href="#cb27-248"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="st">"+proj=robin"</span>) <span class="sc">+</span></span>
-<span id="cb27-249"><a href="#cb27-249"></a>  <span class="fu">theme_map</span>() <span class="sc">+</span></span>
-<span id="cb27-250"><a href="#cb27-250"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Consumption of Food Categories Worldwide"</span>) <span class="sc">+</span></span>
-<span id="cb27-251"><a href="#cb27-251"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.77</span>, <span class="fl">0.02</span>), </span>
-<span id="cb27-252"><a href="#cb27-252"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>, <span class="at">family =</span> <span class="st">"serif"</span>, <span class="at">face =</span> <span class="st">"bold"</span>), </span>
-<span id="cb27-253"><a href="#cb27-253"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>, <span class="at">family =</span> <span class="st">"serif"</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb27-254"><a href="#cb27-254"></a>        <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.8</span>, <span class="st">"cm"</span>),</span>
-<span id="cb27-255"><a href="#cb27-255"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">family =</span> <span class="st">"serif"</span>),</span>
-<span id="cb27-256"><a href="#cb27-256"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>)) <span class="sc">+</span></span>
-<span id="cb27-257"><a href="#cb27-257"></a>  <span class="fu">scale_fill_continuous</span>(<span class="at">name =</span> <span class="st">"Consumption"</span>)</span>
-<span id="cb27-258"><a href="#cb27-258"></a><span class="in">```</span></span>
-<span id="cb27-259"><a href="#cb27-259"></a></span>
-<span id="cb27-260"><a href="#cb27-260"></a>**Observations:**</span>
-<span id="cb27-261"><a href="#cb27-261"></a>Beef is heavily consumed in many highly countries like the United States, Russia, and Brazil, but also less consumed around most of the world and in other large countries like China, India, and Mexico. Dairy is heavily consumed in smaller countries like Finland and Kazakhstan, with moderate consumption around Europe and North America, and generally less consumption worldwide. Eggs are heavily consumed in China, with moderate consumption across Europe and the Americas. Fish has low consumption worldwide, but Myanmar stands out as a high consumer. Lamb is heavily consumed in Kazakhstan, Algeria, and Australia, while the rest of the world has considerably less consumption. The largest consumers of nuts are Persia, Canada and North America, and Bolivia. Additionally, countries with more moderate consumption include China, Australia, and Turkey. Pork is highly consumed in Russia, Europe and North America compared to the rest of the world. Poultry products tend to be more consumed in the Americas, Australia, and Saudi Arabia, with less worldwide consumption elsewhere. Rice is highly consumed in East, Southeast, and South Asia. Soybeans are highly consumed in China, Brazil, Botswana, and Zimbabwe. And lastly, Wheat is highly consumed in Algeria, Russia, Egypt, Turkey, and Iran. It is otherwise less consumed elsewhere.</span>
-<span id="cb27-262"><a href="#cb27-262"></a></span>
-<span id="cb27-263"><a href="#cb27-263"></a></span>
-<span id="cb27-264"><a href="#cb27-264"></a><span class="fu">## Conclusion:</span></span>
-<span id="cb27-265"><a href="#cb27-265"></a></span>
-<span id="cb27-266"><a href="#cb27-266"></a>Most countries around the world have unique eating habits, but regional patterns to appear. For example, rice is heavily consumed in South, Southeast, and East Asia. The entirety of the Americas consumes very little lamb. Yet Kazakhstan, Australia, and Algeria (countries with large portions of lowly populated land) consume a lot of lamb. Similarly, beef is highly consumed in Brazil, the United States, and Australia. These countries all have lots of suitable land for cattle to graze. Dairy also seems to follow lactose tolerance, to an extent, with less consumption in much of Asia and Africa. However, throughout the Americas, where there are mixed and indigenous populations with higher rates of lactose intolerance, dairy still has a presence. Certain food categories tended to have a few outliers, like soybeans, may have had higher consumption in certain countries (like Botswana and Zimbabwe), but their worldwide consumption was so small that just the consumption of wheat among one of the top 5 wheat consumers was more than quadruple the consumption of all the top 5 soybean consumers combined. Surprisingly, the countries that had the highest total consumption were Albania, Finland, Lithuania, the Netherlands, and Sweden. These were all coastal European countries with less than one 100th of India's population. I expected to see larger countries, like Brazil, Japan, India, China, Russia, or the United States to be top consumers. What this may indicate is that consumption is not calculated as the absolute consumption of food in these countries, but perhaps it is done in some other way. Considering that the top consumers were all coastal, perhaps calculations were based on food moving through the country, and these European countries had ports with high traffic. Or perhaps data wasn't sufficiently collected in larger countries like India, China, or the United States. </span>
-<span id="cb27-267"><a href="#cb27-267"></a></span>
-<span id="cb27-268"><a href="#cb27-268"></a></span>
-<span id="cb27-269"><a href="#cb27-269"></a></span>
-<span id="cb27-270"><a href="#cb27-270"></a></span>
-<span id="cb27-271"><a href="#cb27-271"></a></span>
-<span id="cb27-272"><a href="#cb27-272"></a></span>
-<span id="cb27-273"><a href="#cb27-273"></a></span>
-<span id="cb27-274"><a href="#cb27-274"></a></span>
-<span id="cb27-275"><a href="#cb27-275"></a></span>
-<span id="cb27-276"><a href="#cb27-276"></a></span>
-<span id="cb27-277"><a href="#cb27-277"></a></span>
+<div class="sourceCode" id="cb25" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb25-1"><a href="#cb25-1"></a><span class="co">---</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a><span class="an">title:</span><span class="co"> "Exam 2"</span></span>
+<span id="cb25-3"><a href="#cb25-3"></a><span class="an">author:</span><span class="co"> "Gabriel Donelly Higgins"</span></span>
+<span id="cb25-4"><a href="#cb25-4"></a><span class="an">date:</span><span class="co"> "May 2nd, 2025"</span></span>
+<span id="cb25-5"><a href="#cb25-5"></a><span class="an">format:</span><span class="co"> html</span></span>
+<span id="cb25-6"><a href="#cb25-6"></a><span class="co">---</span></span>
+<span id="cb25-7"><a href="#cb25-7"></a></span>
+<span id="cb25-8"><a href="#cb25-8"></a><span class="ss">* </span>this is a continuation of exam one</span>
+<span id="cb25-9"><a href="#cb25-9"></a></span>
+<span id="cb25-10"><a href="#cb25-10"></a><span class="fu">## Research question:</span></span>
+<span id="cb25-11"><a href="#cb25-11"></a></span>
+<span id="cb25-12"><a href="#cb25-12"></a>**What does the consumption of each food category in each country look like?**</span>
+<span id="cb25-13"><a href="#cb25-13"></a></span>
+<span id="cb25-14"><a href="#cb25-14"></a></span>
+<span id="cb25-15"><a href="#cb25-15"></a><span class="fu">## Import Necessary Data and Tools:</span></span>
+<span id="cb25-16"><a href="#cb25-16"></a></span>
+<span id="cb25-17"><a href="#cb25-17"></a>**Load in packages:**</span>
+<span id="cb25-20"><a href="#cb25-20"></a><span class="in">```{r}</span></span>
+<span id="cb25-21"><a href="#cb25-21"></a><span class="fu">library</span>(tidytuesdayR)</span>
+<span id="cb25-22"><a href="#cb25-22"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb25-23"><a href="#cb25-23"></a><span class="fu">library</span>(rnaturalearth)</span>
+<span id="cb25-24"><a href="#cb25-24"></a><span class="fu">library</span>(sf)</span>
+<span id="cb25-25"><a href="#cb25-25"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb25-26"><a href="#cb25-26"></a><span class="in">```</span></span>
+<span id="cb25-27"><a href="#cb25-27"></a></span>
+<span id="cb25-28"><a href="#cb25-28"></a></span>
+<span id="cb25-29"><a href="#cb25-29"></a>**Load data:**</span>
+<span id="cb25-32"><a href="#cb25-32"></a><span class="in">```{r}</span></span>
+<span id="cb25-33"><a href="#cb25-33"></a>tuesdata <span class="ot">&lt;-</span> <span class="fu">tt_load</span>(<span class="st">'2020-02-18'</span>)</span>
+<span id="cb25-34"><a href="#cb25-34"></a>fc <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>food_consumption</span>
+<span id="cb25-35"><a href="#cb25-35"></a><span class="in">```</span></span>
+<span id="cb25-36"><a href="#cb25-36"></a></span>
+<span id="cb25-37"><a href="#cb25-37"></a></span>
+<span id="cb25-38"><a href="#cb25-38"></a>**Inspect Data:**</span>
+<span id="cb25-41"><a href="#cb25-41"></a><span class="in">```{r}</span></span>
+<span id="cb25-42"><a href="#cb25-42"></a><span class="fu">str</span>(fc)</span>
+<span id="cb25-43"><a href="#cb25-43"></a><span class="in">```</span></span>
+<span id="cb25-44"><a href="#cb25-44"></a></span>
+<span id="cb25-47"><a href="#cb25-47"></a><span class="in">```{r}</span></span>
+<span id="cb25-48"><a href="#cb25-48"></a><span class="fu">head</span>(fc, <span class="dv">22</span>)</span>
+<span id="cb25-49"><a href="#cb25-49"></a><span class="in">```</span></span>
+<span id="cb25-50"><a href="#cb25-50"></a></span>
+<span id="cb25-51"><a href="#cb25-51"></a></span>
+<span id="cb25-52"><a href="#cb25-52"></a>**Inspect Country Variable:**</span>
+<span id="cb25-55"><a href="#cb25-55"></a><span class="in">```{r}</span></span>
+<span id="cb25-56"><a href="#cb25-56"></a>fc <span class="sc">|&gt;</span></span>
+<span id="cb25-57"><a href="#cb25-57"></a>  <span class="fu">group_by</span>(country) <span class="sc">|&gt;</span></span>
+<span id="cb25-58"><a href="#cb25-58"></a>  <span class="fu">summarize</span>(<span class="fu">sum</span>(consumption)) <span class="sc">|&gt;</span></span>
+<span id="cb25-59"><a href="#cb25-59"></a>  <span class="fu">str</span>()</span>
+<span id="cb25-60"><a href="#cb25-60"></a><span class="in">```</span></span>
+<span id="cb25-61"><a href="#cb25-61"></a></span>
+<span id="cb25-62"><a href="#cb25-62"></a>There are 130 observations, when you set the unit of observation to countries, so there are 130 countries in this dataset</span>
+<span id="cb25-63"><a href="#cb25-63"></a></span>
+<span id="cb25-64"><a href="#cb25-64"></a></span>
+<span id="cb25-65"><a href="#cb25-65"></a>**Inspect food_category variable:**</span>
+<span id="cb25-68"><a href="#cb25-68"></a><span class="in">```{r}</span></span>
+<span id="cb25-69"><a href="#cb25-69"></a>fc <span class="sc">|&gt;</span></span>
+<span id="cb25-70"><a href="#cb25-70"></a>  <span class="fu">distinct</span>(food_category)</span>
+<span id="cb25-71"><a href="#cb25-71"></a><span class="in">```</span></span>
+<span id="cb25-72"><a href="#cb25-72"></a></span>
+<span id="cb25-73"><a href="#cb25-73"></a>Here we have 11 distinct food categories, but it is better to rename them for the sake of making them easier to read in a viz</span>
+<span id="cb25-74"><a href="#cb25-74"></a></span>
+<span id="cb25-75"><a href="#cb25-75"></a>**Clean data:**</span>
+<span id="cb25-78"><a href="#cb25-78"></a><span class="in">```{r}</span></span>
+<span id="cb25-79"><a href="#cb25-79"></a>fc_clean <span class="ot">&lt;-</span> fc <span class="sc">|&gt;</span></span>
+<span id="cb25-80"><a href="#cb25-80"></a>  <span class="fu">mutate</span>(<span class="at">food_category =</span> <span class="fu">as.factor</span>(food_category),</span>
+<span id="cb25-81"><a href="#cb25-81"></a>         <span class="at">food_category =</span> <span class="fu">fct_recode</span>(food_category,</span>
+<span id="cb25-82"><a href="#cb25-82"></a>                                    <span class="st">"Lamb"</span> <span class="ot">=</span> <span class="st">"Lamb &amp; Goat"</span>,</span>
+<span id="cb25-83"><a href="#cb25-83"></a>                                    <span class="st">"Dairy"</span> <span class="ot">=</span> <span class="st">"Milk - inc. cheese"</span>,</span>
+<span id="cb25-84"><a href="#cb25-84"></a>                                    <span class="st">"Wheat"</span> <span class="ot">=</span> <span class="st">"Wheat and Wheat Products"</span>,</span>
+<span id="cb25-85"><a href="#cb25-85"></a>                                    <span class="st">"Nuts"</span> <span class="ot">=</span> <span class="st">"Nuts inc. Peanut Butter"</span>))</span>
+<span id="cb25-86"><a href="#cb25-86"></a><span class="in">```</span></span>
+<span id="cb25-87"><a href="#cb25-87"></a></span>
+<span id="cb25-88"><a href="#cb25-88"></a>Double checking to make sure all variables are properly renamed</span>
+<span id="cb25-91"><a href="#cb25-91"></a><span class="in">```{r}</span></span>
+<span id="cb25-92"><a href="#cb25-92"></a>fc_clean <span class="sc">|&gt;</span></span>
+<span id="cb25-93"><a href="#cb25-93"></a>  <span class="fu">distinct</span>(food_category)</span>
+<span id="cb25-94"><a href="#cb25-94"></a><span class="in">```</span></span>
+<span id="cb25-95"><a href="#cb25-95"></a></span>
+<span id="cb25-96"><a href="#cb25-96"></a><span class="fu">## Sub-research Question 1: Which 5 countries consume the most food?</span></span>
+<span id="cb25-97"><a href="#cb25-97"></a></span>
+<span id="cb25-98"><a href="#cb25-98"></a>**Expected Dataframe:**</span>
+<span id="cb25-99"><a href="#cb25-99"></a>We want a dataframe in which countries are listed, followed by their total consumption</span>
+<span id="cb25-100"><a href="#cb25-100"></a></span>
+<span id="cb25-101"><a href="#cb25-101"></a></span>
+<span id="cb25-102"><a href="#cb25-102"></a>**Reshaping / Wrangling data:**</span>
+<span id="cb25-105"><a href="#cb25-105"></a><span class="in">```{r}</span></span>
+<span id="cb25-106"><a href="#cb25-106"></a>country_consumption <span class="ot">&lt;-</span> fc_clean <span class="sc">|&gt;</span></span>
+<span id="cb25-107"><a href="#cb25-107"></a>  <span class="fu">group_by</span>(country) <span class="sc">|&gt;</span></span>
+<span id="cb25-108"><a href="#cb25-108"></a>  <span class="fu">summarize</span>(<span class="at">total_consumption =</span> <span class="fu">sum</span>(consumption))</span>
+<span id="cb25-109"><a href="#cb25-109"></a><span class="in">```</span></span>
+<span id="cb25-110"><a href="#cb25-110"></a></span>
+<span id="cb25-111"><a href="#cb25-111"></a></span>
+<span id="cb25-112"><a href="#cb25-112"></a>**Visualizing Data:**</span>
+<span id="cb25-115"><a href="#cb25-115"></a><span class="in">```{r}</span></span>
+<span id="cb25-116"><a href="#cb25-116"></a><span class="co">#| fig-cap: "A Bar Graph of the World's Largest Consumers"</span></span>
+<span id="cb25-117"><a href="#cb25-117"></a><span class="co">#| fig-alt: "A bar graph is displayed. The title of the x-axis is  'Country' and the y axis is 'Total Consumption'. The y-axis goes from 0 to above 600. The x-axis lists the countries of Albania, Finland, Lithuania, Netherlands, and Sweden. Finland's bar is the tallest, above 600 on the y-axis, while the others float above 500. Each bar is colored differently."</span></span>
+<span id="cb25-118"><a href="#cb25-118"></a>country_consumption <span class="sc">|&gt;</span></span>
+<span id="cb25-119"><a href="#cb25-119"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_consumption)) <span class="sc">|&gt;</span></span>
+<span id="cb25-120"><a href="#cb25-120"></a>  <span class="fu">head</span>(<span class="dv">5</span>) <span class="sc">|&gt;</span></span>
+<span id="cb25-121"><a href="#cb25-121"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> country, <span class="at">y =</span> total_consumption, <span class="at">fill =</span> country)) <span class="sc">+</span></span>
+<span id="cb25-122"><a href="#cb25-122"></a>    <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb25-123"><a href="#cb25-123"></a>    <span class="fu">theme_solarized</span>() <span class="sc">+</span></span>
+<span id="cb25-124"><a href="#cb25-124"></a>  <span class="fu">scale_fill_solarized</span>() <span class="sc">+</span></span>
+<span id="cb25-125"><a href="#cb25-125"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Country"</span>, <span class="at">y =</span> <span class="st">"Total Consumption"</span>, <span class="at">title =</span> <span class="st">"World's Largest Consumers"</span>) <span class="sc">+</span></span>
+<span id="cb25-126"><a href="#cb25-126"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>, <span class="at">family =</span> <span class="st">"serif"</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"#586e75"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb25-127"><a href="#cb25-127"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">15</span>, <span class="at">family =</span> <span class="st">"serif"</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"#586e75"</span>),</span>
+<span id="cb25-128"><a href="#cb25-128"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">family =</span> <span class="st">"mono"</span>, <span class="at">color =</span> <span class="st">"#586e75"</span>),</span>
+<span id="cb25-129"><a href="#cb25-129"></a>        <span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb25-130"><a href="#cb25-130"></a><span class="in">```</span></span>
+<span id="cb25-131"><a href="#cb25-131"></a></span>
+<span id="cb25-132"><a href="#cb25-132"></a></span>
+<span id="cb25-133"><a href="#cb25-133"></a>**Observations:**</span>
+<span id="cb25-134"><a href="#cb25-134"></a>Seemingly, the top consumers of food are exclusively European countries. Their geographic location varies from Eastern to Western, Baltics and Balkans and Scandinavian countries. They all consume roughly similar amounts of food, with Findland consuming the most.</span>
+<span id="cb25-135"><a href="#cb25-135"></a></span>
+<span id="cb25-136"><a href="#cb25-136"></a></span>
+<span id="cb25-137"><a href="#cb25-137"></a><span class="fu">## Sub-research Question 2: Which 5 countries consume the most of each food?</span></span>
+<span id="cb25-138"><a href="#cb25-138"></a></span>
+<span id="cb25-139"><a href="#cb25-139"></a>**Expected Dataframe:**</span>
+<span id="cb25-140"><a href="#cb25-140"></a>We want a dataframe where there is a variable for countries, a variable for the food type, and a variable for the consumption value. The food_category should correspond to the top 5 highest values in the consumption variable for its category. And the countries in the country variable will be the top 5 consumers of whatever food category is in the food variable.</span>
+<span id="cb25-141"><a href="#cb25-141"></a></span>
+<span id="cb25-142"><a href="#cb25-142"></a></span>
+<span id="cb25-143"><a href="#cb25-143"></a>**Reshaping / Wrangling Data:**</span>
+<span id="cb25-146"><a href="#cb25-146"></a><span class="in">```{r}</span></span>
+<span id="cb25-147"><a href="#cb25-147"></a>top_food_consumers <span class="ot">&lt;-</span> fc_clean <span class="sc">|&gt;</span></span>
+<span id="cb25-148"><a href="#cb25-148"></a>  <span class="fu">select</span>(<span class="sc">-</span>co2_emmission) <span class="sc">|&gt;</span></span>
+<span id="cb25-149"><a href="#cb25-149"></a>  <span class="fu">group_by</span>(food_category) <span class="sc">|&gt;</span></span>
+<span id="cb25-150"><a href="#cb25-150"></a>  <span class="fu">slice_max</span>(<span class="at">order_by =</span> consumption, <span class="at">n =</span> <span class="dv">5</span>)</span>
+<span id="cb25-151"><a href="#cb25-151"></a><span class="in">```</span></span>
+<span id="cb25-152"><a href="#cb25-152"></a></span>
+<span id="cb25-153"><a href="#cb25-153"></a></span>
+<span id="cb25-154"><a href="#cb25-154"></a>**Vizualizing Data:**</span>
+<span id="cb25-157"><a href="#cb25-157"></a><span class="in">```{r}</span></span>
+<span id="cb25-158"><a href="#cb25-158"></a><span class="co">#| fig-height: 6</span></span>
+<span id="cb25-159"><a href="#cb25-159"></a><span class="co">#| fig-width: 10</span></span>
+<span id="cb25-160"><a href="#cb25-160"></a><span class="co">#| fig-cap: "A Bar Graph of Food Category and Consumption, Colored By The Top 5 Biggest Consumers"</span></span>
+<span id="cb25-161"><a href="#cb25-161"></a><span class="co">#| fig-alt: "A bar graph with an x-axis label 'Food Category' and y-axis label 'Consumption' is displayed. The range goes above 1500 on the y-axis. 11 bars represent 11 food categories on the x-axis, which is labeled with each food category. The bars are colored, and a legend on the right is titled 'Country' and lists the colors and their corresponding country. The title of the plot is 'Largest Consumers by Food Category'. The bar with the highest consumption is dairy, whose consumers all color enough of the bar to make their consumption several times larger than that of the soybean bar. The second and third tallest bars are wheat and rice respectively, followed by fish, poultry, pork, and beef."</span></span>
+<span id="cb25-162"><a href="#cb25-162"></a><span class="fu">ggplot</span>(top_food_consumers, <span class="fu">aes</span>(<span class="at">x =</span> food_category, <span class="at">y =</span> consumption, <span class="at">fill =</span> country)) <span class="sc">+</span></span>
+<span id="cb25-163"><a href="#cb25-163"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb25-164"><a href="#cb25-164"></a>  <span class="fu">theme_solarized</span>() <span class="sc">+</span></span>
+<span id="cb25-165"><a href="#cb25-165"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">family =</span> <span class="st">"mono"</span>, <span class="at">color =</span> <span class="st">"#586e75"</span>),</span>
+<span id="cb25-166"><a href="#cb25-166"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">family =</span> <span class="st">"mono"</span>, <span class="at">color =</span> <span class="st">"#586e75"</span>),</span>
+<span id="cb25-167"><a href="#cb25-167"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>, <span class="at">family =</span> <span class="st">"serif"</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb25-168"><a href="#cb25-168"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">family =</span> <span class="st">"mono"</span>, <span class="at">color =</span> <span class="st">"#586e75"</span>), </span>
+<span id="cb25-169"><a href="#cb25-169"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>, <span class="at">family =</span> <span class="st">"serif"</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb25-170"><a href="#cb25-170"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>, <span class="at">family =</span> <span class="st">"serif"</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"#586e75"</span>)) <span class="sc">+</span></span>
+<span id="cb25-171"><a href="#cb25-171"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Country"</span>, <span class="at">x =</span> <span class="st">"Food Category"</span>, <span class="at">y =</span> <span class="st">"Consumption"</span>, <span class="at">title =</span> <span class="st">"Largest Consumers by Food Category"</span>)</span>
+<span id="cb25-172"><a href="#cb25-172"></a><span class="in">```</span></span>
+<span id="cb25-173"><a href="#cb25-173"></a></span>
+<span id="cb25-174"><a href="#cb25-174"></a></span>
+<span id="cb25-175"><a href="#cb25-175"></a>**Observations:**</span>
+<span id="cb25-176"><a href="#cb25-176"></a>Of all categories, dairy, wheat, and rice are the most consumed. The consumption of dairy, wheat, or rice is enough to outmatch the entire consumption of the top 5 countries combined in some categories like nuts or soybeans. What this means is that some of these categories are relatively easy to be a top 5 country in, because their consumption is very low anyway. </span>
+<span id="cb25-177"><a href="#cb25-177"></a></span>
+<span id="cb25-178"><a href="#cb25-178"></a></span>
+<span id="cb25-179"><a href="#cb25-179"></a><span class="fu">## Sub-research Question 3: What does the consumption of each food look like?</span></span>
+<span id="cb25-180"><a href="#cb25-180"></a></span>
+<span id="cb25-181"><a href="#cb25-181"></a>**Expected Dataframe:**</span>
+<span id="cb25-182"><a href="#cb25-182"></a>We want a dataframe in which there is a country variable, a variable for food type, a corresponding variable for consumption, and a variable for the geometry of each country.</span>
+<span id="cb25-183"><a href="#cb25-183"></a></span>
+<span id="cb25-184"><a href="#cb25-184"></a></span>
+<span id="cb25-185"><a href="#cb25-185"></a>**Reshaping, Wrangling, and importing data:**</span>
+<span id="cb25-186"><a href="#cb25-186"></a></span>
+<span id="cb25-187"><a href="#cb25-187"></a>Find out which countries don't have a match in the geometry dataset</span>
+<span id="cb25-190"><a href="#cb25-190"></a><span class="in">```{r}</span></span>
+<span id="cb25-191"><a href="#cb25-191"></a>fc_clean <span class="sc">|&gt;</span></span>
+<span id="cb25-192"><a href="#cb25-192"></a>  <span class="fu">anti_join</span>(<span class="fu">ne_countries</span>(), <span class="fu">join_by</span>(country <span class="sc">==</span> admin)) <span class="sc">|&gt;</span></span>
+<span id="cb25-193"><a href="#cb25-193"></a>  <span class="fu">distinct</span>(country)</span>
+<span id="cb25-194"><a href="#cb25-194"></a></span>
+<span id="cb25-195"><a href="#cb25-195"></a><span class="fu">st_set_geometry</span>(<span class="fu">ne_countries</span>(), <span class="cn">NULL</span>) <span class="sc">|&gt;</span></span>
+<span id="cb25-196"><a href="#cb25-196"></a>  <span class="fu">anti_join</span>(fc_clean, <span class="fu">join_by</span>(admin <span class="sc">==</span> country)) <span class="sc">|&gt;</span></span>
+<span id="cb25-197"><a href="#cb25-197"></a>  <span class="fu">distinct</span>(admin)</span>
+<span id="cb25-198"><a href="#cb25-198"></a><span class="in">```</span></span>
+<span id="cb25-199"><a href="#cb25-199"></a></span>
+<span id="cb25-200"><a href="#cb25-200"></a></span>
+<span id="cb25-201"><a href="#cb25-201"></a>Rename the countries so that they have a match and join the shapefile</span>
+<span id="cb25-204"><a href="#cb25-204"></a><span class="in">```{r}</span></span>
+<span id="cb25-205"><a href="#cb25-205"></a>temp <span class="ot">&lt;-</span> fc_clean <span class="sc">|&gt;</span></span>
+<span id="cb25-206"><a href="#cb25-206"></a>  <span class="fu">select</span>(<span class="sc">-</span>co2_emmission) <span class="sc">|&gt;</span></span>
+<span id="cb25-207"><a href="#cb25-207"></a>  <span class="fu">group_by</span>(food_category) <span class="sc">|&gt;</span></span>
+<span id="cb25-208"><a href="#cb25-208"></a>  <span class="fu">mutate</span>(<span class="at">consumption =</span> (consumption <span class="sc">-</span> <span class="fu">mean</span>(consumption)) <span class="sc">/</span> <span class="fu">sd</span>(consumption)) <span class="sc">|&gt;</span></span>
+<span id="cb25-209"><a href="#cb25-209"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">fct_recode</span>(country,</span>
+<span id="cb25-210"><a href="#cb25-210"></a>                              <span class="st">"United States of America"</span> <span class="ot">=</span> <span class="st">"USA"</span>,</span>
+<span id="cb25-211"><a href="#cb25-211"></a>                              <span class="st">"Czechia"</span> <span class="ot">=</span> <span class="st">"Czech Republic"</span>,</span>
+<span id="cb25-212"><a href="#cb25-212"></a>                              <span class="st">"Republic of Serbia"</span> <span class="ot">=</span> <span class="st">"Serbia"</span>,</span>
+<span id="cb25-213"><a href="#cb25-213"></a>                              <span class="st">"eSwatini"</span> <span class="ot">=</span> <span class="st">"Swaziland"</span>,</span>
+<span id="cb25-214"><a href="#cb25-214"></a>                              <span class="st">"North Macedonia"</span> <span class="ot">=</span> <span class="st">"Macedonia"</span>,</span>
+<span id="cb25-215"><a href="#cb25-215"></a>                              <span class="st">"Mauritania"</span> <span class="ot">=</span> <span class="st">"Mauritius"</span>,</span>
+<span id="cb25-216"><a href="#cb25-216"></a>                              <span class="st">"United Republic of Tanzania"</span> <span class="ot">=</span> <span class="st">"Tanzania"</span>,</span>
+<span id="cb25-217"><a href="#cb25-217"></a>                              <span class="st">"Democratic Republic of the Congo"</span> <span class="ot">=</span> <span class="st">"Congo"</span>,</span>
+<span id="cb25-218"><a href="#cb25-218"></a>                              <span class="st">"United Republic of Tanzania"</span> <span class="ot">=</span> <span class="st">"Tanzania"</span>,</span>
+<span id="cb25-219"><a href="#cb25-219"></a>                              <span class="st">"The Bahamas"</span> <span class="ot">=</span> <span class="st">"Bahamas"</span>,</span>
+<span id="cb25-220"><a href="#cb25-220"></a>                              <span class="st">"Taiwan"</span> <span class="ot">=</span> <span class="st">"Taiwan. ROC"</span>))</span>
+<span id="cb25-221"><a href="#cb25-221"></a></span>
+<span id="cb25-222"><a href="#cb25-222"></a>global_consumption <span class="ot">&lt;-</span> <span class="fu">ne_countries</span>() <span class="sc">|&gt;</span></span>
+<span id="cb25-223"><a href="#cb25-223"></a>  <span class="fu">select</span>(admin, geometry) <span class="sc">|&gt;</span></span>
+<span id="cb25-224"><a href="#cb25-224"></a>  <span class="fu">left_join</span>(temp, <span class="fu">join_by</span>(admin <span class="sc">==</span> country)) <span class="sc">|&gt;</span></span>
+<span id="cb25-225"><a href="#cb25-225"></a>  <span class="fu">mutate</span>(<span class="at">consumption =</span> <span class="fu">replace_na</span>(consumption, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb25-226"><a href="#cb25-226"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> food_category, <span class="at">values_from =</span> consumption) <span class="sc">|&gt;</span></span>
+<span id="cb25-227"><a href="#cb25-227"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="st">`</span><span class="at">NA</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb25-228"><a href="#cb25-228"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="sc">-</span>geometry, <span class="sc">-</span>admin), <span class="at">names_to =</span> <span class="st">"food_category"</span>, <span class="at">values_to =</span> <span class="st">"consumption"</span>)</span>
+<span id="cb25-229"><a href="#cb25-229"></a></span>
+<span id="cb25-230"><a href="#cb25-230"></a><span class="fu">head</span>(global_consumption)</span>
+<span id="cb25-231"><a href="#cb25-231"></a><span class="in">```</span></span>
+<span id="cb25-232"><a href="#cb25-232"></a></span>
+<span id="cb25-233"><a href="#cb25-233"></a></span>
+<span id="cb25-234"><a href="#cb25-234"></a>**Vizualizing Data:**</span>
+<span id="cb25-237"><a href="#cb25-237"></a><span class="in">```{r}</span></span>
+<span id="cb25-238"><a href="#cb25-238"></a><span class="co">#| fig-height: 8</span></span>
+<span id="cb25-239"><a href="#cb25-239"></a><span class="co">#| fig-width: 15</span></span>
+<span id="cb25-240"><a href="#cb25-240"></a><span class="co">#| fig-cap: "Facet Wrapped World Maps of Consumption by Food Category"</span></span>
+<span id="cb25-241"><a href="#cb25-241"></a><span class="co">#| fig-alt: "Eleven world maps are shown, facet wrapped by food category. The categories are beef, dairy, eggs, fish, lamb, nuts, pork, poultry, rice, soybeans, and wheat. They are colored from dark to light blue, representing low to high consumption, as shown in a legend in the bottom right that goes from 0 to 6. Some countries have a grey fill, representing their lack of data. The title of the plot is 'Consumption of Food Categories Worldwide'. The countries with the highest beef consumption tend to be in the Americas. Those with the highest Dairy consumption tend to be in Europe and there is moderate consumption in the Americas. Egg consumption is moderate in North America, China, and Europe. Fish consumption is low worldwide, but moderate in Myanmar. Lamb consumption is high in a few countries like Kazakhstan, Algeria, and Australia. Nut consumption is high in select countries like the United States, Iran, China, and Bolivia. Pork consumption is high in China and Europe. Poultry consumption is high in the Americas. Rice consumption is high in East, Southeast, and South Asia. Soybean consumption is high in Botswana, Zimbabwe, and China. Wheat consumption is high in Algeria, Egypt, Russia, Iran, and Turkey."</span></span>
+<span id="cb25-242"><a href="#cb25-242"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb25-243"><a href="#cb25-243"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> global_consumption,</span>
+<span id="cb25-244"><a href="#cb25-244"></a>          <span class="fu">aes</span>(<span class="at">fill =</span> consumption)) <span class="sc">+</span></span>
+<span id="cb25-245"><a href="#cb25-245"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>food_category) <span class="sc">+</span></span>
+<span id="cb25-246"><a href="#cb25-246"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="st">"+proj=robin"</span>) <span class="sc">+</span></span>
+<span id="cb25-247"><a href="#cb25-247"></a>  <span class="fu">theme_map</span>() <span class="sc">+</span></span>
+<span id="cb25-248"><a href="#cb25-248"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Consumption of Food Categories Worldwide"</span>) <span class="sc">+</span></span>
+<span id="cb25-249"><a href="#cb25-249"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.77</span>, <span class="fl">0.02</span>), </span>
+<span id="cb25-250"><a href="#cb25-250"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>, <span class="at">family =</span> <span class="st">"serif"</span>, <span class="at">face =</span> <span class="st">"bold"</span>), </span>
+<span id="cb25-251"><a href="#cb25-251"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>, <span class="at">family =</span> <span class="st">"serif"</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb25-252"><a href="#cb25-252"></a>        <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.8</span>, <span class="st">"cm"</span>),</span>
+<span id="cb25-253"><a href="#cb25-253"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">family =</span> <span class="st">"serif"</span>),</span>
+<span id="cb25-254"><a href="#cb25-254"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb25-255"><a href="#cb25-255"></a>  <span class="fu">scale_fill_continuous</span>(<span class="at">name =</span> <span class="st">"Consumption"</span>)</span>
+<span id="cb25-256"><a href="#cb25-256"></a><span class="in">```</span></span>
+<span id="cb25-257"><a href="#cb25-257"></a></span>
+<span id="cb25-258"><a href="#cb25-258"></a>**Observations:**</span>
+<span id="cb25-259"><a href="#cb25-259"></a>Beef is heavily consumed in many highly countries like the United States, Russia, and Brazil, but also less consumed around most of the world and in other large countries like China, India, and Mexico. Dairy is heavily consumed in smaller countries like Finland and Kazakhstan, with moderate consumption around Europe and North America, and generally less consumption worldwide. Eggs are heavily consumed in China, with moderate consumption across Europe and the Americas. Fish has low consumption worldwide, but Myanmar stands out as a high consumer. Lamb is heavily consumed in Kazakhstan, Algeria, and Australia, while the rest of the world has considerably less consumption. The largest consumers of nuts are Persia, Canada and North America, and Bolivia. Additionally, countries with more moderate consumption include China, Australia, and Turkey. Pork is highly consumed in Russia, Europe and North America compared to the rest of the world. Poultry products tend to be more consumed in the Americas, Australia, and Saudi Arabia, with less worldwide consumption elsewhere. Rice is highly consumed in East, Southeast, and South Asia. Soybeans are highly consumed in China, Brazil, Botswana, and Zimbabwe. And lastly, Wheat is highly consumed in Algeria, Russia, Egypt, Turkey, and Iran. It is otherwise less consumed elsewhere.</span>
+<span id="cb25-260"><a href="#cb25-260"></a></span>
+<span id="cb25-261"><a href="#cb25-261"></a></span>
+<span id="cb25-262"><a href="#cb25-262"></a><span class="fu">## Conclusion:</span></span>
+<span id="cb25-263"><a href="#cb25-263"></a></span>
+<span id="cb25-264"><a href="#cb25-264"></a>Most countries around the world have unique eating habits, but regional patterns to appear. For example, rice is heavily consumed in South, Southeast, and East Asia. The entirety of the Americas consumes very little lamb. Yet Kazakhstan, Australia, and Algeria (countries with large portions of lowly populated land) consume a lot of lamb. Similarly, beef is highly consumed in Brazil, the United States, and Australia. These countries all have lots of suitable land for cattle to graze. Dairy also seems to follow lactose tolerance, to an extent, with less consumption in much of Asia and Africa. However, throughout the Americas, where there are mixed and indigenous populations with higher rates of lactose intolerance, dairy still has a presence. Certain food categories tended to have a few outliers, like soybeans, may have had higher consumption in certain countries (like Botswana and Zimbabwe), but their worldwide consumption was so small that just the consumption of wheat among one of the top 5 wheat consumers was more than quadruple the consumption of all the top 5 soybean consumers combined. Surprisingly, the countries that had the highest total consumption were Albania, Finland, Lithuania, the Netherlands, and Sweden. These were all coastal European countries with less than one 100th of India's population. I expected to see larger countries, like Brazil, Japan, India, China, Russia, or the United States to be top consumers. What this may indicate is that consumption is not calculated as the absolute consumption of food in these countries, but perhaps it is done in some other way. Considering that the top consumers were all coastal, perhaps calculations were based on food moving through the country, and these European countries had ports with high traffic. Or perhaps data wasn't sufficiently collected in larger countries like India, China, or the United States. </span>
+<span id="cb25-265"><a href="#cb25-265"></a></span>
+<span id="cb25-266"><a href="#cb25-266"></a></span>
+<span id="cb25-267"><a href="#cb25-267"></a></span>
+<span id="cb25-268"><a href="#cb25-268"></a></span>
+<span id="cb25-269"><a href="#cb25-269"></a></span>
+<span id="cb25-270"><a href="#cb25-270"></a></span>
+<span id="cb25-271"><a href="#cb25-271"></a></span>
+<span id="cb25-272"><a href="#cb25-272"></a></span>
+<span id="cb25-273"><a href="#cb25-273"></a></span>
+<span id="cb25-274"><a href="#cb25-274"></a></span>
+<span id="cb25-275"><a href="#cb25-275"></a></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

@@ -373,10 +373,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">ggplot</span>(movies_len, <span class="fu">aes</span>(<span class="at">x =</span> title_len)) <span class="sc">+</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">geom_histogram</span>(<span class="at">color =</span> <span class="st">"cornsilk"</span>, <span class="co"># this helps to make the bars contrast against each other</span></span>
 <span id="cb3-3"><a href="#cb3-3"></a>                 <span class="at">binwidth =</span> <span class="dv">5</span>) <span class="sc">+</span> <span class="co"># this allows the data to be broken into classes, making it easier to explain and understand</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a>  <span class="fu">theme_solarized</span>() <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>  <span class="fu">theme_solarized_2</span>() <span class="sc">+</span></span>
 <span id="cb3-5"><a href="#cb3-5"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Total Characters in Title"</span>,</span>
 <span id="cb3-6"><a href="#cb3-6"></a>       <span class="at">y =</span> <span class="st">"Movies and TV Shows"</span>,</span>
-<span id="cb3-7"><a href="#cb3-7"></a>       <span class="at">title =</span> <span class="st">"Movies and TV Shows on Streaming Services Versus the Total Characters in Their Title"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-7"><a href="#cb3-7"></a>       <span class="at">title =</span> <span class="st">"Media on Streaming Services Vs. Total Characters in Title"</span>) <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">16</span>),</span>
+<span id="cb3-9"><a href="#cb3-9"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb3-10"><a href="#cb3-10"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"mono"</span>, <span class="at">size =</span> <span class="dv">8</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="bw-uni_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" alt="A histogram with an x-axis titled 'Total Characters in Title' and a y-axis titled 'Movies and TV Shows'. The bars on the histogram have a grey color. The x-axis has a range of 120, and the y-axis has a range of 2500. The bins are have a width of 5, and the bin with the most observations is the 11-15 bin, closely followed by the 6-10 bin. They each have slightly more than 2500 observations, while the only other bin that comes close is the 16-20 bin, with less than 1500 observations. The distribution of movies and TV shows in the bins is initially low, at slightly more than 1000 observations for the 1-5 bin, followed by the peaks of the 6-10 and 11-15 bins, and then decreasing exponentially across each bin. There is no movie or TV show with more than 60 characters in its title" width="672"></p>
@@ -1063,20 +1066,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb4-43"><a href="#cb4-43"></a><span class="fu">ggplot</span>(movies_len, <span class="fu">aes</span>(<span class="at">x =</span> title_len)) <span class="sc">+</span></span>
 <span id="cb4-44"><a href="#cb4-44"></a>  <span class="fu">geom_histogram</span>(<span class="at">color =</span> <span class="st">"cornsilk"</span>, <span class="co"># this helps to make the bars contrast against each other</span></span>
 <span id="cb4-45"><a href="#cb4-45"></a>                 <span class="at">binwidth =</span> <span class="dv">5</span>) <span class="sc">+</span> <span class="co"># this allows the data to be broken into classes, making it easier to explain and understand</span></span>
-<span id="cb4-46"><a href="#cb4-46"></a>  <span class="fu">theme_solarized</span>() <span class="sc">+</span></span>
+<span id="cb4-46"><a href="#cb4-46"></a>  <span class="fu">theme_solarized_2</span>() <span class="sc">+</span></span>
 <span id="cb4-47"><a href="#cb4-47"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Total Characters in Title"</span>,</span>
 <span id="cb4-48"><a href="#cb4-48"></a>       <span class="at">y =</span> <span class="st">"Movies and TV Shows"</span>,</span>
-<span id="cb4-49"><a href="#cb4-49"></a>       <span class="at">title =</span> <span class="st">"Movies and TV Shows on Streaming Services Versus the Total Characters in Their Title"</span>)</span>
-<span id="cb4-50"><a href="#cb4-50"></a><span class="in">```</span></span>
-<span id="cb4-51"><a href="#cb4-51"></a></span>
-<span id="cb4-52"><a href="#cb4-52"></a></span>
-<span id="cb4-53"><a href="#cb4-53"></a><span class="fu">## Conclusion:</span></span>
+<span id="cb4-49"><a href="#cb4-49"></a>       <span class="at">title =</span> <span class="st">"Media on Streaming Services Vs. Total Characters in Title"</span>) <span class="sc">+</span></span>
+<span id="cb4-50"><a href="#cb4-50"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">16</span>),</span>
+<span id="cb4-51"><a href="#cb4-51"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb4-52"><a href="#cb4-52"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"mono"</span>, <span class="at">size =</span> <span class="dv">8</span>))</span>
+<span id="cb4-53"><a href="#cb4-53"></a><span class="in">```</span></span>
 <span id="cb4-54"><a href="#cb4-54"></a></span>
-<span id="cb4-55"><a href="#cb4-55"></a>Movies and TV shows on streaming services tends to offer less entertainment as the title of the entertainment more characters than 15. A plurality of the entertainment has 11-15 characters, sharply followed by 6-10. As one looks for movies and tv shows with titles longer than 15 characetrs, the number of observations decreases exponentially. There could be many reasons for this such as audiences' attention spans preferring shorter titles or writers simply coming up with shorter titles more often than very long ones. </span>
-<span id="cb4-56"><a href="#cb4-56"></a></span>
+<span id="cb4-55"><a href="#cb4-55"></a></span>
+<span id="cb4-56"><a href="#cb4-56"></a><span class="fu">## Conclusion:</span></span>
 <span id="cb4-57"><a href="#cb4-57"></a></span>
-<span id="cb4-58"><a href="#cb4-58"></a><span class="fu">## References:</span></span>
-<span id="cb4-59"><a href="#cb4-59"></a>https://www.kaggle.com/datasets/ruchi798/movies-on-netflix-prime-video-hulu-and-disney (accessed: April 11th, 2025)</span>
+<span id="cb4-58"><a href="#cb4-58"></a>Movies and TV shows on streaming services tends to offer less entertainment as the title of the entertainment more characters than 15. A plurality of the entertainment has 11-15 characters, sharply followed by 6-10. As one looks for movies and tv shows with titles longer than 15 characetrs, the number of observations decreases exponentially. There could be many reasons for this such as audiences' attention spans preferring shorter titles or writers simply coming up with shorter titles more often than very long ones. </span>
+<span id="cb4-59"><a href="#cb4-59"></a></span>
+<span id="cb4-60"><a href="#cb4-60"></a></span>
+<span id="cb4-61"><a href="#cb4-61"></a><span class="fu">## References:</span></span>
+<span id="cb4-62"><a href="#cb4-62"></a>https://www.kaggle.com/datasets/ruchi798/movies-on-netflix-prime-video-hulu-and-disney (accessed: April 11th, 2025)</span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
