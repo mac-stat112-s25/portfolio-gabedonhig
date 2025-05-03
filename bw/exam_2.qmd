@@ -152,7 +152,7 @@ ggplot(top_food_consumers, aes(x = food_category, y = consumption, fill = countr
 Of all categories, dairy, wheat, and rice are the most consumed. The consumption of dairy, wheat, or rice is enough to outmatch the entire consumption of the top 5 countries combined in some categories like nuts or soybeans. What this means is that some of these categories are relatively easy to be a top 5 country in, because their consumption is very low anyway. 
 
 
-## Sub-research Question 1: What does the consumption of each food look like?
+## Sub-research Question 3: What does the consumption of each food look like?
 
 **Expected Dataframe:**
 We want a dataframe in which there is a country variable, a variable for food type, a corresponding variable for consumption, and a variable for the geometry of each country.
@@ -190,8 +190,6 @@ temp <- fc_clean |>
                               "United Republic of Tanzania" = "Tanzania",
                               "The Bahamas" = "Bahamas",
                               "Taiwan" = "Taiwan. ROC"))
-
-temp
 
 global_consumption <- ne_countries() |>
   select(admin, geometry) |>

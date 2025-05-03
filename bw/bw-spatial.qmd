@@ -92,7 +92,10 @@ ggplot() +
   scale_fill_manual(name = "People of Working Age per Business",
                     values = my_colors) +
   coord_sf(crs = 7856) +
-  labs(title = "Ratio of People of Working Age to Businesses Across Greater Sydney")
+  labs(title = "Working Age People to Businesses Across Greater Sydney") +
+  theme(plot.title = element_text(face = "bold", size = 15),
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(family = "mono", face = "bold"))
 ```
 
 

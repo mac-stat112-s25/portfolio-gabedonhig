@@ -79,8 +79,8 @@ euro_gdp_marriages_rights <- euro_gdp_marriages |>
 ## Step 3: Visualize
 
 ```{r}
+#| fig-alt: "A scatterplot uses 'Percent of Couples Which are Homosexual' on the x-axis and 'Real GDP Per Capita in Euros' on the y-axis. The title above the scatterplot is 'Percent of Couples Which are Homosexual, Real GDP per capita, and the LGBT Equality Index of European Countries'. There is a legend titled 'LGBT Equality Index' to the right of the scatterplot. There are 4"
 #| fig-cap: "A Scatterplot of Countries' Percent of Couples Which Are Homosexual and Real GDP per Capita, with points color coded by their class in the LGBT Equality Index, and using trend lines for each class along with a an overall trend line for all points regardless of class"
-#| fig-alt: "A scatterplot uses 'Percent of Couples Which are Homosexual' on the x-axis and 'Real GDP Per Capita in Euros' on the y-axis. The title above the scatterplot is 'Percent of Couples Which are Homosexual, Real GDP per capita, and the LGBT Equality Index of European Countries'. There is a legend titled 'LGBT Equality Index' to the right of the scatterplot. There are 4 "
 ggplot(euro_gdp_marriages_rights, aes(x = pct_homo_marriages, y = OBS_VALUE, color = EI)) +
   geom_point(size = 3,
              alpha = 0.8) +
@@ -91,14 +91,19 @@ ggplot(euro_gdp_marriages_rights, aes(x = pct_homo_marriages, y = OBS_VALUE, col
               se = FALSE) + # I am getting rid of the confidence interval because it obscures much of the graph
   labs(x = "Percent of Couples Which are Homosexual", 
        y = "Real GDP Per Capita in Euros", 
-       title = "Percent of Couples Which are Homosexual, Real GDP per capita, and the LGBT Equality Index of European Countries") +
+       title = "Homosexuality In Relationships, Real GDP per capita, and The LGBT Equality Index") +
   geom_smooth(aes(x = pct_homo_marriages, y = OBS_VALUE),
               method = "lm", 
               line_type = "dashed",
               se = FALSE,
               inherit.aes = FALSE,
               color = "black",
-              linewidth = 2) # I increase the linewidth to make it clear that this line in the most important, different from the others as a representation of the overall trend
+              linewidth = 2) + # I increase the linewidth to make it clear that this line in the most important, different from the others as a representation of the overall trend
+  theme(plot.title = element_text(size = 12.5, hjust = 0.3, family = "serif", face = "bold"),
+        axis.title = element_text(size = 10, family = "serif", face = "bold"),
+        axis.text = element_text(size = 8, family = "mono"),
+        legend.title = element_text(size = 10, family = "serif", face = "bold"),
+        legend.text = element_text(size = 8, family = "mono"))
 ```
 
 

@@ -37,7 +37,12 @@ billionaires <- messy_billionaires |>
 ggplot(billionaires, aes(x = age, fill = gender, position = "fill")) +
   geom_histogram(color = "cornsilk", position = "fill", binwidth = 3) +
   theme_solarized() +
-  labs(x = "Age of Billionares", y = "Distribution", title = "Distribution of Gender by Age Among American Billionaires", fill = "Gender")
+  labs(x = "Age of Billionares", y = "Distribution", title = "Distribution of Gender by Age Among American Billionaires", fill = "Gender") +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold", family = "serif", size = 15.5, color = "#b87333"),
+        axis.title = element_text(face = "bold", family = "serif", size = 13.5, color = "#b87333"),
+        legend.title = element_text(face = "bold", family = "serif", size = 13.5, color = "#b87333"),
+        axis.text = element_text(family = "mono", color = "#cd853f"),
+        legend.text = element_text(family = "mono", color = "#cd853f"))
 ```
 
 
