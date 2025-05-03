@@ -806,7 +806,7 @@
     "href": "summary/exam_2.html#useful-r-functions-summary",
     "title": "10  Exam 2 Summary",
     "section": "10.3 Useful R Functions Summary",
-    "text": "10.3 Useful R Functions Summary\n\n\n\n\n\n\n\nFunction\nAction\n\n\n\n\nstr(dataset1)\nShows the number of rows, variables, the type of values in each variable, and values in each variable.\n\n\nsummary(dataset1)\nGives a summary of each variable, showing the min / mean / max / median / 1st and 3rd quartiles for numerical variables. Identifies string variables and labels them as such.\n\n\nhead(dataset, observationCount)\nShows the first observations in a dataset, up to observationCount.\n\n\ndistinct(variable)\nLists all unique values within a variable.",
+    "text": "10.3 Useful R Functions Summary\n\n\n\n\n\n\n\nFunction\nAction\n\n\n\n\nstr(dataset1)\nShows the number of rows, variables, the type of values in each variable, and values in each variable.\n\n\nsummary(dataset1)\nGives a summary of each variable, showing min / mean / max / median / 1st and 3rd quartile for numeric variables. Also identifies string variables.\n\n\nhead(dataset, observation_count)\nShows the first observations in a dataset up to observation_count.\n\n\ndistinct(variable)\nLists all unique values within a variable.\n\n\nslice_max(order_by = variable1, n = x)\nShows the observations with the highest values in variable1. The number of rows shown is determined by x (e.g., top 100 values).\n\n\nvariable1 = replace_na(variable1, x)\nReplaces NA values in variable1 with x, typically used within a mutate() statement.",
     "crumbs": [
       "Summary",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Exam 2 Summary</span>"
@@ -829,6 +829,28 @@
     "title": "10  Exam 2 Summary",
     "section": "10.5 Common forcats Factor Functions",
     "text": "10.5 Common forcats Factor Functions\n\n\n\n\n\n\n\nFunction\nResult\n\n\n\n\nfct_relevel(variable, c(\"value1\", \"value2\", \"value3\"))\nReorders how the categories are shown in a plot.\n\n\nfct_reorder()\nRelevels according to the values of another variable.\n\n\nfct_infreq()\nOrders levels from highest to lowest frequency.\n\n\nfct_rev()\nReverses the current order of levels.\n\n\nfct_recode()\nManually changes the levels of a factor.\n\n\nfct_lump()\nGroups together the least common levels.\n\n\nfct_relabel()\nRenames factor levels using a function.",
+    "crumbs": [
+      "Summary",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Exam 2 Summary</span>"
+    ]
+  },
+  {
+    "objectID": "summary/exam_2.html#effective-viz",
+    "href": "summary/exam_2.html#effective-viz",
+    "title": "10  Exam 2 Summary",
+    "section": "10.6 Effective Viz:",
+    "text": "10.6 Effective Viz:\nUsing theme():\nTo effectively vizualize, you need to know how to use theme(). Firstly, here is a table with the names of different components in a plot and their name in theme():\n\n\n\nItem in plot\nName in theme()\n\n\n\n\nNumbers / characters next to the axes\naxis.text\n\n\nNumbers / characters next to the x-axis\naxis.text.x\n\n\nNumbers / characters next to the y-axis\naxis.text.y\n\n\nTitle of the axes\naxis.title\n\n\nTitle of the x-axis\naxis.title.x\n\n\nTitle of the y-axis\naxis.title.y\n\n\nLegend position\nlegend.position\n\n\nLegend size\nlegend.key.size\n\n\nLegend title\nlegend.title\n\n\nLegend text\nlegend.text\n\n\nFacet wrapped text\nstrip.text\n\n\nName of the plot\nplot.title\n\n\n\nUsing element_text():\nSecondly, there are different arguments you can use within the element_text() argument for theme items. They are:\n\n\n\n\n\n\n\nArgument\nWhat it does\n\n\n\n\nsize = x\nSets the text size.\n\n\nfamily = \"font\"\nSets the font family.\n\n\nface = \"face\"\nSets the font style: \"plain\", \"bold\", \"italic\", or \"bold.italic\".\n\n\ncolor = \"color\"\nSets the color of the text.\n\n\nangle = x\nSets the angle of the text (e.g., 45 for diagonal).\n\n\nhjust = x\nAdjusts horizontal justification (e.g., 0 = left, 1 = right).\n\n\nvjust = x\nAdjusts vertical justification (e.g., 0 = bottom, 1 = top).\n\n\n\nSome useful goto fonts in the family argument include: - “sans” - “serif” - “mono”\nHow to use different items in theme:\n\n\n\n\n\n\n\n\nItem\nHow to use it\nOutcome\n\n\n\n\nlegend.position\n= c(x, y)\nPlaces the legend proportionally within the plot area. For example, c(0.5, 0.75) centers it horizontally and places it 75% up vertically.\n\n\nlegend.position\n= \"top\", \"left\", \"right\", \"bottom\", \"none\"\nSets the legend position to a fixed side of the plot, or removes it entirely with \"none\".\n\n\nlegend.key.size\n= unit(x, \"cm\")\nSets the size of legend keys using a numeric value x and a measurement unit (commonly \"cm\").\n\n\n\nUsing ggthemes():\nSome useful ggthemes() include: - theme_economist() - theme_solarized() - can also use theme_solarized(light = FALSE) - theme_wsj() - theme_excel() - theme_fivethirtyeight\nWhen to use different ggtheme() scale functions:\n\n\n\n\n\n\n\nSituation\nCorrect command (using solarized)\n\n\n\n\nYou are using color\nscale_color_solarized()\n\n\nYou are using a fill\nscale_fill_solarized()\n\n\nYou are using binned categories\nscale_binned_solarized()\n\n\n\nYou can also use name = “text” in these commands to name your legend\nChanging Plot Dimensions:\nIf you want to change the height of your figure, use #| fig-height: y\nIf you want to change the width of your figure, use #| fig-width: x\nAdding captions to Your Plot:\nTo add figure captions that summarize the plot for someone listening, use #| fig-cap: “text”\nTo add alt-text that explains what is on the plot for someone listening, use #| fig-alt: “text”\nUsing labs():\nYou use labs to add / change labels of various parts of your plot:",
+    "crumbs": [
+      "Summary",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Exam 2 Summary</span>"
+    ]
+  },
+  {
+    "objectID": "summary/exam_2.html#customizing-labels-in-labs",
+    "href": "summary/exam_2.html#customizing-labels-in-labs",
+    "title": "10  Exam 2 Summary",
+    "section": "10.7 Customizing Labels in labs()",
+    "text": "10.7 Customizing Labels in labs()\n\n\n\nItem\nWhat it does\n\n\n\n\nfill = \"name\"\nSets the legend title for fill color.\n\n\ncolor = \"name\"\nSets the legend title for line/point color.\n\n\ntitle = \"name\"\nSets the main plot title.\n\n\nx = \"name\"\nSets the x-axis label.\n\n\ny = \"name\"\nSets the y-axis label.",
     "crumbs": [
       "Summary",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Exam 2 Summary</span>"
