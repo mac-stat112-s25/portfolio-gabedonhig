@@ -1,5 +1,106 @@
 ---
 title: "Quadvariate Viz"
+author: "Gabriel Donelly Higgins"
+date: "May 2nd, 2025"
+format: html
 ---
 
-Use this file to generate a professional looking **quadvariate** visualization.  The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
+## Research question:
+
+How does population, internal migration, overseas migration, and the fertility rate relate to each other at Statistical Level 4 areas in Australia
+
+## Step 1: Load necessary packages
+
+```{r}
+library(tidyverse)
+library(ggthemes)
+```
+
+
+## Step 2: Import / clean / join and wrangle the data:
+
+```{r}
+messy_aussie_data <- read_csv("../data/ABS,ABS_REGIONAL_ASGS2021,1.3.0+CABEE_5+CABEE_15+CABEE_10+MIGRATION_7+MIGRATION_4+BD_3+BD_4+BD_2+ERP_P_20.SA3..A.csv")
+
+aussie_data <- messy_aussie_data |>
+  select(Region, `Data Item`, OBS_VALUE) |>
+  mutate(`Data Item` = fct_recode(`Data Item`,
+                                  "fert_rate" = "Total fertility rate (births per female) (rate)",
+                                  "net_over_migr" = "Net overseas migration (no.)",
+                                  "net_inter_migr" = "Net internal migration (no.)",
+                                  "reg_births" = "Registered births (no.)",
+                                  "reg_deaths" = "Registered deaths (no.)",
+                                  "total_pop" = "Estimated resident population: Persons (no.)",
+                                  "total_busi_exits" = "Total business exits (no.)",
+                                  "total_busi_entr" = "Total business entries (no.)",
+                                  "total_busi" = "Total businesses (no.)")) |>
+  pivot_wider(names_from = `Data Item`, values_from = OBS_VALUE) |>
+  filter(!is.na(fert_rate)) |>
+  mutate(net_pop = reg_births - reg_deaths) |> # total births - deaths
+  mutate(net_migr = net_over_migr + net_inter_migr) |> # the total change in migrants
+  mutate(net_busi = total_busi_entr - total_busi_exits) |> # the total change in businesses
+  mutate(pct_inter_migr = (net_inter_migr / total_pop) * 100) |> # net internal migration as a percent of total pop
+  mutate(pct_over_migr = (net_over_migr / total_pop) * 100) |> # net overseas migration as a percent of total pop
+  mutate(pct_migr = (net_migr / total_pop) * 100) |> # the pct change in population by migrants
+  mutate(pct_pop = (net_pop / total_pop) * 100) |> # the pct change in population
+  mutate(pct_busi = (net_busi / total_busi) * 100) |> # the pct change in businesses
+  mutate(yn_fert_rate = cut(fert_rate,
+                          breaks = c(0, 2.1, Inf),
+                          labels = c("Below replacement rate", "Above replacement rate"),
+                          include.lowest = TRUE)) |>
+  mutate(yn_net_migr = cut(net_migr,
+                          breaks = c(-99999999, 0, Inf),
+                          labels = c("Lost population through migration", "Gained population through migration"),
+                          include.lowest = TRUE)) |>
+  mutate(yn_inter_migr = cut(net_inter_migr,
+                          breaks = c(-99999999, 0, Inf),
+                          labels = c("Net Negative internal migration", "Net Positive internal migration"),
+                          include.lowest = TRUE)) |>
+  mutate(yn_over_migr = cut(net_over_migr,
+                          breaks = c(-99999999, 0, Inf),
+                          labels = c("Lost population through overseas migration", "Gained population through overseas migration"),
+                          include.lowest = TRUE)) |>
+  mutate(yn_net_busi = cut(net_busi,
+                          breaks = c(-99999999, 0, Inf),
+                          labels = c("Lost more businesses than gained", "Gained more businesses than lost"),
+                          include.lowest = TRUE)) |>
+  filter(!is.na(yn_inter_migr))
+  
+summary(aussie_data)  
+
+aussie_data
+```
+
+
+## Step 3: Put data into a plot
+
+```{r}
+#| fig-cap: "A Scatterplot of Population and Overseas Migration Faceted by Internal Migration and Colored by Fertility Rate"
+#| fig-alt: "There is a scatterplot which uses net overseas migration standardized as a percentage of the population on the y-axis, and the population of points on the x-axis. It is faceted by whether or not the points experienced a net positive or negative internal migration, and the points are colored either red or blue. The legend shows that red points are above replacement rate, and blue points are below. The title is 'Fertility Rates, Internal / Overseas Migration, and Population'. The points are slightly transparent, so you can see how intensely red or blue a part of the plot is where there are many points. There are trend lines for the red and blue dots on both of the scattered plots. On the net negative internal migration scatterplot, there is a similar positive correlation between population and overseas migration between red and blue points, but the red trend line starts at a lower point, nearer to 0%, while the blue trend line starts nearer to 1%. On the scatterplot for points with a net positive internal migration, there was the same positive correlation among red and blue points, but the trend lines were flatter. Again, the blue trend line started above the red point, but below 0.5% (whereas in the other scatterplot the blue trend line started above 0.5%). The red trend line starts above as close to 0% as in the previous scatterplot, and in below the blue trend line. The blue trend lines extend further on the x-axis because they have points which extend further."
+
+ggplot(aussie_data, aes(x = total_pop, y = pct_over_migr, color = yn_fert_rate)) +
+  geom_point(alpha = 0.6,
+             size = 0.75) +
+  facet_wrap(~yn_inter_migr) +
+  geom_smooth(method = "lm",
+              se = FALSE) +
+  theme_solarized(light = FALSE) +
+  scale_color_solarized() +
+  scale_color_solarized(name = "Fertility Rate") +
+  labs(x = "Population", y = "Net Overseas Migration as % of Pop.", title = "Fertility Rates, Internal / Overseas Migration, and Population") +
+  theme(axis.title = element_text(size = 10, family = "mono", face = "bold"),
+        plot.title = element_text(size = 12.5, family = "mono", face = "bold"),
+        axis.text = element_text(size = 7, family = "mono", color = "#93a1a1"),
+        legend.title = element_text(size = 12, family = "mono", face = "bold"),
+        legend.text = element_text(size = 8, family = "mono", color = "#93a1a1"),
+        strip.text = element_text(size = 8, family = "mono", face = "bold"))
+```
+
+
+**Conclusion:**
+
+It seems like when Statistical Level 4 Areas(SL4A) in Australia have a negative internal migration, they get more overseas immigrants per capita, indicating that overseas immigrants may be more attracted to SL4A's that have a net negative internal migration. Perhaps this is because the labor pool is smaller, allowing them to more easily fill it, or perhaps there are other reasons. However, even if the trend was more positive for both SL4A's with fertility rates below and above replace rate, the y-intercept for both the net negative and net positive internal migration above replacement lines were the same. What this means is that in SL4A's with low populations and a fertility rate above replacement rate, the net overseas migration per capita is roughly similar, but that trend changes in SL4A's that have higher populations as immigrants tend to go to the ones with net negative internal migration. The reason why there are more SL4A's with positive internal migration and high populations is possibly because an SL4A with a high population is necessarily more likely to have a more active economy, attracting people internally for jobs. This may make it so that more natives go to these SL4A's, and perhaps overseas immigrants may have difficulty competing with natives. Lastly, the outliers which really increase the range of the y-axis tend to be outliers from the net negative internal migration SL4A's, and they are all also below replacement rate. Approaching this through the lens of the United States' urban development and history, the reason these outliers may have such high overseas migration per capita is because they serve as ethnic enclaves, where overseas immigrants of certain regons tend to concentrate. These SL4A's may have lower fertility rates and are losing natives to internal migration, which indicates that there are fewer natives occupying the area, making room for new overseas immigrant communities
+
+
+## References:
+https://dataexplorer.abs.gov.au/vis?fs[0]=Data%20by%20region%2C0%7CMain%20Structure%20and%20Greater%20Capital%20City%20Statistical%20Areas%23ASGS%23&pg=0&fc=Data%20by%20region&df[ds]=DATA_BY_REGION_TOPICS&df[id]=ABS_REGIONAL_ASGS2021&df[ag]=ABS&df[vs]=1.3.0&pd=2022%2C2022&dq=CABEE_5%2BCABEE_15%2BCABEE_10%2BMIGRATION_7%2BMIGRATION_4%2BBD_3%2BBD_4%2BBD_2%2BERP_P_20.SA3..A&ly[cl]=MEASURE&ly[rw]=ASGS_2021&to[TIME_PERIOD]=false&isAvailabilityDisabled=false&snb=2 (accessed: April 18th, 2025)

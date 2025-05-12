@@ -1,0 +1,246 @@
+---
+title: "Exam 2"
+author: "Gabriel Donelly Higgins"
+date: "May 2nd, 2025"
+format: html
+---
+
+* this is a continuation of exam one
+
+## Research question:
+
+**What does the consumption of each food category in each country look like?**
+
+
+## Import Necessary Data and Tools:
+
+**Load in packages:**
+```{r}
+library(tidytuesdayR)
+library(tidyverse)
+library(rnaturalearth)
+library(sf)
+library(ggthemes)
+```
+
+
+**Load data:**
+```{r}
+tuesdata <- tt_load('2020-02-18')
+fc <- tuesdata$food_consumption
+```
+
+
+**Inspect Data:**
+```{r}
+str(fc)
+```
+
+```{r}
+head(fc, 22)
+```
+
+
+**Inspect Country Variable:**
+```{r}
+fc |>
+  group_by(country) |>
+  summarize(sum(consumption)) |>
+  str()
+```
+
+There are 130 observations, when you set the unit of observation to countries, so there are 130 countries in this dataset
+
+
+**Inspect food_category variable:**
+```{r}
+fc |>
+  distinct(food_category)
+```
+
+Here we have 11 distinct food categories, but it is better to rename them for the sake of making them easier to read in a viz
+
+**Clean data:**
+```{r}
+fc_clean <- fc |>
+  mutate(food_category = as.factor(food_category),
+         food_category = fct_recode(food_category,
+                                    "Lamb" = "Lamb & Goat",
+                                    "Dairy" = "Milk - inc. cheese",
+                                    "Wheat" = "Wheat and Wheat Products",
+                                    "Nuts" = "Nuts inc. Peanut Butter"))
+```
+
+Double checking to make sure all variables are properly renamed
+```{r}
+fc_clean |>
+  distinct(food_category)
+```
+
+## Sub-research Question 1: Which 5 countries consume the most food?
+
+**Expected Dataframe:**
+We want a dataframe in which countries are listed, followed by their total consumption
+
+
+**Reshaping / Wrangling data:**
+```{r}
+country_consumption <- fc_clean |>
+  group_by(country) |>
+  summarize(total_consumption = sum(consumption))
+```
+
+
+**Visualizing Data:**
+```{r}
+#| fig-cap: "A Bar Graph of the World's Largest Consumers"
+#| fig-alt: "A bar graph is displayed. The title of the x-axis is  'Country' and the y axis is 'Total Consumption'. The y-axis goes from 0 to above 600. The x-axis lists the countries of Albania, Finland, Lithuania, Netherlands, and Sweden. Finland's bar is the tallest, above 600 on the y-axis, while the others float above 500. Each bar is colored differently."
+country_consumption |>
+  arrange(desc(total_consumption)) |>
+  head(5) |>
+  ggplot(aes(x = country, y = total_consumption, fill = country)) +
+    geom_col() +
+    theme_solarized() +
+  scale_fill_solarized() +
+  labs(x = "Country", y = "Total Consumption", title = "World's Largest Consumers") +
+  theme(plot.title = element_text(size = 25, family = "serif", face = "bold", color = "#586e75", hjust = 0.5),
+        axis.title = element_text(size = 15, family = "serif", face = "bold", color = "#586e75"),
+        axis.text = element_text(size = 10, family = "mono", color = "#586e75"),
+        legend.position = "none")
+```
+
+
+**Observations:**
+Seemingly, the top consumers of food are exclusively European countries. Their geographic location varies from Eastern to Western, Baltics and Balkans and Scandinavian countries. They all consume roughly similar amounts of food, with Findland consuming the most.
+
+
+## Sub-research Question 2: Which 5 countries consume the most of each food?
+
+**Expected Dataframe:**
+We want a dataframe where there is a variable for countries, a variable for the food type, and a variable for the consumption value. The food_category should correspond to the top 5 highest values in the consumption variable for its category. And the countries in the country variable will be the top 5 consumers of whatever food category is in the food variable.
+
+
+**Reshaping / Wrangling Data:**
+```{r}
+top_food_consumers <- fc_clean |>
+  select(-co2_emmission) |>
+  group_by(food_category) |>
+  slice_max(order_by = consumption, n = 5)
+```
+
+
+**Vizualizing Data:**
+```{r}
+#| fig-height: 6
+#| fig-width: 10
+#| fig-cap: "A Bar Graph of Food Category and Consumption, Colored By The Top 5 Biggest Consumers"
+#| fig-alt: "A bar graph with an x-axis label 'Food Category' and y-axis label 'Consumption' is displayed. The range goes above 1500 on the y-axis. 11 bars represent 11 food categories on the x-axis, which is labeled with each food category. The bars are colored, and a legend on the right is titled 'Country' and lists the colors and their corresponding country. The title of the plot is 'Largest Consumers by Food Category'. The bar with the highest consumption is dairy, whose consumers all color enough of the bar to make their consumption several times larger than that of the soybean bar. The second and third tallest bars are wheat and rice respectively, followed by fish, poultry, pork, and beef."
+ggplot(top_food_consumers, aes(x = food_category, y = consumption, fill = country)) +
+  geom_col() +
+  theme_solarized() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 10, family = "mono", color = "#586e75"),
+        axis.text.y = element_text(size = 10, family = "mono", color = "#586e75"),
+        axis.title = element_text(size = 14, family = "serif", face = "bold"),
+        legend.text = element_text(size = 10, family = "mono", color = "#586e75"), 
+        legend.title = element_text(size = 14, family = "serif", face = "bold"),
+        plot.title = element_text(size = 18, family = "serif", face = "bold", color = "#586e75")) +
+  labs(fill = "Country", x = "Food Category", y = "Consumption", title = "Largest Consumers by Food Category")
+```
+
+
+**Observations:**
+Of all categories, dairy, wheat, and rice are the most consumed. The consumption of dairy, wheat, or rice is enough to outmatch the entire consumption of the top 5 countries combined in some categories like nuts or soybeans. What this means is that some of these categories are relatively easy to be a top 5 country in, because their consumption is very low anyway. 
+
+
+## Sub-research Question 3: What does the consumption of each food look like?
+
+**Expected Dataframe:**
+We want a dataframe in which there is a country variable, a variable for food type, a corresponding variable for consumption, and a variable for the geometry of each country.
+
+
+**Reshaping, Wrangling, and importing data:**
+
+Find out which countries don't have a match in the geometry dataset
+```{r}
+fc_clean |>
+  anti_join(ne_countries(), join_by(country == admin)) |>
+  distinct(country)
+
+st_set_geometry(ne_countries(), NULL) |>
+  anti_join(fc_clean, join_by(admin == country)) |>
+  distinct(admin)
+```
+
+
+Rename the countries so that they have a match and join the shapefile
+```{r}
+temp <- fc_clean |>
+  select(-co2_emmission) |>
+  group_by(food_category) |>
+  mutate(consumption = (consumption - mean(consumption)) / sd(consumption)) |>
+  mutate(country = fct_recode(country,
+                              "United States of America" = "USA",
+                              "Czechia" = "Czech Republic",
+                              "Republic of Serbia" = "Serbia",
+                              "eSwatini" = "Swaziland",
+                              "North Macedonia" = "Macedonia",
+                              "Mauritania" = "Mauritius",
+                              "United Republic of Tanzania" = "Tanzania",
+                              "Democratic Republic of the Congo" = "Congo",
+                              "United Republic of Tanzania" = "Tanzania",
+                              "The Bahamas" = "Bahamas",
+                              "Taiwan" = "Taiwan. ROC"))
+
+global_consumption <- ne_countries() |>
+  select(admin, geometry) |>
+  left_join(temp, join_by(admin == country)) |>
+  mutate(consumption = replace_na(consumption, 0)) |>
+  pivot_wider(names_from = food_category, values_from = consumption) |>
+  select(-`NA`) |>
+  pivot_longer(cols = c(-geometry, -admin), names_to = "food_category", values_to = "consumption")
+
+head(global_consumption)
+```
+
+
+**Vizualizing Data:**
+```{r}
+#| fig-height: 8
+#| fig-width: 15
+#| fig-cap: "Facet Wrapped World Maps of Consumption by Food Category"
+#| fig-alt: "Eleven world maps are shown, facet wrapped by food category. The categories are beef, dairy, eggs, fish, lamb, nuts, pork, poultry, rice, soybeans, and wheat. They are colored from dark to light blue, representing low to high consumption, as shown in a legend in the bottom right that goes from 0 to 6. Some countries have a grey fill, representing their lack of data. The title of the plot is 'Consumption of Food Categories Worldwide'. The countries with the highest beef consumption tend to be in the Americas. Those with the highest Dairy consumption tend to be in Europe and there is moderate consumption in the Americas. Egg consumption is moderate in North America, China, and Europe. Fish consumption is low worldwide, but moderate in Myanmar. Lamb consumption is high in a few countries like Kazakhstan, Algeria, and Australia. Nut consumption is high in select countries like the United States, Iran, China, and Bolivia. Pork consumption is high in China and Europe. Poultry consumption is high in the Americas. Rice consumption is high in East, Southeast, and South Asia. Soybean consumption is high in Botswana, Zimbabwe, and China. Wheat consumption is high in Algeria, Egypt, Russia, Iran, and Turkey."
+ggplot() +
+  geom_sf(data = global_consumption,
+          aes(fill = consumption)) +
+  facet_wrap(~food_category) +
+  coord_sf(crs = "+proj=robin") +
+  theme_map() +
+  labs(title = "Consumption of Food Categories Worldwide") +
+  theme(legend.position = c(0.77, 0.02), 
+        legend.text = element_text(size = 14, family = "serif", face = "bold"), 
+        legend.title = element_text(size = 14, family = "serif", face = "bold"),
+        legend.key.size = unit(0.8, "cm"),
+        strip.text = element_text(size = 14, face = "bold", family = "serif"),
+        plot.title = element_text(size = 25, face = "bold", hjust = 0.5)) +
+  scale_fill_continuous(name = "Consumption")
+```
+
+**Observations:**
+Beef is heavily consumed in many highly countries like the United States, Russia, and Brazil, but also less consumed around most of the world and in other large countries like China, India, and Mexico. Dairy is heavily consumed in smaller countries like Finland and Kazakhstan, with moderate consumption around Europe and North America, and generally less consumption worldwide. Eggs are heavily consumed in China, with moderate consumption across Europe and the Americas. Fish has low consumption worldwide, but Myanmar stands out as a high consumer. Lamb is heavily consumed in Kazakhstan, Algeria, and Australia, while the rest of the world has considerably less consumption. The largest consumers of nuts are Persia, Canada and North America, and Bolivia. Additionally, countries with more moderate consumption include China, Australia, and Turkey. Pork is highly consumed in Russia, Europe and North America compared to the rest of the world. Poultry products tend to be more consumed in the Americas, Australia, and Saudi Arabia, with less worldwide consumption elsewhere. Rice is highly consumed in East, Southeast, and South Asia. Soybeans are highly consumed in China, Brazil, Botswana, and Zimbabwe. And lastly, Wheat is highly consumed in Algeria, Russia, Egypt, Turkey, and Iran. It is otherwise less consumed elsewhere.
+
+
+## Conclusion:
+
+Most countries around the world have unique eating habits, but regional patterns to appear. For example, rice is heavily consumed in South, Southeast, and East Asia. The entirety of the Americas consumes very little lamb. Yet Kazakhstan, Australia, and Algeria (countries with large portions of lowly populated land) consume a lot of lamb. Similarly, beef is highly consumed in Brazil, the United States, and Australia. These countries all have lots of suitable land for cattle to graze. Dairy also seems to follow lactose tolerance, to an extent, with less consumption in much of Asia and Africa. However, throughout the Americas, where there are mixed and indigenous populations with higher rates of lactose intolerance, dairy still has a presence. Certain food categories tended to have a few outliers, like soybeans, may have had higher consumption in certain countries (like Botswana and Zimbabwe), but their worldwide consumption was so small that just the consumption of wheat among one of the top 5 wheat consumers was more than quadruple the consumption of all the top 5 soybean consumers combined. Surprisingly, the countries that had the highest total consumption were Albania, Finland, Lithuania, the Netherlands, and Sweden. These were all coastal European countries with less than one 100th of India's population. I expected to see larger countries, like Brazil, Japan, India, China, Russia, or the United States to be top consumers. What this may indicate is that consumption is not calculated as the absolute consumption of food in these countries, but perhaps it is done in some other way. Considering that the top consumers were all coastal, perhaps calculations were based on food moving through the country, and these European countries had ports with high traffic. Or perhaps data wasn't sufficiently collected in larger countries like India, China, or the United States. 
+
+
+
+
+
+
+
+
+
+
+
+

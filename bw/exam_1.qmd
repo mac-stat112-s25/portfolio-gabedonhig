@@ -1,0 +1,142 @@
+---
+title: "Exam 1"
+author: "Gabriel Donelly Higgins"
+date: "March 30, 2025"
+format: html
+---
+
+## Come Up With A Research Question:
+
+**Research question: what does the consumption of each food category in each country look like?**
+
+## Import Necessary Data and Tools:
+
+**Load in packages:**
+
+```{r}
+library(tidytuesdayR)
+library(tidyverse)
+library(ggplot2)
+library(forcats)
+library(ggthemes)
+```
+
+
+**Load in the data:**
+
+It should all be from the same date
+
+```{r}
+tuesdata <- tt_load('2020-02-18')
+fc <- tuesdata$food_consumption
+```
+
+## Distribution of Variables and Observations:
+
+Find the number of countries:
+
+```{r}
+fc |>
+  distinct(country) |>
+  nrow()
+```
+
+
+Find the number of food categories:
+
+```{r}
+fc |>
+  distinct(food_category) |>
+  nrow()
+```
+
+
+Find the total consumption:
+
+```{r}
+fc |>
+  summarize(total_consumption = sum(consumption))
+```
+
+
+Find out how much each food category tends to be consumed across countries:
+
+```{r}
+ggplot(fc, aes(x = consumption, fill = food_category)) +
+  geom_histogram(bins = 20) +
+  scale_fill_viridis_d(option = "magma", name = "Food Category") +
+  labs(x = "Consumption", y = "Count")
+
+ggplot(fc, aes(x = food_category, y = consumption)) +
+  geom_boxplot() +
+  theme(axis.text.x = element_text(angle = 90, size = 8)) +
+  labs(x = "Food Category", y = "Consumption")
+```
+## Answering the Research Question:
+
+What proportion of each country's total consumption does each food category make up (proportional bar chart)
+
+```{r}
+#| fig-alt: "This bar chart has Consumption on the y-axis, and 'Country' on the x-axis, with a series of bars representing countries (whose names are written below the bars). This is a proportional bar chart, so all of the bars are the same and the ticks on the y-axis go from 0 to 1.0. The bars are stacked with different colors, and there is a legend showing what the colors mean. It is titled 'Food Category'. The colors used are color friendly. Throughout the chart, it is easy to see that food use often follows a pattern, though there are some outliers. Some countries make Rice a massive part of their consumption, outpacing Wheat and Wheat Product. Wheat and Wheat Product makes up a modest amount of most countries consumption, if not a large part of it. Dairy is also a massive part of the consumption of most countries, taking up a large part of bars for most countries. Lastly, other categories take up the rest of the limited space of most bars, making them inconsequential in comparison to dairy, Wheat and Wheat Product, and Rice"
+#| fig-cap: "Proportional Bar Chart of Each Country's Total Food Consumption with Filling for Each Food Category"
+
+fc |>
+  mutate(country = fct_recode(country,
+                              "UAE" = "United Arab Emirates",
+                              "Trinbago" = "Trinidad and Tobago",
+                              "UK" = "United Kingdom",
+                              "Hong Kong" = "Hong Kong SAR. China",
+                              "Bosnia-Herzegovina" = "Bosnia and Herzegovina")) |>
+  ggplot(aes(x = country, y = consumption, fill = food_category)) +
+    geom_col(position = "fill") +
+    labs(x = "Country", y = "Consumption") +
+    theme(axis.title.x = element_text(size = 10),
+          axis.title.y = element_text(size = 10),
+          legend.title = element_text(size = 10),
+          legend.text = element_text(size = 5),
+          axis.text.x = element_text(angle = 90, size = 2)
+          ) +
+    scale_fill_viridis_d(option = "magma", name = "Food Category")
+```
+
+What proportion of each country's total consumption does each food category make up (choropleth maps, faceted by food category)
+
+```{r}
+#| fig-width: 15
+#| fig-height: 15
+#| fig-cap: "Choropleth Maps of The Percent of a Countries' Total Food Consumption that Food Categories Occupy"
+#| fig-alt: "This is a series of facetted maps, done by food category, which shows the percent of a country's food consumption that each category takes up. There is one facet for not available values, showing countries and regions where data was not collected, such as Greenland, Antarctica, Afghanistan, North Korea, and more. The choropleth map uses a gradient (from lightblue to darkblue) that goes from 0 to 100, representing the percent of a country's food consumption that each food category makes up. Certain food categories, like soybeans, make up a very small amount of the diet of most countries. Others, like fish, have higher outliers in African countries below the Sahara. The maps with the most dark blue countries are those representing Wheat and Wheat Product, Rice, and Milk - inc. and cheese. The Milk - inc. and Cheese map has very dark shading across the world, but it is more intense in Europe, Oceania, the Americas, and some African Nations. Wheat and Wheat Product has moderate shading around the world, except for Algeria, Iran, and Egypt where there is intense shading. Rice has darker shading in East, Southeast, and South Asia along with some African nations. Also, on the x-axis tick marks are used for longitude and it is labeled 'Longitude', and the same is done on the y-axis but it is labeled 'Latitude'. There is also a legend showing the value of the gradient colors, titled 'Percent of Total Food Consumption'."
+
+world_map <- map_data("world")
+
+world_map <- world_map |>
+  mutate(region = fct_recode(region, 
+                             "Congo" = "Democratic Republic of the Congo",
+                             "Mauritius" = "Mauritania",
+                             "United Kingdom" = "UK",
+                             "Taiwan. ROC" = "Taiwan",
+                             ))
+
+fc |>
+  group_by(country) |>
+  mutate(total_consumption = sum(consumption)) |>
+  ungroup() |>
+  mutate(percent_consumption = (100 * (consumption / total_consumption))) |>
+  full_join(world_map, join_by(country == region)) |>
+  ggplot(aes(map_id = country, fill = percent_consumption)) +
+    geom_map(map = world_map) +
+    expand_limits(x = world_map$long, y = world_map$lat) +
+    theme_map() +
+    scale_fill_gradient(low = "lightblue", 
+                        high = "darkblue", 
+                        name = "Percent of Total Food Consumption", 
+                        na.value = "darkgrey"
+                        ) +
+    facet_wrap(~food_category, nrow = 4) +
+    theme_classic() +
+    labs(x = "Longitude", y = "Latitude")
+```
+
+## Conclusion:
+
+These two plots can be used to assess country's consumption of food categories in relation to their total food consumption, and also in relation to other countries consumption of each food category as a percent of their total consumption. There is a pattern in which the 3 most consumed food categories in countries tend to be wheat and wheat product, rice, and dairy. Dairy tends to be consumed in large portions in at least some countries across all continents, and in high quantities across all of the Americas, Europe, and Oceania. Rice is also consumed internationally, but the countries that consume it most are in East, Southeast, and South Asia along with Africa. Wheat and wheat product is consumed at a moderate rate to high rate across the whole world, with the only countries that consume it at low rates being in Southeast Asia and Africa South of the Sahara. The biggest consumers of wheat and wheat product are Algeria, Egypt, and Iran. 

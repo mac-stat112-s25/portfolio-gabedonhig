@@ -4,7 +4,7 @@ project:
 
 book:
   title: "COMP/STAT112 Notebook"
-  author: "Your Name Here"
+  author: "Gabriel Donelly Higgins"
   date: today
   reader-mode: true
   page-navigation: true
@@ -13,7 +13,7 @@ book:
   
   
   sidebar:
-    title: "Your Name Here"
+    title: "Gabriel Donelly Higgins"
     collapse-level: 2
     style: "docked"
     pinned: true
@@ -30,6 +30,14 @@ book:
       - bw/bw-tri.qmd
       - bw/bw-quad.qmd
       - bw/bw-spatial.qmd
+      - bw/exam_1.qmd
+      - bw/exam_2.qmd
+      - bw/solo_project.qmd
+
+    - part: "Summary"
+      chapters: 
+      - summary/exam_1.qmd
+      - summary/exam_2.qmd
 
     - part: "In-class Activities"
       chapters: 
@@ -37,6 +45,15 @@ book:
       - ica/ica-bi.qmd
       - ica/ica-multi.qmd
       - ica/ica-spatial.qmd
+      - ica/ica-effective.qmd
+      - ica/ica-joining.qmd
+      - ica/ica-wrangling.qmd
+      - ica/ica-strings.qmd
+      - ica/ica-reshaping.qmd
+      - ica/ica-factors.qmd
+      - ica/ica-dates.qmd
+#      - ica/ica-data_import.qmd
+      
 
 format:
   html:
@@ -51,10 +68,13 @@ format:
     code-link: true
     code-line-numbers: true
     code-tools: true
+    code-fold: true
 
 execute:
   cache: false
   freeze: auto
+  warning: false
+  error: false
 
 editor: 
   markdown:

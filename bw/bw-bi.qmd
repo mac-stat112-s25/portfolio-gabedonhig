@@ -1,5 +1,55 @@
 ---
 title: "Bivariate Viz"
+author: "Gabriel Donelly Higgins"
+date: "April 13th, 2025"
+format: html
 ---
 
-Use this file to generate a professional looking **bivariate** visualization.  The visualization will not perfect the first time but you are expected to improve it throughout the semester especially after covering advanced topics such as effective viz.
+## Research question:
+
+What is the distribution of gender by age among American billionaires
+
+## Step 1: Load necessary packages
+
+```{r}
+library(tidyverse)
+library(ggthemes)
+library(ggplot2)
+```
+
+
+## Step 2: Import and clean / wrangle data
+
+```{r}
+messy_billionaires <- read_csv("../data/Billionaires Statistics Dataset.csv")
+
+billionaires <- messy_billionaires |>
+  filter(countryOfCitizenship == "United States") # we want to look at American Billionaires
+```
+
+
+## Step 3: Vizualize
+
+```{r}
+#| fig-cap: "Histogram of Distribution of Gender by Age Among Billionaires"
+#| fig-alt: "A histogram with an x-axis titled 'Age of Billionares' and a y-axis titled 'Distribution'. The title is 'Distribution of Gender by Age Among American Billionaires' and the title of the legend is 'Gender'. The bars on the histogram have blue and red colors, corresponding to 'F' or 'M' in the legend. The bars are proportional, so that number of billionaires is not displayed, just the distribution. The histogram uses bins for every 3 years of age. Males make up the majority of billionaires in every bar, and some bars are exclusively male. The proportion of female billionaires is relatively similar in all age groups, around 12.5%, except for between 80 and 100 years olds, where there are significant increases that makes them near 42.5% of the population."
+
+ggplot(billionaires, aes(x = age, fill = gender, position = "fill")) +
+  geom_histogram(color = "cornsilk", position = "fill", binwidth = 3) +
+  theme_solarized() +
+  labs(x = "Age of Billionares", y = "Distribution", title = "Distribution of Gender by Age Among American Billionaires", fill = "Gender") +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold", family = "serif", size = 15.5, color = "#b87333"),
+        axis.title = element_text(face = "bold", family = "serif", size = 13.5, color = "#b87333"),
+        legend.title = element_text(face = "bold", family = "serif", size = 13.5, color = "#b87333"),
+        axis.text = element_text(family = "mono", color = "#cd853f"),
+        legend.text = element_text(family = "mono", color = "#cd853f"))
+```
+
+
+## Conclusion:
+
+Male billionaires overwhelmingly makeup the majority of American billionaires across every age group of billionaires. Women make up a small amount of them, except for a few groups between the age of 80 and 100. 
+
+
+## References:
+https://www.kaggle.com/datasets/nelgiriyewithana/billionaires-statistics-dataset (accessed: 13th April, 2025)

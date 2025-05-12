@@ -1,5 +1,109 @@
 ---
 title: "Spatial Viz"
+author: "Gabriel Donelly Higgins"
+date: "April 16, 2025"
+format: html
 ---
 
-Use this file to generate a professional looking **spatial** visualization.  The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
+## Research question:
+
+Across Greater Sydney what is the ratio of working age people to businesses. 
+
+## Step 1: Load necessary packages
+
+```{r}
+library(tidyverse)
+library(sf)
+```
+
+## Step 2: Import and clean / wrangle / join data
+
+
+**Shapefile data across Australia for Level 4 Statistical Areas:**
+
+```{r}
+messy_sf <- read_sf("../data/SA4_2021_AUST_SHP_GDA2020/SA4_2021_AUST_GDA2020.shp")
+
+sydney_sf <- messy_sf |>
+  select(SA4_NAME21, geometry)
+```
+
+
+**Data about the working age population across Greater Sydney's Level 4 Statistical Areas:**
+
+Sidenote: Working age is counted as being between 15-64 years old
+
+```{r}
+messy_working_age_pop <- read_csv("../data/ABS,ABS_REGIONAL_ASGS2021,1.3.0+ERP_18..128+127+126+125+124+123+121+122+120+119+118+117+116+115+102.A.csv")
+
+working_age_pop <- messy_working_age_pop |>
+  mutate(working_age_pop = OBS_VALUE) |>
+  select(Region, working_age_pop) 
+```
+
+
+**Data about the total businesses across Greater Sydney's Level 4 Statistical Areas:**
+
+```{r}
+messy_total_businesses <- read_csv("../data/ABS,ABS_REGIONAL_ASGS2021,1.3.0+CABEE_5..128+127+126+125+124+123+121+122+120+119+118+117+116+115+102.A.csv")
+
+total_businesses <- messy_total_businesses |>
+  mutate(total_businesses = OBS_VALUE) |>
+  select(Region, total_businesses)
+```
+
+
+**Combine the three datasets into one:**
+
+Sidenote: Also, wrangle the data, and turn the results of the ratio of working age persons to businesses into factors. And lastly, create a color palette for each of these factor levels on the map
+
+```{r}
+employee_businesses_sf <- sydney_sf |>
+  inner_join(working_age_pop, join_by(SA4_NAME21 == Region)) |>
+  inner_join(total_businesses, join_by(SA4_NAME21 == Region)) |>
+  mutate(working_persons_per_business = working_age_pop / total_businesses) |>
+  mutate(working_persons_per_business = cut(working_persons_per_business,
+                                            breaks = c(3, 4.5, 5, 5.5, 6, 8, 8.5, 9),
+                                            labels = c("3 - 4.4", "4.5 - 4.9", "5 - 5.4", "5.5 - 5.9", "6 - 7.9", "8 - 8.4", "8.5 - 9"),
+                                            include.lowest = TRUE))
+
+my_colors <- c(
+  "3 - 4.4" = "#f46d43",
+  "4.5 - 4.9" = "#fdae61",
+  "5 - 5.4" = "#fee08b",
+  "5.5 - 5.9" = "#d9ef8b",
+  "6 - 7.9" = "#a6d96a",
+  "8 - 8.4" = "#66bd63",
+  "8.5 - 9" = "#1a9850")
+```
+
+
+## Step 3: Visualize
+
+```{r}
+#| fig-cap: "Choropleth map of the ratio of working age people to businesses in Level 4 Statistical Areas across Greater Sydney, using quantitative classes"
+#| fig-alt: "A choropleth map of the Level 4 Statistical Areas across Greater Sydney, colored by gradient from orange to yellow to green. This shows the number of people of working age there are per business. Lying on an eastern peninsula of the map, there is a small Statistical Area with the fewest working age people per business, between 3 and 4. To its east, extending to the end of the peninsula, and to the north there are other areas with fewer people of working age per business, one with 4.5 - 4.9 and some with 5 - 5.4. To its west and southwest, there are Statistical Areas with a ratio of 5.5 - 5.9 or 6 - 7.9 people of working age per business. As one gets moves further north / west / south away from this Statistical Area with a low ratio, the statistical areas get larger in size and tend to have more people of working age per business. There is an exception, a Statistical Area in the north, with a lower ratio of 5 - 5.4, which also borders (on its east) the Statistical Area with the second lowest ratio (4.5 - 4.9). The statistical areas on the eastern side of the map clearly border some body of water, as they have peninsulas that jut throughout multiple bays, while the borders on the western, northern, and southernmost parts of the map seem to be more straight and organized, like a human made their borders."
+
+
+ggplot() +
+  geom_sf(data = employee_businesses_sf,
+          aes(fill = working_persons_per_business)) +
+  theme_void() +
+  scale_fill_manual(name = "People of Working Age per Business",
+                    values = my_colors) +
+  coord_sf(crs = 7856) +
+  labs(title = "Working Age People to Businesses Across Greater Sydney") +
+  theme(plot.title = element_text(face = "bold", size = 15),
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(family = "mono", face = "bold"))
+```
+
+
+## Conclusion:
+
+Interestingly, it seems like coastal Level 4 Statistical Areas tend to have lower ratios of working age people than those inland. The Statistical Areas with the lowest ratios tended to be concentrated to the left of the center of the map, on the coast. The lowest ratio Statistical area was in the middle of a peninsula. It was positioned so that Statistical areas wth lower ratios were to its north and east, but it also bordered a cluster of Statistical areas with some more mid ranged ratios. There is the possibility that this low ratio Statistical Area is the central business district of Sydney and therefore has few residents overall (which includes residents of working age) in comparison to businesses, therefore making its ratio unique. It would also explain why surrounding Statistical Areas have lower to medium ratios. They could be suburbs, where there is still some investment into businesses, but also a larger population of working age people to balance the ratio. The larger (in size) statistical areas to the west and north have higher ratios. An explanation for this would be that they are rural areas far away from the central business district. Their economic activity is depressed, reducing investment in businesses, and throwing off their ratios. 
+
+
+## References:
+https://dataexplorer.abs.gov.au/vis?fs[0]=Data%20by%20region%2C0%7CMain%20Structure%20and%20Greater%20Capital%20City%20Statistical%20Areas%23ASGS%23&pg=0&fc=Data%20by%20region&df[ds]=DATA_BY_REGION_TOPICS&df[id]=ABS_REGIONAL_ASGS2021&df[ag]=ABS&df[vs]=1.3.0&pd=2020%2C&dq=..118%2B117%2B116%2B115%2B102.A&ly[cl]=TIME_PERIOD&ly[rw]=ASGS_2021%2CMEASURE&to[TIME_PERIOD]=false (accessed: April 16th, 2025)
+https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026/access-and-downloads/digital-boundary-files (accessed: April 16th, 2025)
